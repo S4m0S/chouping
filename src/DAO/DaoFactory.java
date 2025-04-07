@@ -113,9 +113,9 @@ public class DaoFactory {
      *
      * @return Instance de ClientDAO
      */
-//    public objectDao getClientDAO() {
-//        return new clientDao(this);
-//    }
+    public objectDao getClientDAO() {
+        return new clientDao(this);
+    }
 
     /**
      * Récupère l'implémentation DAO pour les commandes
