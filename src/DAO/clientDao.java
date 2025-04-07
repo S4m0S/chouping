@@ -4,7 +4,7 @@ import Modele.Client;
 
 import java.util.ArrayList;
 
-public class clientDao extends objectDao{
+public class clientDao {
 
     private DaoFactory daoFactory;
 
@@ -12,14 +12,7 @@ public class clientDao extends objectDao{
         this.daoFactory = daoFactory_p;
     }
 
-    @Override
-    public ArrayList<Object> getAll(){
-        ArrayList<Object> liste_Client= new ArrayList<Object>();
 
-
-
-        return liste_Client;
-    }
 
 
 }

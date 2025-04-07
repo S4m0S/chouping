@@ -7,13 +7,153 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module-library" exported="">
+    <orderEntry type="module-library">
       <library>
         <CLASSES>
           <root url="jar://$MODULE_DIR$/mysql-connector-j-9.2.0/mysql-connector-j-9.2.0.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/javafx-sdk-24/lib/javafx-swt.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/javafx-sdk-24/lib/javafx.base.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/javafx-sdk-24/lib/javafx.controls.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/javafx-sdk-24/lib/javafx.fxml.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/javafx-sdk-24/lib/javafx.graphics.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/javafx-sdk-24/lib/javafx.media.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/javafx-sdk-24/lib/javafx.swing.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/javafx-sdk-24/lib/javafx.web.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/javafx-sdk-24/lib/jdk.jsobject.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/javafx-sdk-24/lib/jfx.incubator.input.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/javafx-sdk-24/lib/jfx.incubator.richtext.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="file://$MODULE_DIR$" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/javafx-sdk-24/src/javafx.base" />
+          <root url="file://$MODULE_DIR$/javafx-sdk-24/src/javafx.controls" />
+          <root url="file://$MODULE_DIR$/javafx-sdk-24/src/javafx.fxml" />
+          <root url="file://$MODULE_DIR$/javafx-sdk-24/src/javafx.graphics" />
+          <root url="file://$MODULE_DIR$/javafx-sdk-24/src/javafx.media" />
+          <root url="file://$MODULE_DIR$/javafx-sdk-24/src/javafx.swing" />
+          <root url="file://$MODULE_DIR$/javafx-sdk-24/src/javafx.web" />
+          <root url="file://$MODULE_DIR$/javafx-sdk-24/src/jdk.jsobject" />
+          <root url="file://$MODULE_DIR$/javafx-sdk-24/src/jfx.incubator.input" />
+          <root url="file://$MODULE_DIR$/javafx-sdk-24/src/jfx.incubator.richtext" />
+          <root url="file://$MODULE_DIR$/src" />
+          <root url="file://$MODULE_DIR$/javafx-sdk-24/src/javafx.base" />
+          <root url="file://$MODULE_DIR$/javafx-sdk-24/src/javafx.controls" />
+          <root url="file://$MODULE_DIR$/javafx-sdk-24/src/javafx.fxml" />
+          <root url="file://$MODULE_DIR$/javafx-sdk-24/src/javafx.graphics" />
+          <root url="file://$MODULE_DIR$/javafx-sdk-24/src/javafx.media" />
+          <root url="file://$MODULE_DIR$/javafx-sdk-24/src/javafx.swing" />
+          <root url="file://$MODULE_DIR$/javafx-sdk-24/src/javafx.web" />
+          <root url="file://$MODULE_DIR$/javafx-sdk-24/src/jdk.jsobject" />
+          <root url="file://$MODULE_DIR$/javafx-sdk-24/src/jfx.incubator.input" />
+          <root url="file://$MODULE_DIR$/javafx-sdk-24/src/jfx.incubator.richtext" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/javafx-sdk-24/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+        <jarDirectory url="file://$MODULE_DIR$/javafx-sdk-24/lib" recursive="false" />
       </library>
     </orderEntry>
   </component>
