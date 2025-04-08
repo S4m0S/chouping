@@ -4,7 +4,7 @@ import Modele.Client;
 
 import java.util.ArrayList;
 
-public class clientDao extends objectDao{
+public class clientDao implements objectDao{
 
     private DaoFactory daoFactory;
 
@@ -21,5 +21,26 @@ public class clientDao extends objectDao{
         return liste_Client;
     }
 
+    @Override
+    public void ajouter(Object object_p){
+
+    }
+
+
+    @Override
+    public Object chercher(int object_id){
+
+        return new Object();
+    }
+
+    @Override
+    public void modifier(Object object_p){
+
+    }
+
+    @Override
+    public void supprimer(Object object_p){
+
+    }
 
 }

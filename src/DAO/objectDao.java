@@ -15,7 +15,7 @@ public interface objectDao {
     public void ajouter(Object object_p);
 
 
-    public Object chercher(int object_p);
+    public Object chercher(int object_id);
 
 
     public void modifier(Object object_p);
