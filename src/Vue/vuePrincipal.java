@@ -8,8 +8,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import java.awt.*;
-
 
 public class vuePrincipal extends Application{
 
@@ -26,7 +24,7 @@ public class vuePrincipal extends Application{
         BorderPane root = new BorderPane();
 
         // Barre de menu
-        Menu menuBar = new creerMenuBar();
+        javafx.scene.control.MenuBar menuBar = creerMenuBar();
         root.setTop(menuBar);
 
         VBox conteneurPrincipal = new VBox(10);
@@ -49,20 +47,22 @@ public class vuePrincipal extends Application{
         stage.setTitle("Chouping");
         stage.setScene(scene);
         stage.show();
-
     }
 
-    private javafx.scene.control.MenuBar creerMenuBar(){
+    public javafx.scene.control.MenuBar creerMenuBar(){
         MenuBar menubar = new MenuBar();
 
-        Menu menuItem = new Menu("Item");
+        Menu menuItemAchat = new Menu("Item");
         javafx.scene.control.MenuItem armes = new MenuItem("Armes");
         javafx.scene.control.MenuItem plastron = new MenuItem("Plastron");
 
 
-        menuItem.getItems().addAll(armes, plastron);
+        menuItemAchat.getItems().addAll(armes, plastron);
+
+        menubar.getMenus().add(menuItemAchat);
 
 
+        return menubar;
     }
 
     public static void main(String[] args) {

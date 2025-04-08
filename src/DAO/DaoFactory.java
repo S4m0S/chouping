@@ -117,6 +117,8 @@ public class DaoFactory {
         return new clientDao(this);
     }
 
+
+
     /**
      * Récupère l'implémentation DAO pour les commandes
      *
