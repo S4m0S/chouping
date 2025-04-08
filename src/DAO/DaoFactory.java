@@ -114,7 +114,7 @@ public class DaoFactory {
      * @return Instance de ClientDAO
      */
     public objectDao getClientDAO() {
-        return new clientDao(this);
+        return new clientDAO(this);
     }
 
 
