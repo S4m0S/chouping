@@ -8,7 +8,7 @@ public class MenuPrincipal {
     private MenuBar menuBar;
 
     public MenuPrincipal(){
-
+        initialiserMenu();
     }
 
     public void initialiserMenu(){
