@@ -1,4 +1,6 @@
 package Vue;
 
-public class VueAccueil {
+public class VueAccueil extends VueBase {
+
+
 }
