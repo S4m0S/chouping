@@ -1,12 +1,42 @@
-package DAO;
+package Dao;
 
-public class itemDAO implements objectDao{
+import Modele.Item;
+import java.util.ArrayList;
 
-    private DaoFactory daoFactory;
+/**
+ * Interface ItemDAO pour définir les méthodes d'accès aux données de la table items.
+ */
+public interface ItemDAO {
 
-    public itemDAO(DaoFactory daoFactory_p){
-        this.daoFactory = daoFactory_p;
-    }
+    /**
+     * Récupérer tous les items présents dans la base de données.
+     * @return une liste d'objets Item.
+     */
+    public ArrayList<Item> getAll();
 
-    // Pareil, il faut remplir toutes les fonctions correctement
+    /**
+     * Ajouter un nouvel item dans la base de données.
+     * @param item objet Item à insérer.
+     */
+    public void ajouter(Item item);
+
+    /**
+     * Chercher un item en fonction de son identifiant.
+     * @param id identifiant de l'item.
+     * @return l'objet Item trouvé ou null si l'id n'existe pas.
+     */
+    public Item chercher(int id);
+
+    /**
+     * Modifier les informations d'un item existant.
+     * @param item objet Item contenant les nouvelles informations.
+     * @return l'objet Item mis à jour.
+     */
+    public Item modifier(Item item);
+
+    /**
+     * Supprimer un item de la base de données.
+     * @param item objet Item à supprimer.
+     */
+    public void supprimer(Item item);
 }
