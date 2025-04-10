@@ -159,7 +159,7 @@ public class commandeDAO implements objectDao {
         }
     }
 
-    // 🔁 Méthodes utilitaires
+    // Méthodes utilitaires
 
     private int[] recupererItemsCommande(Connection connection, int id_commande) throws SQLException {
         PreparedStatement statement = connection.prepareStatement(

@@ -44,6 +44,9 @@ public class VuePrincipal extends Application{
         VueAccueil vueAccueil = new VueAccueil(controlleurSupreme);
         Scene scene = new Scene(vueAccueil.getRoot(),stage.getWidth(), stage.getHeight());
 
+        // On peut ajouter un fichier CSS global ici
+        // scene.getStylesheets().add(getClass().getResource("/styles/global.css").toExternalForm());
+
         stage.setScene(scene);
         stage.show();
     }
