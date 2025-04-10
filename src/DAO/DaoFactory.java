@@ -1,4 +1,5 @@
 package DAO;
+
 import java.sql.*;
 
 /**
@@ -86,6 +87,7 @@ public class DaoFactory {
             System.err.println("Erreur lors de la fermeture des ressources: " + e.getMessage());
         }
     }
+
     /**
      * Ferme la connexion à la base de données
      * Méthode conservée pour compatibilité avec le code existant
@@ -102,27 +104,20 @@ public class DaoFactory {
     }
 
     /**
-     * Récupère l'implémentation DAO pour les produits
-     *
-     * @return Instance de ProduitDAO
-     */
-
-
-    /**
      * Récupère l'implémentation DAO pour les clients
      *
      * @return Instance de ClientDAO
      */
-    public objectDao getClientDAO() {
-        return new clientDAO(this);
+    public ClientDAO getClientDAO() {
+        return new ClientDAOImpl(this);
     }
 
-
-
     /**
-     * Récupère l'implémentation DAO pour les commandes
+     * Récupère l'implémentation DAO pour les items
      *
-     * @return Instance de CommanderDAO
+     * @return Instance de ItemDAO
      */
-
+    public ItemDAO getItemDAO() {
+        return new ItemDAOImpl(this);
+    }
 }
