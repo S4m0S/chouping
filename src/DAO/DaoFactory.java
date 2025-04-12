@@ -1,5 +1,7 @@
 package DAO;
 
+import DAO.ItemDAOImpl;
+
 import java.sql.*;
 
 /**
@@ -108,8 +110,8 @@ public class DaoFactory {
      *
      * @return Instance de ClientDAO
      */
-    public ClientDAO getClientDAO() {
-        return new ClientDAOImpl(this);
+    public clientDAO getClientDAO() {
+        return new clientDAO(this);
     }
 
     /**
@@ -117,7 +119,7 @@ public class DaoFactory {
      *
      * @return Instance de ItemDAO
      */
-    public ItemDAO getItemDAO() {
-        return new ItemDAOImpl(this);
+    public DAO.ItemDAOImpl getItemDAO() {
+        return new DAO.ItemDAOImpl(this);
     }
 }

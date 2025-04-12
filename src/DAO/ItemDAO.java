@@ -1,7 +1,9 @@
-package Dao;
+package DAO;
 
 import Modele.Item;
 import java.util.ArrayList;
+
+
 
 /**
  * Interface ItemDAO pour définir les méthodes d'accès aux données de la table items.

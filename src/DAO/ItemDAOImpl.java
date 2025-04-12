@@ -1,8 +1,10 @@
-package Dao;
+package DAO;
 
 import Modele.Item;
 import java.sql.*;
 import java.util.ArrayList;
+import DAO.DaoFactory;
+
 
 /**
  * Implémentation de l'interface ItemDAO pour la gestion des items dans la base de données.
