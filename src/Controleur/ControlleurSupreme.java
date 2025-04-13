@@ -24,5 +24,4 @@ public class ControlleurSupreme {
         vuePrincipal.accederVue(vueArmes);
         System.out.println("Bien à la page Armes");
     }
-
 }

@@ -1,6 +1,7 @@
 package Vue;
 
 import Controleur.ControlleurSupreme;
+import Modele.User;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 
@@ -17,7 +18,7 @@ public class VueArmes extends VueBase {
     protected void initialiserComposant() {
         layout = new BorderPane();
 
-        MenuPrincipal menu = new MenuPrincipal(controlleurSupreme);
+        MenuPrincipal menu = new MenuPrincipal(new User(0),controlleurSupreme);
         layout.setTop(menu.getMenuBar());
 
         labelTitre = new Label("Bienvenue dans la page des Armes");
