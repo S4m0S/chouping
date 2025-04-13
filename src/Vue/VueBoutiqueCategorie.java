@@ -25,7 +25,7 @@ public class VueBoutiqueCategorie extends VueBase {
         BorderPane layout = new BorderPane();
 
         // Ajout du menu en haut
-        MenuPrincipal menu = new MenuPrincipal(new User(0),controlleurSupreme);
+        MenuPrincipal menu = new MenuPrincipal(controlleurSupreme);
         layout.setTop(menu.getMenuBar());
 
         // Contenu central

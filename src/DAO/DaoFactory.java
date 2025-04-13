@@ -13,7 +13,6 @@ import java.sql.*;
 public class DaoFactory {
     // Configuration de la connexion JDBC
     private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
-    private static final String URL_PREFIX = "jdbc:mysql://localhost:3307/";
 
     private final String url;
     private final String username;
@@ -52,7 +51,7 @@ public class DaoFactory {
                 Class.forName(DRIVER);
 
                 // Construction de l'URL complète
-                String completeUrl = URL_PREFIX + database;
+                String completeUrl = "jdbc:mysql://localhost:3306/" + database;
 
                 // Création de l'instance
                 instance = new DaoFactory(completeUrl, username, password);

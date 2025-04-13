@@ -15,7 +15,6 @@ public class VueAccueil extends VueBase {
     private BorderPane borderPane;
     private VBox contenuCentral;
     private Label titreAcceuil;
-    private Button boutonVueCompte;
 
 
     public VueAccueil(ControlleurSupreme controlleurSupreme_p){
@@ -27,7 +26,10 @@ public class VueAccueil extends VueBase {
         // Conteneur principal qui sera donne comme root
         borderPane = new BorderPane();
 
-        MenuPrincipal menuPrincipal = new MenuPrincipal(new User(0), controlleurSupreme);
+
+        borderPane.getStylesheets().add(getClass().getResource("/src/resources/css/acceuil.css").toExternalForm());
+
+        MenuPrincipal menuPrincipal = new MenuPrincipal(controlleurSupreme);
         borderPane.setTop(menuPrincipal.getMenuBar());
 
         // Creation du contenu au centre de la vue
@@ -39,16 +41,11 @@ public class VueAccueil extends VueBase {
         // Titre Principal
 
         titreAcceuil = new Label("Bienvenue sur notre site Chouping");
-        titreAcceuil.setStyle("");
-        // fonctione qui si lier a un fichier CSS
-        // titreAcceuil.getStyleClass().add("titre-principal");
-
-        boutonVueCompte = new Button("Voir Mon Compte");
-        //boutonVueCompte.setStyle("");
+        titreAcceuil.getStyleClass().add("titre");
 
 
         // Ajout de tous les composants dans le conteneur central
-        contenuCentral.getChildren().addAll(titreAcceuil,boutonVueCompte);
+        contenuCentral.getChildren().addAll(titreAcceuil);
 
         // Ajout du conteneur central au centre du conteneur Principal
         borderPane.setCenter(contenuCentral);
@@ -79,10 +76,8 @@ public class VueAccueil extends VueBase {
     }
 
     @Override
-    protected void configurerActions(){
-        boutonVueCompte.setOnAction(event -> {
-            ((ControlleurSupreme) controlleurSupreme).accederCompte(this);
-        });
+    protected void configurerActions() {
+
     }
 
     @Override

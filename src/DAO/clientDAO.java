@@ -1,6 +1,7 @@
 package DAO;
 
 import Modele.Client;
+import Modele.User;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -72,6 +73,33 @@ public class clientDAO implements objectDao{
 
     }
 
+    public User connection(String pseudo, String password){
+        try{
+            Connection connection = daoFactory.getConnection();
+            PreparedStatement statement = connection.prepareStatement("SELECT id_compte, user_type FROM compte WHERE pseudo=? AND mdp=?");
+
+            statement.setString(1,pseudo);
+            statement.setString(2,password);
+
+            ResultSet resultat = statement.executeQuery();
+
+            if (resultat.next()){
+                int id_compte = resultat.getInt("id_compte");
+                int user_type = resultat.getInt("user_type");
+
+                User user = new User(id_compte,pseudo,user_type);
+
+                return user;
+            }
+            else {
+                return null;
+            }
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     @Override
     public Object chercher(int object_id){

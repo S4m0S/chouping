@@ -1,0 +1,49 @@
+/* connection.css */
+.root {
+    -fx-font-family: 'Arial';
+
+}
+
+/* Style pour le titre */
+.titre-connexion {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+}
+
+/* Style pour les labels */
+.label-connexion {
+    -fx-font-size: 14px;
+    -fx-text-fill: #34495e;
+}
+
+/* Style pour les champs de texte */
+.champ-connexion {
+    -fx-max-width: 250px;
+    -fx-font-size: 14px;
+    -fx-padding: 5px;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+    -fx-border-color: #bdc3c7;
+    -fx-border-width: 1px;
+}
+
+/* Style pour le bouton */
+.bouton-connexion {
+    -fx-pref-width: 150px;
+    -fx-background-color: #2ecc71;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 5px;
+    -fx-cursor: hand;
+}
+
+.bouton-connexion:hover {
+    -fx-background-color: #27ae60;
+}
+
+/* Style pour les messages d'erreur */
+.erreur-connexion {
+    -fx-text-fill: #e74c3c;
+    -fx-font-size: 12px;
+}
