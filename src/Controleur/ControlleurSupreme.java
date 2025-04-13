@@ -19,4 +19,10 @@ public class ControlleurSupreme {
         vue.actualiser();
     }
 
+    public void accederArmes() {
+        Vue.VueArmes vueArmes = new Vue.VueArmes(this);
+        vuePrincipal.accederVue(vueArmes);
+        System.out.println("Bien à la page Armes");
+    }
+
 }

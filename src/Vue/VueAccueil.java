@@ -29,7 +29,7 @@ public class VueAccueil extends VueBase {
         // Conteneur principal qui sera donne comme root
         borderPane = new BorderPane();
 
-        MenuPrincipal menuPrincipal = new MenuPrincipal(new User(0));
+        MenuPrincipal menuPrincipal = new MenuPrincipal(new User(0), controlleurSupreme);
         borderPane.setTop(menuPrincipal.getMenuBar());
 
         // Creation du contenu au centre de la vue
