@@ -18,4 +18,5 @@ public class User {
     public int getUserType(){
         return this.userType;
     }
+    public int getId_user(){return this.id_user;}
 }

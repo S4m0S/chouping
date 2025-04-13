@@ -14,7 +14,6 @@ import javafx.scene.layout.VBox;
 
 public class VueConnection extends VueBase{
 
-    private BorderPane borderPane;
     private VBox contenuCentral;
     private Button loginButton;
     private PasswordField passwordField;
@@ -28,7 +27,7 @@ public class VueConnection extends VueBase{
 
     @Override
     protected void initialiserComposant() {
-        borderPane = new BorderPane();
+        BorderPane borderPane = new BorderPane();
 
         borderPane.getStylesheets().add(getClass().getResource("/src/resources/css/connection.css").toExternalForm());
 
