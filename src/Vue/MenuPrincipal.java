@@ -1,5 +1,6 @@
 package Vue;
 
+import Modele.User;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -8,9 +9,11 @@ import javafx.scene.image.ImageView;
 
 public class MenuPrincipal {
     private MenuBar menuBar;
+    private User user;
 
-    public MenuPrincipal(){
+    public MenuPrincipal(User user_p){
         initialiserMenu();
+        this.user = user_p;
     }
 
     public void initialiserMenu(){
@@ -34,6 +37,7 @@ public class MenuPrincipal {
         Menu menuCompte = new Menu();
         menuCompte.setGraphic(vueIconCompte);
 
+        if()
 
 
         menuCompte.setText("");

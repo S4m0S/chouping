@@ -1,6 +1,7 @@
 package Vue;
 
 import Controleur.ControlleurSupreme;
+import Modele.User;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -28,7 +29,7 @@ public class VueAccueil extends VueBase {
         // Conteneur principal qui sera donne comme root
         borderPane = new BorderPane();
 
-        MenuPrincipal menuPrincipal = new MenuPrincipal();
+        MenuPrincipal menuPrincipal = new MenuPrincipal(new User(0));
         borderPane.setTop(menuPrincipal.getMenuBar());
 
         // Creation du contenu au centre de la vue
