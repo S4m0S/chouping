@@ -47,6 +47,15 @@ public class MenuPrincipal {
             controlleurSupreme.accederArmes(); // Appelle le contrôleur pour changer de vue
         });
 
+        plastrons.setOnAction(e -> {
+            controlleurSupreme.accederPlastrons(); // Appelle le contrôleur pour changer de vue
+        });
+
+        potions.setOnAction(e -> {
+            controlleurSupreme.accederPotions(); // Appelle le contrôleur pour changer de vue
+        });
+
+
 
 
 

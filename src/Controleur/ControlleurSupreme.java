@@ -22,7 +22,19 @@ public class ControlleurSupreme {
     public void accederArmes() {
         Vue.VueArmes vueArmes = new Vue.VueArmes(this);
         vuePrincipal.accederVue(vueArmes);
-        System.out.println("Bien à la page Armes");
+        System.out.println("Page des armes");
+    }
+
+    public void accederPlastrons() {
+        Vue.VuePlastrons vuePlastrons = new Vue.VuePlastrons(this);
+        vuePrincipal.accederVue(vuePlastrons);
+        System.out.println("Page des Plastrons");
+    }
+
+    public void accederPotions() {
+        Vue.VuePotions vuePotions = new Vue.VuePotions(this);
+        vuePrincipal.accederVue(vuePotions);
+        System.out.println("Page des Potions");
     }
 
 }

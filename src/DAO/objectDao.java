@@ -11,8 +11,8 @@ public interface objectDao {
      */
     public ArrayList<Object> getAll();
 
-
     public void ajouter(Object object_p);
+
 
 
     public Object chercher(int object_id);
