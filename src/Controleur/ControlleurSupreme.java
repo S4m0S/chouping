@@ -2,6 +2,7 @@ package Controleur;
 
 import DAO.DaoFactory;
 import Vue.VueBase;
+import Vue.VueBoutiqueCategorie;
 import Vue.VuePrincipal;
 
 public class ControlleurSupreme {
@@ -19,22 +20,9 @@ public class ControlleurSupreme {
         vue.actualiser();
     }
 
-    public void accederArmes() {
-        Vue.VueArmes vueArmes = new Vue.VueArmes(this);
-        vuePrincipal.accederVue(vueArmes);
-        System.out.println("Page des armes");
-    }
-
-    public void accederPlastrons() {
-        Vue.VuePlastrons vuePlastrons = new Vue.VuePlastrons(this);
-        vuePrincipal.accederVue(vuePlastrons);
-        System.out.println("Page des Plastrons");
-    }
-
-    public void accederPotions() {
-        Vue.VuePotions vuePotions = new Vue.VuePotions(this);
-        vuePrincipal.accederVue(vuePotions);
-        System.out.println("Page des Potions");
+    public void accederCategorie(String nomCategorie) {
+        VueBoutiqueCategorie vue = new VueBoutiqueCategorie(this, nomCategorie);
+        vuePrincipal.accederVue(vue);
     }
 
 }

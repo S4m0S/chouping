@@ -43,19 +43,10 @@ public class MenuPrincipal {
         Menu menuCompte = new Menu();
         menuCompte.setGraphic(vueIconCompte);
 
-        armes.setOnAction(e -> {
-            controlleurSupreme.accederArmes(); // Appelle le contrôleur pour changer de vue
-        });
-
-        plastrons.setOnAction(e -> {
-            controlleurSupreme.accederPlastrons(); // Appelle le contrôleur pour changer de vue
-        });
-
-        potions.setOnAction(e -> {
-            controlleurSupreme.accederPotions(); // Appelle le contrôleur pour changer de vue
-        });
-
-
+        armes.setOnAction(e -> controlleurSupreme.accederCategorie("Armes"));
+        bottes.setOnAction(e -> controlleurSupreme.accederCategorie("Bottes"));
+        plastrons.setOnAction(e -> controlleurSupreme.accederCategorie("Plastrons"));
+        potions.setOnAction(e -> controlleurSupreme.accederCategorie("Potions"));
 
 
 
