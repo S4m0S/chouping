@@ -33,6 +33,8 @@ public class MenuPrincipal {
 
         menuItemAchat.getItems().addAll(armes, plastrons, potions, bottes);
 
+        menuItemAchat.setStyle("-fx-text-fill: white;"+
+                "menu-item .label { -fx-text-fill: white; }");
 
         Image imageIconCompte = new Image("/src/assets/menu/compteIcon.png");
         ImageView vueIconCompte = new ImageView(imageIconCompte);
@@ -42,6 +44,10 @@ public class MenuPrincipal {
 
         Menu menuCompte = new Menu();
         menuCompte.setGraphic(vueIconCompte);
+
+        menuBar.setStyle("-fx-background-color: transparent;");
+
+
 
         armes.setOnAction(e -> controlleurSupreme.accederCategorie("Armes"));
         bottes.setOnAction(e -> controlleurSupreme.accederCategorie("Bottes"));

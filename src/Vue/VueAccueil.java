@@ -6,10 +6,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 
 
 public class VueAccueil extends VueBase {
@@ -64,6 +62,17 @@ public class VueAccueil extends VueBase {
         footer.getChildren().add(versionLabel);
         borderPane.setBottom(footer);
 
+
+        Image image = new Image("resources/acceuil.png");
+        BackgroundImage backgroundImage = new BackgroundImage(
+                image,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.CENTER,
+                new BackgroundSize(100, 100, true, true, true, true)
+        );
+
+        borderPane.setBackground(new Background(backgroundImage));
 
         // Ajout du conteneur principal en tant que root pour pouvoir le donner sur demande
         this.root = borderPane;

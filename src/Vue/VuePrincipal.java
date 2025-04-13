@@ -31,7 +31,7 @@ public class VuePrincipal extends Application{
         stage.setMinHeight(600);
 
 
-        javafx.scene.image.Image icone = new javafx.scene.image.Image("assets/global/icon.png");
+        javafx.scene.image.Image icone = new javafx.scene.image.Image("resources/global/icon.png");
         stage.getIcons().add(icone);
 
         afficherVueAcceuil();

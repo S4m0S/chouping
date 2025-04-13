@@ -24,5 +24,4 @@ public class ControlleurSupreme {
         VueBoutiqueCategorie vue = new VueBoutiqueCategorie(this, nomCategorie);
         vuePrincipal.accederVue(vue);
     }
-
 }
