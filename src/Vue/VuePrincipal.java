@@ -51,6 +51,13 @@ public class VuePrincipal extends Application{
         stage.show();
     }
 
+    public void accederVue(VueBase vue) {
+        Scene scene = new Scene(vue.getRoot(), stage.getWidth(), stage.getHeight());
+        stage.setScene(scene);
+        stage.show();
+    }
+
+
 
     /**
      * Pour afficher n'importe quel vue

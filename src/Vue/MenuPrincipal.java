@@ -5,13 +5,19 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import Controleur.ControlleurSupreme;
+
 
 public class MenuPrincipal {
     private MenuBar menuBar;
 
-    public MenuPrincipal(){
+    private ControlleurSupreme controlleurSupreme;
+
+    public MenuPrincipal(ControlleurSupreme controlleurSupreme) {
+        this.controlleurSupreme = controlleurSupreme;
         initialiserMenu();
     }
+
 
     public void initialiserMenu(){
         this.menuBar = new MenuBar();
@@ -33,6 +39,11 @@ public class MenuPrincipal {
 
         Menu menuCompte = new Menu();
         menuCompte.setGraphic(vueIconCompte);
+
+        armes.setOnAction(e -> {
+            controlleurSupreme.accederArmes(); // Appelle le contrôleur pour changer de vue
+        });
+
 
 
 
