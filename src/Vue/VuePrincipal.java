@@ -49,6 +49,9 @@ public class VuePrincipal extends Application{
 
         stage.setScene(scene);
         stage.show();
+        stage.setWidth(1000);
+        stage.setHeight(600);
+
     }
 
     public void accederVue(VueBase vue) {
