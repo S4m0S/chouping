@@ -26,17 +26,17 @@ public class MenuPrincipal {
         this.menuBar = new MenuBar();
 
         Menu menuItemAchat = new Menu("Item");
-        MenuItem armes = new MenuItem("Armes");
-        MenuItem plastrons = new MenuItem("Plastrons");
-        MenuItem potions = new MenuItem("Potions");
-        MenuItem bottes = new MenuItem("Bottes");
+        javafx.scene.control.MenuItem armes = new MenuItem("Armes");
+        javafx.scene.control.MenuItem plastrons = new MenuItem("Plastrons");
+        javafx.scene.control.MenuItem potions = new MenuItem("Potions");
+        javafx.scene.control.MenuItem bottes = new MenuItem("Bottes");
 
         menuItemAchat.getItems().addAll(armes, plastrons, potions, bottes);
 
         menuItemAchat.setStyle("-fx-text-fill: white;"+
                 "menu-item .label { -fx-text-fill: white; }");
 
-        Image imageIconCompte = new Image("/src/resources/menu/compteIcon.png");
+        Image imageIconCompte = new Image("/src/assets/menu/compteIcon.png");
         ImageView vueIconCompte = new ImageView(imageIconCompte);
 
         vueIconCompte.setFitHeight(20);
@@ -47,10 +47,12 @@ public class MenuPrincipal {
 
         menuBar.setStyle("-fx-background-color: transparent;");
 
-        armes.setOnAction(e -> {
-            controlleurSupreme.accederArmes(); // Appelle le contrôleur pour changer de vue
-        });
 
+
+        armes.setOnAction(e -> controlleurSupreme.accederCategorie("Armes"));
+        bottes.setOnAction(e -> controlleurSupreme.accederCategorie("Bottes"));
+        plastrons.setOnAction(e -> controlleurSupreme.accederCategorie("Plastrons"));
+        potions.setOnAction(e -> controlleurSupreme.accederCategorie("Potions"));
 
 
 
