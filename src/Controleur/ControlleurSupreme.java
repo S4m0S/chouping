@@ -6,10 +6,10 @@ import Modele.User;
 import Vue.*;
 
 public class ControlleurSupreme {
-    VuePrincipal vuePrincipal;
-    DaoFactory daoFactory;
-    User user;
-    Client client;
+    private VuePrincipal vuePrincipal;
+    private DaoFactory daoFactory;
+    private User user;
+    private Client client;
 
     public ControlleurSupreme(VuePrincipal vuePrincipal_p, DaoFactory daoFactory_p){
         this.vuePrincipal = vuePrincipal_p;
@@ -50,6 +50,10 @@ public class ControlleurSupreme {
         }
     }
 
+    public void accederCreationCompte(){
+        vuePrincipal.accederVue(new VueCreationCompte(this));
+    }
+
     public void accederAcceuil(){
         vuePrincipal.accederVue(new VueAccueil(this));
     }
@@ -70,6 +74,12 @@ public class ControlleurSupreme {
 
     public Client getClient(){
         return this.client;
+    }
+
+    public boolean creerClient(Client nouveauClient){
+        daoFactory.getClientDAO().ajouter(nouveauClient);
+        this.client = nouveauClient;
+        return true;
     }
 
 
