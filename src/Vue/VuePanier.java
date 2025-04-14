@@ -1,7 +1,7 @@
 package Vue;
 
 import Controleur.ControlleurSupreme;
-import Modele.Item;
+import Modele.Article;
 import Modele.Panier;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
@@ -9,7 +9,7 @@ import javafx.scene.layout.*;
 
 public class VuePanier extends VueBase {
 
-    private VBox itemsContainer;
+    private VBox articlesContainer;
     private Label totalLabel;
 
     public VuePanier(ControlleurSupreme controlleurSupreme) {
@@ -35,10 +35,10 @@ public class VuePanier extends VueBase {
         titleLabel.getStyleClass().add("panier-title");
         mainContainer.getChildren().add(titleLabel);
 
-        // Container pour les items
-        itemsContainer = new VBox();
-        itemsContainer.getStyleClass().add("panier-item-container");
-        mainContainer.getChildren().add(itemsContainer);
+        // Container pour les articles
+        articlesContainer = new VBox();
+        articlesContainer.getStyleClass().add("panier-article-container");
+        mainContainer.getChildren().add(articlesContainer);
 
         // Section total
         HBox totalSection = new HBox();
@@ -54,60 +54,60 @@ public class VuePanier extends VueBase {
     }
 
     private void actualiserPanier() {
-        itemsContainer.getChildren().clear();
+        articlesContainer.getChildren().clear();
         Panier panier = controlleurSupreme.getPanier();
         double total = 0;
 
-        for (int i = 0; i < panier.getListeItem().size(); i++) {
-            Item item = panier.getListeItem().get(i);
+        for (int i = 0; i < panier.getListeArticle().size(); i++) {
+            Article article = panier.getListeArticle().get(i);
             int quantite = panier.getListeQuantite().get(i);
-            total += item.getPrix() * quantite;
+            total += article.getPrix() * quantite;
 
-            // Création de la boîte pour chaque item
-            HBox itemBox = new HBox();
-            itemBox.getStyleClass().add("panier-item-box");
-            itemBox.setSpacing(20);
-            itemBox.setPadding(new Insets(15));
+            // Création de la boîte pour chaque article
+            HBox articleBox = new HBox();
+            articleBox.getStyleClass().add("panier-article-box");
+            articleBox.setSpacing(20);
+            articleBox.setPadding(new Insets(15));
 
-            // Partie gauche : Info item
-            VBox itemInfo = new VBox();
-            itemInfo.setSpacing(5);
+            // Partie gauche : Info article
+            VBox articleInfo = new VBox();
+            articleInfo.setSpacing(5);
 
-            Label nameLabel = new Label(item.getNom());
-            nameLabel.getStyleClass().add("item-name");
+            Label nameLabel = new Label(article.getNom());
+            nameLabel.getStyleClass().add("article-name");
 
-            Label priceLabel = new Label(String.format("%.2f €", item.getPrix()));
-            priceLabel.getStyleClass().add("item-price");
+            Label priceLabel = new Label(String.format("%.2f €", article.getPrix()));
+            priceLabel.getStyleClass().add("article-price");
 
-            itemInfo.getChildren().addAll(nameLabel, priceLabel);
+            articleInfo.getChildren().addAll(nameLabel, priceLabel);
 
             // Partie droite : Contrôles quantité
             HBox controlsBox = new HBox();
             controlsBox.getStyleClass().add("quantity-controls");
             controlsBox.setSpacing(10);
 
-            Spinner<Integer> quantitySpinner = new Spinner<>(1, item.getStock(), quantite);
+            Spinner<Integer> quantitySpinner = new Spinner<>(1, article.getStock(), quantite);
             quantitySpinner.getStyleClass().add("quantity-field");
 
             Button updateButton = new Button("Modifier");
             updateButton.getStyleClass().add("update-button");
             updateButton.setOnAction(e -> {
-                controlleurSupreme.getPanier().changerQuantite(item, quantitySpinner.getValue());
+                controlleurSupreme.getPanier().changerQuantite(article, quantitySpinner.getValue());
                 actualiserPanier();
             });
 
             Button removeButton = new Button("Supprimer");
             removeButton.getStyleClass().add("remove-button");
             removeButton.setOnAction(e -> {
-                controlleurSupreme.getPanier().supprimerItem(item);
+                controlleurSupreme.getPanier().supprimerArticle(article);
                 actualiserPanier();
             });
 
             controlsBox.getChildren().addAll(quantitySpinner, updateButton, removeButton);
 
             // Assemblage
-            itemBox.getChildren().addAll(itemInfo, controlsBox);
-            itemsContainer.getChildren().add(itemBox);
+            articleBox.getChildren().addAll(articleInfo, controlsBox);
+            articlesContainer.getChildren().add(articleBox);
         }
 
         // Mise à jour du total

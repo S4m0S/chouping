@@ -3,42 +3,42 @@ package Modele;
 import java.util.ArrayList;
 
 public class Panier {
-    private ArrayList<Item> listeItem;
+    private ArrayList<Article> listeArticle;
     private ArrayList<Integer> listeQuantite;
 
     public Panier(){
-        this.listeItem = new ArrayList<Item>();
+        this.listeArticle = new ArrayList<Article>();
         this.listeQuantite = new ArrayList<Integer>();
     }
 
 
 
-    public void ajouterItem(Item item_ajouter, int quantite){
-        this.listeItem.add(item_ajouter);
+    public void ajouterArticle(Article article_ajouter, int quantite){
+        this.listeArticle.add(article_ajouter);
         this.listeQuantite.add(quantite);
     }
 
-    public void changerQuantite(Item item_changer, int quantite){
-        for (int i = 0; i < this.listeItem.size(); i++) {
-            if (this.listeItem.get(i).getId_item()==item_changer.getId_item()){
+    public void changerQuantite(Article article_changer, int quantite){
+        for (int i = 0; i < this.listeArticle.size(); i++) {
+            if (this.listeArticle.get(i).getId_article()==article_changer.getId_article()){
                 this.listeQuantite.set(i, quantite);
                 return;
             }
         }
     }
 
-    public void supprimerItem(Item item_supprimer){
-        for (int i = 0; i < this.listeItem.size(); i++) {
-            if (this.listeItem.get(i).getId_item()==item_supprimer.getId_item()){
-                this.listeItem.remove(i);
+    public void supprimerArticle(Article article_supprimer){
+        for (int i = 0; i < this.listeArticle.size(); i++) {
+            if (this.listeArticle.get(i).getId_article()==article_supprimer.getId_article()){
+                this.listeArticle.remove(i);
                 this.listeQuantite.remove(i);
                 return;
             }
         }
     }
 
-    public ArrayList<Item> getListeItem(){
-        return this.listeItem;
+    public ArrayList<Article> getListeArticle(){
+        return this.listeArticle;
     }
 
     public ArrayList<Integer> getListeQuantite(){

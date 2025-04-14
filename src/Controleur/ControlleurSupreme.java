@@ -73,7 +73,12 @@ public class ControlleurSupreme {
 
 
     public void accederPanier(){
-        vuePrincipal.accederVue(new VuePanier(this));
+        if (this.client==null) {
+            vuePrincipal.accederVue(new VueConnection(this));
+        }
+        else {
+            vuePrincipal.accederVue(new VuePanier(this));
+        }
     }
 
     public User getUser(){

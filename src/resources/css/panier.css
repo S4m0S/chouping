@@ -11,12 +11,12 @@
     -fx-padding: 0 0 20 0;
 }
 
-.panier-item-container {
+.panier-article-container {
     -fx-spacing: 15;
     -fx-padding: 0 0 20 0;
 }
 
-.panier-item-box {
+.panier-article-box {
     -fx-background-color: white;
     -fx-background-radius: 10;
     -fx-border-radius: 10;
@@ -24,13 +24,13 @@
     -fx-padding: 15;
 }
 
-.item-name {
+.article-name {
     -fx-font-size: 16px;
     -fx-font-weight: bold;
     -fx-text-fill: #34495e;
 }
 
-.item-price {
+.article-price {
     -fx-font-size: 14px;
     -fx-text-fill: #7f8c8d;
 }
