@@ -34,7 +34,7 @@ public class MenuPrincipal {
 
         boutonAcceuil.getStyleClass().addAll("menu-item","bouton-item");
 
-        Menu menuItemAchat = new Menu("Item");
+        Menu menuItemAchat = new Menu("Article");
         javafx.scene.control.MenuItem armes = new MenuItem("Armes");
         javafx.scene.control.MenuItem plastrons = new MenuItem("Plastrons");
         javafx.scene.control.MenuItem potions = new MenuItem("Potions");
