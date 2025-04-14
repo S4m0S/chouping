@@ -2,6 +2,7 @@ package Controleur;
 
 import DAO.DaoFactory;
 import Modele.Client;
+import Modele.Panier;
 import Modele.User;
 import Vue.*;
 
@@ -10,6 +11,7 @@ public class ControlleurSupreme {
     private DaoFactory daoFactory;
     private User user;
     private Client client;
+    private Panier panier;
 
     public ControlleurSupreme(VuePrincipal vuePrincipal_p, DaoFactory daoFactory_p){
         this.vuePrincipal = vuePrincipal_p;
@@ -17,6 +19,7 @@ public class ControlleurSupreme {
         this.vuePrincipal.getControlleurSupreme(this);
         this.user = null;
         this.client = null;
+        this.panier = null;
     }
 
 
@@ -25,12 +28,11 @@ public class ControlleurSupreme {
         if(user_essaie!=null){
             ((VueConnection) vue).changeErrorLabel("Vous êtes désormais connecté");
             this.user = user_essaie;
-            this.client = (Client) daoFactory.getClientDAO().chercher(this.user.getId_user());
-            if (this.client==null){
-                System.out.println("Erreurs");
-            }
+
             switch (this.user.getUserType()){
                 case 0:
+                    this.client = (Client) daoFactory.getClientDAO().chercher(this.user.getId_user());
+                    this.panier = new Panier();
                     vuePrincipal.accederVue(new VueClient(this));
 
             }
@@ -68,6 +70,12 @@ public class ControlleurSupreme {
         daoFactory.getClientDAO().modifier(client_p);
     }
 
+
+
+    public void accederPanier(){
+        vuePrincipal.accederVue(new VuePanier(this));
+    }
+
     public User getUser(){
         return this.user;
     }
@@ -81,6 +89,8 @@ public class ControlleurSupreme {
         this.client = nouveauClient;
         return true;
     }
+
+    public Panier getPanier(){return this.panier;}
 
 
 }

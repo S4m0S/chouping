@@ -1,0 +1,74 @@
+/* panier.css */
+.panier-view {
+    -fx-background-color: #f8f9fa;
+    -fx-padding: 20;
+}
+
+.panier-title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+    -fx-padding: 0 0 20 0;
+}
+
+.panier-item-container {
+    -fx-spacing: 15;
+    -fx-padding: 0 0 20 0;
+}
+
+.panier-item-box {
+    -fx-background-color: white;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 0);
+    -fx-padding: 15;
+}
+
+.item-name {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #34495e;
+}
+
+.item-price {
+    -fx-font-size: 14px;
+    -fx-text-fill: #7f8c8d;
+}
+
+.quantity-controls {
+    -fx-spacing: 10;
+    -fx-alignment: center-right;
+}
+
+.quantity-field {
+    -fx-pref-width: 50;
+    -fx-alignment: center;
+}
+
+.remove-button {
+    -fx-background-color: #e74c3c;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.remove-button:hover {
+    -fx-background-color: #c0392b;
+}
+
+.update-button {
+    -fx-background-color: #3498db;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.update-button:hover {
+    -fx-background-color: #2980b9;
+}
+
+.total-section {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-padding: 20 0 0 0;
+    -fx-border-width: 1 0 0 0;
+    -fx-border-color: #bdc3c7;
+}

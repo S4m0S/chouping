@@ -48,28 +48,38 @@ public class MenuPrincipal {
         Image imageIconCompte = new Image("resources/menu/compteIcon.png");
         ImageView vueIconCompte = new ImageView(imageIconCompte);
 
+
         vueIconCompte.setFitHeight(20);
         vueIconCompte.setFitWidth(20);
 
         Button boutonCompte = new Button();
         boutonCompte.setGraphic(vueIconCompte);
-
         boutonCompte.getStyleClass().addAll("menu-item","bouton-item");
+
+
+        Image imageIconPanier = new Image("/src/resources/paniers.png");
+        ImageView vueIconPanier = new ImageView(imageIconPanier);
+
+        vueIconPanier.setFitWidth(20);
+        vueIconPanier.setFitHeight(20);
+
+        Button boutonPanier = new Button();
+        boutonPanier.setGraphic(vueIconPanier);
+        boutonPanier.getStyleClass().addAll("menu-item","bouton-item");
+
 
         armes.setOnAction(e -> controlleurSupreme.accederCategorie("Armes"));
         bottes.setOnAction(e -> controlleurSupreme.accederCategorie("Bottes"));
         plastrons.setOnAction(e -> controlleurSupreme.accederCategorie("Plastrons"));
         potions.setOnAction(e -> controlleurSupreme.accederCategorie("Potions"));
-
-
         boutonAcceuil.setOnAction(e -> {
             controlleurSupreme.accederAcceuil();
         });
-
         boutonCompte.setOnAction(e-> controlleurSupreme.accederCompte());
+        boutonPanier.setOnAction(e-> controlleurSupreme.accederPanier());
 
 
-        this.menuBar.getMenus().addAll(createMenuFromButton(boutonAcceuil),menuItemAchat, createMenuFromButton(boutonCompte));
+        this.menuBar.getMenus().addAll(createMenuFromButton(boutonAcceuil),menuItemAchat, createMenuFromButton(boutonCompte),createMenuFromButton(boutonPanier));
     }
 
     private Menu createMenuFromButton(Button button) {
