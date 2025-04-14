@@ -1,7 +1,6 @@
 package Vue;
 
 import Controleur.ControlleurSupreme;
-import Modele.User;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -19,6 +18,7 @@ public class VueConnection extends VueBase{
     private PasswordField passwordField;
     private TextField pseudoField;
     private Label errorLabel;
+    private Button creerCompteButton;
 
 
     public VueConnection(ControlleurSupreme controlleurSupreme_p){
@@ -66,7 +66,10 @@ public class VueConnection extends VueBase{
         errorLabel = new Label("");
         errorLabel.getStyleClass().add("label-connexion");
 
-// Ajout des composants au VBox
+        creerCompteButton = new Button("Creer un compte");
+        creerCompteButton.getStyleClass().add("bouton-connexion");
+
+        // Ajout des composants au VBox
         contenuCentral.getChildren().addAll(
                 titre,
                 labelUsername,
@@ -74,6 +77,7 @@ public class VueConnection extends VueBase{
                 labelPassword,
                 passwordField,
                 loginButton,
+                creerCompteButton,
                 errorLabel
         );
 
@@ -88,6 +92,8 @@ public class VueConnection extends VueBase{
         loginButton.setOnAction( e->
                 controlleurSupreme.requestConnection(pseudoField.getText(),passwordField.getText(),this)
         );
+        creerCompteButton.setOnAction(e->
+                controlleurSupreme.accederCreationCompte());
     }
 
     public void changeErrorLabel(String s){

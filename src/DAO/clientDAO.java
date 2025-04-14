@@ -54,13 +54,33 @@ public class clientDAO implements objectDao{
 
         try{
             Connection connection = daoFactory.getConnection();
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO client(nom, mail, classe, monnaie, date_naissance) VALUES (?,?,?,?,?);");
+
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO compte(pseudo , mdp, user_type) VALUES (?,?,?);");
 
             statement.setString(1,((Client) object_p).getNom());
-            statement.setString(2,((Client) object_p).getMail());
-            statement.setInt(3,((Client) object_p).getClasse());
-            statement.setDouble(4,((Client) object_p).getMonnaie());
-            statement.setDate(5,((Client) object_p).getDate_naissance());
+            statement.setString(2,"mdp");
+            statement.setInt(3, 0);
+
+            statement.executeUpdate();
+
+            statement = connection.prepareStatement("SELECT id_compte FROM compte WHERE pseudo=?;");
+            statement.setString(1,((Client) object_p).getNom());
+
+            ResultSet resultat = statement.executeQuery();
+            resultat.next();
+
+            int id_compte = resultat.getInt("id_compte");
+
+
+            statement = connection.prepareStatement("INSERT INTO client(id_compte, nom, mail, classe, monnaie, date_naissance) VALUES (?,?,?,?,?,?);");
+
+
+            statement.setInt(1,id_compte);
+            statement.setString(2,((Client) object_p).getNom());
+            statement.setString(3,((Client) object_p).getMail());
+            statement.setInt(4,((Client) object_p).getClasse());
+            statement.setDouble(5,((Client) object_p).getMonnaie());
+            statement.setDate(6,((Client) object_p).getDate_naissance());
 
             statement.executeUpdate();
 
