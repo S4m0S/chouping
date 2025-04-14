@@ -20,17 +20,17 @@ public class VueBoutiqueCategorie extends VueBase {
     private VBox contenuCentral;
     private String nomCategorie;
 
-    public VueBoutiqueCategorie(ControlleurSupreme controlleurSupreme_p, String nomCategorie_p) {
+    public VueBoutiqueCategorie(ControlleurSupreme controlleurSupreme_p) {
         super(controlleurSupreme_p);
-        this.nomCategorie = nomCategorie_p;
     }
 
     @Override
     protected void initialiserComposant() {
+        this.nomCategorie = controlleurSupreme.getCategorieActuelle();
         borderPane = new BorderPane();
 
         // Chemin vers le fichier CSS - à ajuster selon votre structure de projet
-        String cssPath = "/resources/css/VueBoutiqueCategorie.css";
+        String cssPath = "/src/resources/css/VueBoutiqueCategorie.css";
         try {
             String externalForm = getClass().getResource(cssPath).toExternalForm();
             borderPane.getStylesheets().add(externalForm);
@@ -41,7 +41,7 @@ public class VueBoutiqueCategorie extends VueBase {
         }
 
         // Logs pour débogage
-        System.out.println("Chargement de la catégorie: " + nomCategorie);
+        System.out.println("Chargement de la catégorie: " + this.nomCategorie);
 
         // Barre de menu
         MenuPrincipal menuPrincipal = new MenuPrincipal(controlleurSupreme);
@@ -62,10 +62,8 @@ public class VueBoutiqueCategorie extends VueBase {
 
         // Chargement des articles depuis la BDD
         try {
-            DaoFactory daoFactory = DaoFactory.getInstance("chouping", "root", "");
-            articleDAO articleDAO = new articleDAO(daoFactory);
-            ArrayList<Object> articles = articleDAO.getAll();
-
+            ArrayList<Article> articles = controlleurSupreme.getAllArticles();
+            System.out.println(articles.size());
             int typeRecherche = getTypeCorrespondant(nomCategorie);
             System.out.println("Type de catégorie identifié: " + typeRecherche);
             System.out.println("Nombre d'articles trouvés: " + articles.size());
@@ -86,18 +84,18 @@ public class VueBoutiqueCategorie extends VueBase {
                     // Image
                     ImageView imageView = new ImageView();
                     try {
-                        String imagePath = "/resources/articles/" + article.getNom().toLowerCase().replace(" ", "_") + ".png";
+                        String imagePath = "/src/resources/articles/" + article.getNom().toLowerCase().replace(" ", "_") + ".jpg";
                         System.out.println("Tentative de chargement d'image: " + imagePath);
                         Image image = new Image(getClass().getResourceAsStream(imagePath));
                         if (image.isError()) {
                             System.out.println("Image non trouvée, utilisation de l'image par défaut");
-                            imageView.setImage(new Image(getClass().getResourceAsStream("/resources/defaut.png")));
+                            imageView.setImage(new Image(getClass().getResourceAsStream("/src/resources/defaut.png")));
                         } else {
                             imageView.setImage(image);
                         }
                     } catch (Exception e) {
                         System.err.println("Erreur de chargement d'image pour " + article.getNom() + ": " + e.getMessage());
-                        imageView.setImage(new Image(getClass().getResourceAsStream("/resources/defaut.png")));
+                        imageView.setImage(new Image(getClass().getResourceAsStream("/src/resources/defaut.png")));
                     }
                     imageView.setFitWidth(100);
                     imageView.setFitHeight(100);

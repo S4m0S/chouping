@@ -22,19 +22,26 @@ public class articleDAO implements objectDao {
 
             ResultSet resultat = statement.executeQuery("SELECT * FROM article;");
 
+
+            Connection connection1 = daoFactory.getConnection();
+            Statement statement1 = connection1.createStatement();
+            ResultSet resultat1 = statement1.executeQuery("SELECT * FROM caracteristiques;");
+
             while (resultat.next()) {
-                int id_article = resultat.getInt(1);
-                String nom = resultat.getString(2);
-                int stock = resultat.getInt(3);
-                String description = resultat.getString(4);
-                double prix = resultat.getDouble(5);
-                int type = resultat.getInt(6);
-                int classe = resultat.getInt(7);
-                int couleur = resultat.getInt(8);
-                double taille = resultat.getDouble(9);
-                int matiere = resultat.getInt(10);
-                int solidite = resultat.getInt(11);
-                double poids = resultat.getDouble(12);
+                resultat1.next();
+
+                int id_article = resultat.getInt("id_article");
+                String nom = resultat.getString("nom");
+                int stock = resultat.getInt("stock");
+                String description = resultat.getString("description");
+                double prix = resultat1.getDouble("prix");
+                int type = resultat1.getInt("type");
+                int classe = resultat1.getInt("classe");
+                int couleur = resultat1.getInt("couleur");
+                double taille = resultat1.getDouble("taille");
+                int matiere = resultat1.getInt("matiere");
+                int solidite = resultat1.getInt("solidite");
+                double poids = resultat1.getDouble("poids");
 
                 Article article = new Article(id_article, nom, stock, description, prix, type, classe, couleur, taille, matiere, solidite, poids);
 

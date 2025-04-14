@@ -1,10 +1,13 @@
 package Controleur;
 
 import DAO.DaoFactory;
+import Modele.Article;
 import Modele.Client;
 import Modele.Panier;
 import Modele.User;
 import Vue.*;
+
+import java.util.ArrayList;
 
 public class ControlleurSupreme {
     private VuePrincipal vuePrincipal;
@@ -12,6 +15,7 @@ public class ControlleurSupreme {
     private User user;
     private Client client;
     private Panier panier;
+    private String categorieActuelle;
 
     public ControlleurSupreme(VuePrincipal vuePrincipal_p, DaoFactory daoFactory_p){
         this.vuePrincipal = vuePrincipal_p;
@@ -60,14 +64,35 @@ public class ControlleurSupreme {
         vuePrincipal.accederVue(new VueAccueil(this));
     }
 
-    public void accederCategorie(String nomCategorie) {
-        VueBoutiqueCategorie vue = new VueBoutiqueCategorie(this, nomCategorie);
+    public void accederCategorie(String nomCategorie_p) {
+        this.categorieActuelle = nomCategorie_p;
+        VueBoutiqueCategorie vue = new VueBoutiqueCategorie(this);
         vuePrincipal.accederVue(vue);
     }
 
     public void updateClient(Client client_p){
         this.client = client_p;
         daoFactory.getClientDAO().modifier(client_p);
+    }
+
+    public String getCategorieActuelle(){
+        return this.categorieActuelle;
+    }
+
+    public ArrayList<Article> getAllArticles(){
+        ArrayList<Object> objectList = daoFactory.getarticleDAO().getAll();
+
+        // Créer une nouvelle liste d'Articles
+        ArrayList<Article> articleList = new ArrayList<>();
+
+        // Convertir chaque élément
+        for (Object obj : objectList) {
+            if (obj instanceof Article) {
+                articleList.add((Article) obj);
+            }
+        }
+
+        return articleList;
     }
 
 
@@ -92,6 +117,7 @@ public class ControlleurSupreme {
     public boolean creerClient(Client nouveauClient){
         daoFactory.getClientDAO().ajouter(nouveauClient);
         this.client = nouveauClient;
+        vuePrincipal.accederVue(new VueConnection(this));
         return true;
     }
 
