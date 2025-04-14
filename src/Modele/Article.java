@@ -1,8 +1,8 @@
 package Modele;
 
-public class Item {
+public class Article {
 
-    private int id_item;
+    private int id_article;
     private String nom;
     private int stock;
     private String description;
@@ -18,9 +18,9 @@ public class Item {
     private double poids;
 
 
-    public Item(int id_item, String nom, int stock, String description, double prix, int type,
-                int classe, int couleur, double taille, int matiere, int solidite, double poids) {
-        this.id_item = id_item;
+    public Article(int id_article, String nom, int stock, String description, double prix, int type,
+                   int classe, int couleur, double taille, int matiere, int solidite, double poids) {
+        this.id_article = id_article;
         this.nom = nom;
         this.stock = stock;
         this.description = description;
@@ -35,12 +35,12 @@ public class Item {
     }
 
     // Getters et Setters
-    public int getId_item() {
-        return id_item;
+    public int getId_article() {
+        return id_article;
     }
 
-    public void setId_item(int id_item) {
-        this.id_item = id_item;
+    public void setId_article(int id_article) {
+        this.id_article = id_article;
     }
 
     public String getNom() {
@@ -133,8 +133,8 @@ public class Item {
 
     @Override
     public String toString() {
-        return "Item{" +
-                "id_item=" + id_item +
+        return "Article{" +
+                "id_article=" + id_article +
                 ", nom='" + nom + '\'' +
                 ", stock=" + stock +
                 ", description='" + description + '\'' +

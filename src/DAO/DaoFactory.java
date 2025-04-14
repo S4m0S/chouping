@@ -112,11 +112,11 @@ public class DaoFactory {
     }
 
     /**
-     * Récupère l'implémentation DAO pour les items
+     * Récupère l'implémentation DAO pour les articles
      *
-     * @return Instance de ItemDAO
+     * @return Instance de articleDAO
      */
-    public ItemDAO getItemDAO() {
-        return new ItemDAO(this);
+    public articleDAO getarticleDAO() {
+        return new articleDAO(this);
     }
 }
