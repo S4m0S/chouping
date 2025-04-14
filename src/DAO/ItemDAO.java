@@ -4,11 +4,11 @@ import Modele.Item;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class itemDAO implements objectDao {
+public class ItemDAO implements objectDao {
 
     private DaoFactory daoFactory;
 
-    public itemDAO(DaoFactory daoFactory_p) {
+    public ItemDAO(DaoFactory daoFactory_p) {
         this.daoFactory = daoFactory_p;
     }
 

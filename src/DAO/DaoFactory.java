@@ -1,7 +1,5 @@
 package DAO;
 
-import DAO.ItemDAOImpl;
-
 import java.sql.*;
 
 /**
@@ -118,7 +116,7 @@ public class DaoFactory {
      *
      * @return Instance de ItemDAO
      */
-    public DAO.ItemDAOImpl getItemDAO() {
-        return new DAO.ItemDAOImpl(this);
+    public ItemDAO getItemDAO() {
+        return new ItemDAO(this);
     }
 }
