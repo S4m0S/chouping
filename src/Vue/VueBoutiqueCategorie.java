@@ -12,6 +12,12 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.stage.Stage;
+import javafx.scene.Scene;
+import javafx.scene.Cursor;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.paint.Color;
+import javafx.scene.layout.StackPane;
 
 import java.util.ArrayList;
 
@@ -20,7 +26,6 @@ public class VueBoutiqueCategorie extends VueBase {
     private BorderPane borderPane;
     private VBox contenuCentral;
     private String nomCategorie;
-
 
     public VueBoutiqueCategorie(ControlleurSupreme controlleurSupreme_p) {
         super(controlleurSupreme_p);
@@ -31,7 +36,6 @@ public class VueBoutiqueCategorie extends VueBase {
         this.nomCategorie = controlleurSupreme.getCategorieActuelle();
         borderPane = new BorderPane();
 
-        // Chemin vers le fichier CSS - à ajuster selon votre structure de projet
         String cssPath = "/src/resources/css/VueBoutiqueCategorie.css";
         try {
             String externalForm = getClass().getResource(cssPath).toExternalForm();
@@ -42,14 +46,10 @@ public class VueBoutiqueCategorie extends VueBase {
             System.err.println("Chemin CSS tenté: " + cssPath);
         }
 
-        // Logs pour débogage
         System.out.println("Chargement de la catégorie: " + this.nomCategorie);
 
-        // Barre de menu
         MenuPrincipal menuPrincipal = new MenuPrincipal(controlleurSupreme);
         borderPane.setTop(menuPrincipal.getMenuBar());
-
-        // Contenu central
 
         contenuCentral = new VBox(30);
         contenuCentral.setPadding(new Insets(40));
@@ -62,15 +62,13 @@ public class VueBoutiqueCategorie extends VueBase {
         grillearticles.getStyleClass().add("grid-articles");
         grillearticles.setPrefColumns(3);
         grillearticles.setAlignment(Pos.CENTER);
-        grillearticles.setHgap(20); // Espace horizontal entre les articles
+        grillearticles.setHgap(20);
         grillearticles.setVgap(20);
 
-        // Chargement des articles depuis la BDD
         try {
             ArrayList<Article> articles = controlleurSupreme.getAllArticles();
             System.out.println(articles.size());
             int typeRecherche = getTypeCorrespondant(nomCategorie);
-
 
             for (Object obj : articles) {
                 Article article = (Article) obj;
@@ -85,14 +83,12 @@ public class VueBoutiqueCategorie extends VueBase {
                     boxarticle.setMinHeight(250);
                     boxarticle.setMaxHeight(250);
 
-                    // Image
                     ImageView imageView = new ImageView();
                     try {
                         String imagePath = "/src/resources/articles/" + article.getNom().toLowerCase().replace(" ", "_") + ".jpg";
                         System.out.println("Tentative de chargement d'image: " + imagePath);
                         Image image = new Image(getClass().getResourceAsStream(imagePath));
                         if (image.isError()) {
-                            System.out.println("Image non trouvée, utilisation de l'image par défaut");
                             imageView.setImage(new Image(getClass().getResourceAsStream("/src/resources/defaut.png")));
                         } else {
                             imageView.setImage(image);
@@ -101,8 +97,33 @@ public class VueBoutiqueCategorie extends VueBase {
                         System.err.println("Erreur de chargement d'image pour " + article.getNom() + ": " + e.getMessage());
                         imageView.setImage(new Image(getClass().getResourceAsStream("/src/resources/defaut.png")));
                     }
+
                     imageView.setFitWidth(100);
                     imageView.setFitHeight(100);
+
+
+                    // 🎯 ZOOM au clic
+                    final Article articleFinal = article;
+
+                    imageView.setOnMouseClicked(event -> {
+                        Stage zoomStage = new Stage();
+                        zoomStage.setTitle(articleFinal.getNom());
+
+                        ImageView zoomedImageView = new ImageView(imageView.getImage());
+                        zoomedImageView.setPreserveRatio(true);
+                        zoomedImageView.setFitWidth(500);
+                        zoomedImageView.setFitHeight(500);
+
+                        StackPane root = new StackPane(zoomedImageView);
+                        root.setStyle("-fx-background-color: rgba(0,0,0,0.85);");
+                        root.setPadding(new Insets(20));
+
+                        Scene scene = new Scene(root);
+                        zoomStage.setScene(scene);
+                        zoomStage.show();
+                    });
+
+
 
                     Label nomLabel = new Label(article.getNom());
                     nomLabel.getStyleClass().add("article-name");
@@ -113,8 +134,7 @@ public class VueBoutiqueCategorie extends VueBase {
                     Button acheterBtn = new Button("Acheter");
                     acheterBtn.getStyleClass().add("buy-button");
 
-                    acheterBtn.setOnAction(e-> controlleurSupreme.accederVueArticle(article));
-
+                    acheterBtn.setOnAction(e -> controlleurSupreme.accederVueArticle(article));
 
                     boxarticle.getChildren().addAll(imageView, nomLabel, prixLabel, acheterBtn);
                     grillearticles.getChildren().add(boxarticle);
@@ -127,20 +147,13 @@ public class VueBoutiqueCategorie extends VueBase {
 
         contenuCentral.getChildren().addAll(titreCategorie, grillearticles);
 
-        // Ajouter un ScrollPane pour rendre le contenu défilable
         ScrollPane scrollPane = new ScrollPane(contenuCentral);
-        scrollPane.setFitToWidth(true); // Adapte la largeur du contenu à celle du ScrollPane
-        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED); // Barre de défilement vertical selon besoin
-        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER); // Pas de barre de défilement horizontal
-
-
-        // Optionnel : ajouter une classe CSS pour le ScrollPane
+        scrollPane.setFitToWidth(true);
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.getStyleClass().add("content-scroll");
-
-        // Placer le ScrollPane au centre du BorderPane au lieu du contenuCentral
         borderPane.setCenter(scrollPane);
 
-        // Pied de page
         HBox footer = new HBox();
         footer.getStyleClass().add("footer");
         footer.setAlignment(Pos.CENTER_RIGHT);
@@ -148,7 +161,6 @@ public class VueBoutiqueCategorie extends VueBase {
         footer.getChildren().add(versionLabel);
         borderPane.setBottom(footer);
 
-        // Fond d'écran facultatif
         try {
             Image backgroundImage = new Image(getClass().getResourceAsStream("/resources/backgrounds/shop_bg.png"));
             if (!backgroundImage.isError()) {
@@ -172,16 +184,16 @@ public class VueBoutiqueCategorie extends VueBase {
 
     @Override
     protected void configurerActions() {
-
+        // à compléter si nécessaire
     }
 
     @Override
     public void actualiser() {
-        // À implémenter si besoin de rafraîchir la vue
+        // à compléter si nécessaire
     }
 
     private int getTypeCorrespondant(String categorie) {
-        if(categorie == null){
+        if (categorie == null) {
             System.out.println("Categorie Null");
             return -1;
         }
@@ -194,7 +206,6 @@ public class VueBoutiqueCategorie extends VueBase {
                 return 3;
             case "bottes":
                 return 4;
-            // Ajouter plus de cas selon les catégories
             default:
                 System.out.println("Catégorie non reconnue: " + categorie.toLowerCase());
                 return -1;
