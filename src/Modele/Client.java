@@ -45,4 +45,7 @@ public class Client {
     public double getMonnaie() {return monnaie;}
     public Date getDate_naissance() {return date_naissance;}
     public int getId_compte() {return id_compte;}
+
+
+
 }

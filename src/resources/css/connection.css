@@ -1,49 +1,97 @@
 /* connection.css */
 .root {
-    -fx-font-family: 'Arial';
-
+    -fx-font-family: 'Ringbearer', 'Arial', sans-serif;
+    -fx-background-image: url('file:/src/resources/background-login.png');
+    -fx-background-size: cover;
 }
 
 /* Style pour le titre */
 .titre-connexion {
-    -fx-font-size: 20px;
+    -fx-font-size: 28px;
     -fx-font-weight: bold;
-    -fx-text-fill: #2c3e50;
+    -fx-text-fill: linear-gradient(to bottom, #f2d16b, #c9a227);
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+    -fx-padding: 0 0 20px 0;
+}
+
+/* Style pour le conteneur principal */
+.conteneur-connexion {
+    -fx-background-color: rgba(20, 20, 30, 0.8);
+    -fx-background-radius: 15;
+    -fx-border-color: #5a4a2f;
+    -fx-border-width: 3px;
+    -fx-border-radius: 15;
+    -fx-padding: 30px;
+    -fx-effect: innershadow(three-pass-box, rgba(210, 175, 85, 0.5), 10, 0, 0, 0);
 }
 
 /* Style pour les labels */
 .label-connexion {
-    -fx-font-size: 14px;
-    -fx-text-fill: #34495e;
+    -fx-font-size: 16px;
+    -fx-text-fill: #e0d5b8;
+    -fx-effect: dropshadow(one-pass-box, black, 2, 0, 1, 1);
 }
 
 /* Style pour les champs de texte */
 .champ-connexion {
-    -fx-max-width: 250px;
+    -fx-max-width: 300px;
     -fx-font-size: 14px;
-    -fx-padding: 5px;
+    -fx-padding: 8px;
     -fx-background-radius: 5px;
     -fx-border-radius: 5px;
-    -fx-border-color: #bdc3c7;
-    -fx-border-width: 1px;
+    -fx-background-color: #1a1a1a;
+    -fx-text-fill: #f2d16b;
+    -fx-border-color: #5a4a2f;
+    -fx-border-width: 2px;
+    -fx-prompt-text-fill: #5a4a2f;
+}
+
+.champ-connexion:focused {
+    -fx-border-color: #f2d16b;
+    -fx-effect: dropshadow(three-pass-box, rgba(210, 175, 85, 0.8), 5, 0, 0, 0);
 }
 
 /* Style pour le bouton */
 .bouton-connexion {
-    -fx-pref-width: 150px;
-    -fx-background-color: #2ecc71;
-    -fx-text-fill: white;
+    -fx-pref-width: 200px;
+    -fx-background-color: linear-gradient(to bottom, #5a4a2f, #3a2e1f);
+    -fx-text-fill: #f2d16b;
     -fx-font-weight: bold;
+    -fx-font-size: 16px;
     -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+    -fx-border-color: #f2d16b;
+    -fx-border-width: 1px;
     -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 5, 0, 0, 1);
 }
 
 .bouton-connexion:hover {
-    -fx-background-color: #27ae60;
+    -fx-background-color: linear-gradient(to bottom, #6a5a3f, #4a3e2f);
+    -fx-text-fill: #fff0c0;
+    -fx-effect: dropshadow(three-pass-box, rgba(210, 175, 85, 0.8), 10, 0, 0, 0);
+}
+
+.bouton-connexion:pressed {
+    -fx-background-color: linear-gradient(to bottom, #3a2e1f, #5a4a2f);
+    -fx-translate-y: 1px;
 }
 
 /* Style pour les messages d'erreur */
 .erreur-connexion {
-    -fx-text-fill: #e74c3c;
-    -fx-font-size: 12px;
+    -fx-text-fill: #ff4d4d;
+    -fx-font-size: 13px;
+    -fx-effect: dropshadow(one-pass-box, black, 1, 0, 0, 0);
+}
+
+/* Style pour le lien d'inscription */
+.lien-inscription {
+    -fx-text-fill: #f2d16b;
+    -fx-font-size: 13px;
+    -fx-underline: true;
+    -fx-cursor: hand;
+}
+
+.lien-inscription:hover {
+    -fx-text-fill: #fff0c0;
 }
