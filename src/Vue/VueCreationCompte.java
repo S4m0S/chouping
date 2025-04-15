@@ -2,6 +2,7 @@ package Vue;
 import javafx.geometry.Insets;
 import Controleur.ControlleurSupreme;
 import Modele.Client;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
@@ -16,6 +17,7 @@ public class VueCreationCompte extends VueBase {
     private Spinner<Double> monnaieSpinner;
     private DatePicker dateNaissancePicker;
     private Button submitButton;
+    private VBox contenuCentral;
 
     public VueCreationCompte(ControlleurSupreme controlleurSupreme) {
         super(controlleurSupreme);
@@ -24,6 +26,11 @@ public class VueCreationCompte extends VueBase {
     @Override
     protected void initialiserComposant() {
         // Création du fond avec l'image
+
+        contenuCentral = new VBox(30);
+        contenuCentral.setPadding(new Insets(40));
+        contenuCentral.setAlignment(Pos.TOP_CENTER);
+
         Image backgroundImage = new Image("file:src/resources/background-login.jpg.png");
         BackgroundImage background = new BackgroundImage(
                 backgroundImage,
@@ -73,7 +80,15 @@ public class VueCreationCompte extends VueBase {
         GridPane.setColumnSpan(submitButton, 2);
         formGrid.add(submitButton, 0, 6);
 
-        borderPane.setCenter(formContainer);
+        contenuCentral.getChildren().add(formContainer);
+
+        ScrollPane scrollPane = new ScrollPane(contenuCentral);
+        scrollPane.setFitToWidth(true);
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane.getStyleClass().add("content-scroll");
+        borderPane.setCenter(scrollPane);
+
         this.root = borderPane;
     }
 
