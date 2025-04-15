@@ -7,11 +7,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 
-
-public class VueConnection extends VueBase{
+public class VueConnection extends VueBase {
 
     private VBox contenuCentral;
     private Button loginButton;
@@ -20,29 +20,47 @@ public class VueConnection extends VueBase{
     private Label errorLabel;
     private Button creerCompteButton;
 
-
-    public VueConnection(ControlleurSupreme controlleurSupreme_p){
+    public VueConnection(ControlleurSupreme controlleurSupreme_p) {
         super(controlleurSupreme_p);
     }
 
     @Override
     protected void initialiserComposant() {
-        BorderPane borderPane = new BorderPane();
+        // Création du fond avec l'image
+        Image backgroundImage = new Image("file:src/resources/background-login.jpg.png");
+        BackgroundImage background = new BackgroundImage(
+                backgroundImage,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.CENTER,
+                new BackgroundSize(100, 100, true, true, true, true)
+        );
 
-        borderPane.getStylesheets().add(getClass().getResource("/src/resources/css/connection.css").toExternalForm());
+        BorderPane borderPane = new BorderPane();
+        borderPane.setBackground(new Background(background));
+        borderPane.getStylesheets().add(getClass().getResource("/resources/css/connection.css").toExternalForm());
 
         MenuPrincipal menuPrincipal = new MenuPrincipal(controlleurSupreme);
         borderPane.setTop(menuPrincipal.getMenuBar());
 
-
+        // Conteneur principal avec transparence
         contenuCentral = new VBox(20);
         contenuCentral.setPadding(new Insets(30));
         contenuCentral.setAlignment(Pos.CENTER);
+        contenuCentral.setBackground(new Background(new BackgroundFill(
+                Color.rgb(20, 20, 30, 0.7),
+                new CornerRadii(15),
+                Insets.EMPTY
+        )));
+        contenuCentral.setBorder(new Border(new BorderStroke(
+                Color.web("#5a4a2f"),
+                BorderStrokeStyle.SOLID,
+                new CornerRadii(15),
+                new BorderWidths(3)
+        )));
+        contenuCentral.setMaxWidth(400);
 
-
-
-// Création des composants
-
+        // Création des composants
         Label titre = new Label("Connexion");
         titre.getStyleClass().add("titre-connexion");
 
@@ -64,10 +82,10 @@ public class VueConnection extends VueBase{
         loginButton.getStyleClass().add("bouton-connexion");
 
         errorLabel = new Label("");
-        errorLabel.getStyleClass().add("label-connexion");
+        errorLabel.getStyleClass().add("erreur-connexion");
 
-        creerCompteButton = new Button("Creer un compte");
-        creerCompteButton.getStyleClass().add("bouton-connexion");
+        creerCompteButton = new Button("Créer un compte");
+        creerCompteButton.getStyleClass().add("lien-inscription");
 
         // Ajout des composants au VBox
         contenuCentral.getChildren().addAll(
@@ -77,31 +95,36 @@ public class VueConnection extends VueBase{
                 labelPassword,
                 passwordField,
                 loginButton,
-                creerCompteButton,
-                errorLabel
+                errorLabel,
+                creerCompteButton
         );
 
-
-        borderPane.setCenter(contenuCentral);
+        // Centrer le contenu
+        StackPane centerPane = new StackPane(contenuCentral);
+        centerPane.setPadding(new Insets(50));
+        borderPane.setCenter(centerPane);
 
         this.root = borderPane;
     }
 
     @Override
     protected void configurerActions() {
-        loginButton.setOnAction( e->
-                controlleurSupreme.requestConnection(pseudoField.getText(),passwordField.getText(),this)
+        loginButton.setOnAction(e ->
+                controlleurSupreme.requestConnection(pseudoField.getText(), passwordField.getText(), this)
         );
-        creerCompteButton.setOnAction(e->
+        creerCompteButton.setOnAction(e ->
                 controlleurSupreme.accederCreationCompte());
     }
 
-    public void changeErrorLabel(String s){
+    public void changeErrorLabel(String s) {
         this.errorLabel.setText(s);
     }
 
     @Override
     public void actualiser() {
-
+        // Réinitialiser les champs si nécessaire
+        pseudoField.setText("");
+        passwordField.setText("");
+        errorLabel.setText("");
     }
 }

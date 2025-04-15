@@ -1,11 +1,8 @@
 /* connection.css */
 .root {
-    -fx-font-family: 'Ringbearer', 'Arial', sans-serif;
-    -fx-background-image: url('file:/src/resources/background-login.png');
-    -fx-background-size: cover;
+    -fx-font-family: 'Arial', sans-serif;
 }
 
-/* Style pour le titre */
 .titre-connexion {
     -fx-font-size: 28px;
     -fx-font-weight: bold;
@@ -14,27 +11,14 @@
     -fx-padding: 0 0 20px 0;
 }
 
-/* Style pour le conteneur principal */
-.conteneur-connexion {
-    -fx-background-color: rgba(20, 20, 30, 0.8);
-    -fx-background-radius: 15;
-    -fx-border-color: #5a4a2f;
-    -fx-border-width: 3px;
-    -fx-border-radius: 15;
-    -fx-padding: 30px;
-    -fx-effect: innershadow(three-pass-box, rgba(210, 175, 85, 0.5), 10, 0, 0, 0);
-}
-
-/* Style pour les labels */
 .label-connexion {
     -fx-font-size: 16px;
     -fx-text-fill: #e0d5b8;
     -fx-effect: dropshadow(one-pass-box, black, 2, 0, 1, 1);
 }
 
-/* Style pour les champs de texte */
 .champ-connexion {
-    -fx-max-width: 300px;
+    -fx-max-width: 250px;
     -fx-font-size: 14px;
     -fx-padding: 8px;
     -fx-background-radius: 5px;
@@ -51,7 +35,6 @@
     -fx-effect: dropshadow(three-pass-box, rgba(210, 175, 85, 0.8), 5, 0, 0, 0);
 }
 
-/* Style pour le bouton */
 .bouton-connexion {
     -fx-pref-width: 200px;
     -fx-background-color: linear-gradient(to bottom, #5a4a2f, #3a2e1f);
@@ -72,24 +55,20 @@
     -fx-effect: dropshadow(three-pass-box, rgba(210, 175, 85, 0.8), 10, 0, 0, 0);
 }
 
-.bouton-connexion:pressed {
-    -fx-background-color: linear-gradient(to bottom, #3a2e1f, #5a4a2f);
-    -fx-translate-y: 1px;
-}
-
-/* Style pour les messages d'erreur */
 .erreur-connexion {
-    -fx-text-fill: #ff4d4d;
+    -fx-text-fill: #ff6b6b;
     -fx-font-size: 13px;
     -fx-effect: dropshadow(one-pass-box, black, 1, 0, 0, 0);
 }
 
-/* Style pour le lien d'inscription */
 .lien-inscription {
     -fx-text-fill: #f2d16b;
     -fx-font-size: 13px;
     -fx-underline: true;
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
     -fx-cursor: hand;
+    -fx-padding: 5;
 }
 
 .lien-inscription:hover {
