@@ -1,13 +1,11 @@
 package Controleur;
 
 import DAO.DaoFactory;
-import Modele.Article;
-import Modele.Client;
-import Modele.Panier;
-import Modele.User;
+import Modele.*;
 import Vue.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ControlleurSupreme {
     private VuePrincipal vuePrincipal;
@@ -124,4 +122,35 @@ public class ControlleurSupreme {
     public Panier getPanier(){return this.panier;}
 
 
+    public void accederVueArticle(Article article){
+        vuePrincipal.accederVue(new VueArticle(this, article));
+    }
+
+    public ArrayList<Commande> getCommandesUtilisateur(){
+        if (this.client != null){
+            ArrayList<Object> objectList = daoFactory.getCommandeDAO().getAll();
+
+            ArrayList<Commande> list_commande = new ArrayList<>();
+
+            // Convertir chaque élément
+            for (Object obj : objectList) {
+                if (obj instanceof Commande) {
+                    if (((Commande) obj).getId_compte() == client.getId_compte()) {
+                        list_commande.add((Commande) obj);
+                    }
+                }
+            }
+            return list_commande;
+
+        }
+        return null;
+    }
+
+    public void afficherDetailCommande(Commande commande){
+        vuePrincipal.accederVue(new VueDetailCommande(this, commande));
+    }
+
+    public ArrayList<Article> getaArticlesCommande(Commande commande) {
+        return daoFactory.getCommandeDAO().getItemsDetailsCommande(commande.getId_commande());
+    }
 }

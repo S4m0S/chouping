@@ -1,0 +1,47 @@
+.nom-article {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+}
+
+.prix {
+    -fx-font-size: 20px;
+    -fx-text-fill: #27ae60;
+    -fx-font-weight: bold;
+}
+
+.stock {
+    -fx-font-size: 14px;
+    -fx-text-fill: #7f8c8d;
+}
+
+.titre-section {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #34495e;
+    -fx-padding: 10 0 5 0;
+}
+
+.bouton-ajout {
+    -fx-background-color: #2ecc71;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-padding: 10 20;
+    -fx-background-radius: 5;
+}
+
+.bouton-ajout:hover {
+    -fx-background-color: #27ae60;
+    -fx-cursor: hand;
+}
+
+.grid-pane {
+    -fx-hgap: 15;
+    -fx-vgap: 10;
+    -fx-padding: 10;
+}
+
+.text-area {
+    -fx-background-color: #f8f9fa;
+    -fx-border-color: #bdc3c7;
+}

@@ -1,5 +1,6 @@
 package DAO;
 
+import Modele.Article;
 import Modele.Commande;
 
 import java.sql.*;
@@ -192,5 +193,43 @@ public class commandeDAO implements objectDao {
         }
 
         statement.executeBatch();
+    }
+
+    public ArrayList<Article> getItemsDetailsCommande(int id_commande) {
+        ArrayList<Article> items = new ArrayList<>();
+
+        String sql = "SELECT i.* FROM item i " +
+                "JOIN commande_articles ca ON i.id_item = ca.id_article " +
+                "WHERE ca.id_commande = ?";
+
+        try (Connection connection = daoFactory.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setInt(1, id_commande);
+            ResultSet rs = statement.executeQuery();
+
+            while (rs.next()) {
+                Article item = new Article(
+                        rs.getInt("id_item"),
+                        rs.getString("nom"),
+                        rs.getInt("stock"),
+                        rs.getString("description"),
+                        rs.getDouble("prix"),
+                        rs.getInt("type"),
+                        rs.getInt("classe"),
+                        rs.getInt("couleur"),
+                        rs.getDouble("taille"),
+                        rs.getInt("matiere"),
+                        rs.getInt("solidite"),
+                        rs.getDouble("poids")
+                );
+                items.add(item);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Erreur lors de la récupération des détails des articles");
+        }
+
+        return items;
     }
 }

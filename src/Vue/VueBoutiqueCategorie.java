@@ -8,6 +8,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -19,6 +20,7 @@ public class VueBoutiqueCategorie extends VueBase {
     private BorderPane borderPane;
     private VBox contenuCentral;
     private String nomCategorie;
+
 
     public VueBoutiqueCategorie(ControlleurSupreme controlleurSupreme_p) {
         super(controlleurSupreme_p);
@@ -48,6 +50,7 @@ public class VueBoutiqueCategorie extends VueBase {
         borderPane.setTop(menuPrincipal.getMenuBar());
 
         // Contenu central
+
         contenuCentral = new VBox(30);
         contenuCentral.setPadding(new Insets(40));
         contenuCentral.setAlignment(Pos.TOP_CENTER);
@@ -59,14 +62,15 @@ public class VueBoutiqueCategorie extends VueBase {
         grillearticles.getStyleClass().add("grid-articles");
         grillearticles.setPrefColumns(3);
         grillearticles.setAlignment(Pos.CENTER);
+        grillearticles.setHgap(20); // Espace horizontal entre les articles
+        grillearticles.setVgap(20);
 
         // Chargement des articles depuis la BDD
         try {
             ArrayList<Article> articles = controlleurSupreme.getAllArticles();
             System.out.println(articles.size());
             int typeRecherche = getTypeCorrespondant(nomCategorie);
-            System.out.println("Type de catégorie identifié: " + typeRecherche);
-            System.out.println("Nombre d'articles trouvés: " + articles.size());
+
 
             for (Object obj : articles) {
                 Article article = (Article) obj;
@@ -109,10 +113,8 @@ public class VueBoutiqueCategorie extends VueBase {
                     Button acheterBtn = new Button("Acheter");
                     acheterBtn.getStyleClass().add("buy-button");
 
-                    acheterBtn.setOnAction(event -> {
-                        // Action d'achat (à personnaliser)
-                        System.out.println("Achat de l'article : " + article.getNom());
-                    });
+                    acheterBtn.setOnAction(e-> controlleurSupreme.accederVueArticle(article));
+
 
                     boxarticle.getChildren().addAll(imageView, nomLabel, prixLabel, acheterBtn);
                     grillearticles.getChildren().add(boxarticle);
@@ -124,7 +126,19 @@ public class VueBoutiqueCategorie extends VueBase {
         }
 
         contenuCentral.getChildren().addAll(titreCategorie, grillearticles);
-        borderPane.setCenter(contenuCentral);
+
+        // Ajouter un ScrollPane pour rendre le contenu défilable
+        ScrollPane scrollPane = new ScrollPane(contenuCentral);
+        scrollPane.setFitToWidth(true); // Adapte la largeur du contenu à celle du ScrollPane
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED); // Barre de défilement vertical selon besoin
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER); // Pas de barre de défilement horizontal
+
+
+        // Optionnel : ajouter une classe CSS pour le ScrollPane
+        scrollPane.getStyleClass().add("content-scroll");
+
+        // Placer le ScrollPane au centre du BorderPane au lieu du contenuCentral
+        borderPane.setCenter(scrollPane);
 
         // Pied de page
         HBox footer = new HBox();
@@ -158,7 +172,7 @@ public class VueBoutiqueCategorie extends VueBase {
 
     @Override
     protected void configurerActions() {
-        // À remplir si besoin plus tard (panier, détails, etc.)
+
     }
 
     @Override

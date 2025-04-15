@@ -119,4 +119,6 @@ public class DaoFactory {
     public articleDAO getarticleDAO() {
         return new articleDAO(this);
     }
+
+    public commandeDAO getCommandeDAO(){return new commandeDAO(this);}
 }
