@@ -47,6 +47,11 @@ public class VuePanier extends VueBase {
         totalSection.getChildren().add(totalLabel);
         mainContainer.getChildren().add(totalSection);
 
+        Button boutonCommander = new Button("Commander");
+        mainContainer.getChildren().add(boutonCommander);
+
+        boutonCommander.setOnAction(e-> controlleurSupreme.commander());
+
         borderPane.setCenter(mainContainer);
         this.root = borderPane;
 

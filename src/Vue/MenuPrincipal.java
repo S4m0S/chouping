@@ -68,6 +68,7 @@ public class MenuPrincipal {
         boutonPanier.getStyleClass().addAll("menu-item","bouton-item");
 
 
+
         armes.setOnAction(e -> controlleurSupreme.accederCategorie("Armes"));
         bottes.setOnAction(e -> controlleurSupreme.accederCategorie("Bottes"));
         plastrons.setOnAction(e -> controlleurSupreme.accederCategorie("Plastrons"));
@@ -80,6 +81,14 @@ public class MenuPrincipal {
 
 
         this.menuBar.getMenus().addAll(createMenuFromButton(boutonAcceuil),menuItemAchat, createMenuFromButton(boutonCompte),createMenuFromButton(boutonPanier));
+
+        if (controlleurSupreme.getClient()!=null){
+            Button boutonCommandes = new Button("Mes Commandes");
+            boutonCommandes.getStyleClass().addAll("menu-item","bouton-item");
+            boutonCommandes.setOnAction(e-> controlleurSupreme.afficherCommande());
+            this.menuBar.getMenus().add(createMenuFromButton(boutonCommandes));
+        }
+
     }
 
     private Menu createMenuFromButton(Button button) {
