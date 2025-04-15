@@ -11,6 +11,7 @@ public class Client {
     private int classe;
     private double monnaie;
     private java.sql.Date date_naissance;
+    private User user;
 
     // Initialaser
     public Client(String nom_p, String mail_p, int classe_p, double monnaie_p, java.sql.Date date_naissance_p){
@@ -40,6 +41,10 @@ public class Client {
     public void setNom(String nom) {this.nom = nom;}
     public void setId_compte(int id_compte) {this.id_compte = id_compte;}
 
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     // Getter
     public String getNom() {return nom;}
     public String getMail() {return mail;}
@@ -48,6 +53,7 @@ public class Client {
     public Date getDate_naissance() {return date_naissance;}
     public int getId_compte() {return id_compte;}
 
-
-
+    public User getUser() {
+        return user;
+    }
 }

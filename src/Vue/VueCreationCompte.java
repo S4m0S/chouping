@@ -139,6 +139,11 @@ public class VueCreationCompte extends VueBase {
                     Date.valueOf(dateNaissancePicker.getValue())
             );
 
+            User user = new User(pseudoField.getText(),0);
+            user.setPassword(passwordField.getText());
+            nouveauClient.setUser(user);
+
+
             if (controlleurSupreme.creerClient(nouveauClient)) {
                 showStyledAlert("Succès", "Client créé avec succès", Alert.AlertType.INFORMATION);
                 resetForm();
