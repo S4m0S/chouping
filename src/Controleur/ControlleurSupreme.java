@@ -150,7 +150,32 @@ public class ControlleurSupreme {
         vuePrincipal.accederVue(new VueDetailCommande(this, commande));
     }
 
+    public void afficherCommande(){
+        vuePrincipal.accederVue(new VueCommandes(this));
+    }
+
     public ArrayList<Article> getaArticlesCommande(Commande commande) {
         return daoFactory.getCommandeDAO().getItemsDetailsCommande(commande.getId_commande());
+    }
+
+    public void commander(){
+        Commande new_commande = new Commande(client.getId_compte());
+        int[] id_article = new int[panier.getListeArticle().size()];
+        int[] nb_article = new int[panier.getListeQuantite().size()];
+
+        for (int i = 0; i < panier.getListeArticle().size(); i++) {
+                 id_article[i] = (panier.getListeArticle().get(i).getId_article());
+                 nb_article[i] = (panier.getListeQuantite().get(i));
+        }
+
+
+
+
+        new_commande.setItems(id_article);
+        new_commande.setNb_items(nb_article);
+
+
+
+        daoFactory.getCommandeDAO().ajouter(new_commande);
     }
 }

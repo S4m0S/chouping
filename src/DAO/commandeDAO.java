@@ -5,6 +5,8 @@ import Modele.Commande;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.sql.Timestamp;
+import java.time.Instant;
 
 public class commandeDAO implements objectDao {
     private DaoFactory daoFactory;
@@ -26,7 +28,7 @@ public class commandeDAO implements objectDao {
             while (resultat.next()) {
                 int id_commande = resultat.getInt("id_commande");
                 int id_compte = resultat.getInt("id_compte");
-                Date date_achat = resultat.getDate("date_achat");
+                Date date_achat = resultat.getDate("date");
 
                 Commande commande = new Commande(id_commande, id_compte, date_achat);
                 commande.setItems(recupererItemsCommande(connection, id_commande));
@@ -47,13 +49,18 @@ public class commandeDAO implements objectDao {
         try {
             Connection connection = daoFactory.getConnection();
             PreparedStatement statement = connection.prepareStatement(
-                    "INSERT INTO commande(id_compte, date_achat) VALUES (?, ?);",
+                    "INSERT INTO commande(id_compte, date) VALUES (?, ?);",
                     Statement.RETURN_GENERATED_KEYS
             );
 
             Commande commande = (Commande) object_p;
             statement.setInt(1, commande.getId_compte());
-            statement.setDate(2, commande.getDate_achat());
+
+
+
+            Timestamp timestamp = Timestamp.from(Instant.now());
+            statement.setTimestamp(2, timestamp);
+
 
             statement.executeUpdate();
 
@@ -64,7 +71,7 @@ public class commandeDAO implements objectDao {
                 commande.setId_commande(id_commande_genere);
 
                 // Ajouter les items à la table de jointure
-                ajouterItemsCommande(connection, id_commande_genere, commande.getItems());
+                ajouterItemsCommande(connection, id_commande_genere, commande.getItems(), commande.getNb_items());
             }
 
         } catch (SQLException e) {
@@ -111,7 +118,7 @@ public class commandeDAO implements objectDao {
 
             // Modifier la commande de base
             PreparedStatement statement = connection.prepareStatement(
-                    "UPDATE commande SET id_compte=?, date_achat=? WHERE id_commande=?;"
+                    "UPDATE commande SET id_compte=?, date=? WHERE id_commande=?;"
             );
 
             statement.setInt(1, commande.getId_compte());
@@ -121,12 +128,12 @@ public class commandeDAO implements objectDao {
 
             // Supprimer les anciens items et ajouter les nouveaux
             PreparedStatement deleteItems = connection.prepareStatement(
-                    "DELETE FROM commande_item WHERE id_commande=?;"
+                    "DELETE FROM commande_articles WHERE id_commande=?;"
             );
             deleteItems.setInt(1, commande.getId_commande());
             deleteItems.executeUpdate();
 
-            ajouterItemsCommande(connection, commande.getId_commande(), commande.getItems());
+            ajouterItemsCommande(connection, commande.getId_commande(), commande.getItems(), commande.getNb_items());
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -142,7 +149,7 @@ public class commandeDAO implements objectDao {
 
             // Supprimer d'abord les items liés à la commande
             PreparedStatement deleteItems = connection.prepareStatement(
-                    "DELETE FROM commande_item WHERE id_commande=?;"
+                    "DELETE FROM commande_articles WHERE id_commande=?;"
             );
             deleteItems.setInt(1, commande.getId_commande());
             deleteItems.executeUpdate();
@@ -164,7 +171,7 @@ public class commandeDAO implements objectDao {
 
     private int[] recupererItemsCommande(Connection connection, int id_commande) throws SQLException {
         PreparedStatement statement = connection.prepareStatement(
-                "SELECT id_item FROM commande_item WHERE id_commande=?;"
+                "SELECT id_article FROM commande_articles WHERE id_commande=?;"
         );
         statement.setInt(1, id_commande);
 
@@ -172,23 +179,24 @@ public class commandeDAO implements objectDao {
 
         ArrayList<Integer> liste = new ArrayList<>();
         while (resultat.next()) {
-            liste.add(resultat.getInt("id_item"));
+            liste.add(resultat.getInt("id_article"));
         }
 
         // Conversion en tableau
         return liste.stream().mapToInt(Integer::intValue).toArray();
     }
 
-    private void ajouterItemsCommande(Connection connection, int id_commande, int[] items) throws SQLException {
+    private void ajouterItemsCommande(Connection connection, int id_commande, int[] items, int[] nb_items) throws SQLException {
         if (items == null) return;
 
         PreparedStatement statement = connection.prepareStatement(
-                "INSERT INTO commande_item(id_commande, id_item) VALUES (?, ?);"
+                "INSERT INTO commande_articles(id_commande, id_article,quantite) VALUES (?, ?, ?);"
         );
 
-        for (int id_item : items) {
+        for (int i = 0; i < items.length; i++) {
             statement.setInt(1, id_commande);
-            statement.setInt(2, id_item);
+            statement.setInt(2, items[i]);
+            statement.setInt(3, nb_items[i]);
             statement.addBatch();
         }
 
@@ -198,9 +206,12 @@ public class commandeDAO implements objectDao {
     public ArrayList<Article> getItemsDetailsCommande(int id_commande) {
         ArrayList<Article> items = new ArrayList<>();
 
-        String sql = "SELECT i.* FROM item i " +
-                "JOIN commande_articles ca ON i.id_item = ca.id_article " +
+        String sql = "SELECT i.*, c.* FROM article i " +
+                "JOIN commande_articles ca ON i.id_article = ca.id_article " +
+                "JOIN caracteristiques c ON i.id_article = c.id_article " +
                 "WHERE ca.id_commande = ?";
+
+
 
         try (Connection connection = daoFactory.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -210,7 +221,7 @@ public class commandeDAO implements objectDao {
 
             while (rs.next()) {
                 Article item = new Article(
-                        rs.getInt("id_item"),
+                        rs.getInt("id_article"),
                         rs.getString("nom"),
                         rs.getInt("stock"),
                         rs.getString("description"),
