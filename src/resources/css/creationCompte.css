@@ -1,9 +1,10 @@
-/* create-client.css */
-.create-client-view {
-    -fx-background-image: url('runic_background_dark.jpg');
-    -fx-background-size: cover;
-    -fx-padding: 40;
+/* creationCompte.css */
+.root {
     -fx-font-family: 'Ringbearer', 'Arial', sans-serif;
+}
+
+.create-client-view {
+    -fx-background-color: transparent;
 }
 
 .create-client-title {
@@ -18,7 +19,6 @@
     -fx-font-size: 16px;
     -fx-text-fill: #e0d5b8;
     -fx-effect: dropshadow(one-pass-box, black, 2, 0, 1, 1);
-    -fx-font-weight: bold;
 }
 
 .create-client-field {
@@ -39,29 +39,43 @@
 }
 
 .create-client-spinner {
-    -fx-background-radius: 5;
-    -fx-border-radius: 5;
-    -fx-border-color: #5a4a2f;
-    -fx-border-width: 2;
-    -fx-background-color: #1a1a1a;
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
 }
 
-.create-client-spinner .text-field {
+.create-client-spinner .increment-arrow-button,
+.create-client-spinner .decrement-arrow-button {
+    -fx-background-color: #3a2e1f;
+    -fx-border-color: #5a4a2f;
+}
+
+.create-client-spinner .increment-arrow,
+.create-client-spinner .decrement-arrow {
+    -fx-background-color: #f2d16b;
+}
+
+.spinner-text-field {
+    -fx-background-color: #1a1a1a;
     -fx-text-fill: #f2d16b;
-    -fx-background-color: transparent;
+    -fx-border-color: #5a4a2f;
+    -fx-border-width: 2;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 5;
 }
 
 .create-client-date-picker {
-    -fx-background-radius: 5;
-    -fx-border-radius: 5;
-    -fx-border-color: #5a4a2f;
-    -fx-border-width: 2;
-    -fx-background-color: #1a1a1a;
+    -fx-background-color: transparent;
 }
 
-.create-client-date-picker .text-field {
+.date-picker-text-field {
+    -fx-background-color: #1a1a1a;
     -fx-text-fill: #f2d16b;
-    -fx-background-color: transparent;
+    -fx-border-color: #5a4a2f;
+    -fx-border-width: 2;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 5;
 }
 
 .create-client-submit-button {
@@ -84,37 +98,33 @@
     -fx-effect: dropshadow(three-pass-box, rgba(210, 175, 85, 0.8), 10, 0, 0, 0);
 }
 
-.create-client-submit-button:pressed {
-    -fx-background-color: linear-gradient(to bottom, #3a2e1f, #5a4a2f);
-    -fx-translate-y: 1px;
-}
-
 .create-client-form-grid {
-    -fx-hgap: 20;
-    -fx-vgap: 15;
-    -fx-padding: 30;
     -fx-background-color: rgba(20, 20, 30, 0.8);
     -fx-background-radius: 15;
     -fx-border-radius: 15;
     -fx-border-color: #5a4a2f;
     -fx-border-width: 3;
     -fx-effect: innershadow(three-pass-box, rgba(210, 175, 85, 0.5), 15, 0, 0, 0);
-    -fx-max-width: 650;
+    -fx-max-width: 600;
 }
 
-.create-client-error {
-    -fx-text-fill: #ff6b6b;
-    -fx-font-size: 13px;
-    -fx-effect: dropshadow(one-pass-box, black, 1, 0, 0, 0);
+.custom-alert {
+    -fx-background-color: rgba(20, 20, 30, 0.9);
+    -fx-border-color: #5a4a2f;
+    -fx-border-width: 2;
 }
 
-.create-client-link {
-    -fx-text-fill: #f2d16b;
+.custom-alert .label.content {
+    -fx-text-fill: #e0d5b8;
     -fx-font-size: 14px;
-    -fx-underline: true;
-    -fx-cursor: hand;
 }
 
-.create-client-link:hover {
-    -fx-text-fill: #fff0c0;
+.custom-alert:header *.header-panel {
+    -fx-background-color: linear-gradient(to bottom, #5a4a2f, #3a2e1f);
+}
+
+.custom-alert:header *.header-panel *.label {
+    -fx-text-fill: #f2d16b;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
 }

@@ -1,10 +1,11 @@
 package Vue;
-
+import javafx.geometry.Insets;
 import Controleur.ControlleurSupreme;
 import Modele.Client;
 import javafx.scene.control.*;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import java.sql.Date;
 import java.time.LocalDate;
 
@@ -22,17 +23,36 @@ public class VueCreationCompte extends VueBase {
 
     @Override
     protected void initialiserComposant() {
+        // Création du fond avec l'image
+        Image backgroundImage = new Image("file:src/resources/background-login.jpg.png");
+        BackgroundImage background = new BackgroundImage(
+                backgroundImage,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.CENTER,
+                new BackgroundSize(100, 100, true, true, true, true)
+        );
+
         BorderPane borderPane = new BorderPane();
-        borderPane.getStyleClass().add("create-client-view");
-        borderPane.getStylesheets().add(getClass().getResource("/src/resources/css/creationCompte.css").toExternalForm());
+        borderPane.setBackground(new Background(background));
+        borderPane.getStylesheets().add(getClass().getResource("/resources/css/creationCompte.css").toExternalForm());
 
         // Menu en haut
         MenuPrincipal menuPrincipal = new MenuPrincipal(controlleurSupreme);
         borderPane.setTop(menuPrincipal.getMenuBar());
 
-        // Centre - Formulaire de création
+        // Centre - Formulaire de création dans un conteneur stylisé
         GridPane formGrid = new GridPane();
         formGrid.getStyleClass().add("create-client-form-grid");
+
+        // Ajout de padding et d'espacement
+        formGrid.setHgap(20);
+        formGrid.setVgap(15);
+        formGrid.setPadding(new Insets(30));
+
+        // Conteneur pour effets visuels
+        StackPane formContainer = new StackPane(formGrid);
+        formContainer.setPadding(new Insets(50));
 
         // Titre
         Label titleLabel = new Label("Nouveau Client");
@@ -53,7 +73,7 @@ public class VueCreationCompte extends VueBase {
         GridPane.setColumnSpan(submitButton, 2);
         formGrid.add(submitButton, 0, 6);
 
-        borderPane.setCenter(formGrid);
+        borderPane.setCenter(formContainer);
         this.root = borderPane;
     }
 
@@ -63,10 +83,15 @@ public class VueCreationCompte extends VueBase {
 
         if (field instanceof TextField) {
             field.getStyleClass().add("create-client-field");
+            ((TextField) field).setPromptText("Entrez " + labelText.replace("*", "").toLowerCase());
         } else if (field instanceof Spinner) {
             field.getStyleClass().add("create-client-spinner");
+            // Style spécifique pour les Spinner
+            ((Spinner<?>) field).getEditor().getStyleClass().add("spinner-text-field");
         } else {
             field.getStyleClass().add("create-client-date-picker");
+            // Style spécifique pour le DatePicker
+            ((DatePicker) field).getEditor().getStyleClass().add("date-picker-text-field");
         }
 
         grid.add(label, 0, row);
@@ -76,13 +101,11 @@ public class VueCreationCompte extends VueBase {
     @Override
     protected void configurerActions() {
         submitButton.setOnAction(e -> {
-            // Validation des champs obligatoires
             if (nomField.getText().isEmpty() || mailField.getText().isEmpty()) {
-                showAlert("Erreur", "Les champs marqués d'un * sont obligatoires");
+                showStyledAlert("Erreur", "Les champs marqués d'un * sont obligatoires", Alert.AlertType.ERROR);
                 return;
             }
 
-            // Création du nouveau client
             Client nouveauClient = new Client(
                     nomField.getText(),
                     mailField.getText(),
@@ -91,14 +114,27 @@ public class VueCreationCompte extends VueBase {
                     Date.valueOf(dateNaissancePicker.getValue())
             );
 
-            // Enregistrement via le contrôleur
             if (controlleurSupreme.creerClient(nouveauClient)) {
-                showAlert("Succès", "Client créé avec succès");
+                showStyledAlert("Succès", "Client créé avec succès", Alert.AlertType.INFORMATION);
                 resetForm();
             } else {
-                showAlert("Erreur", "Échec de la création du client");
+                showStyledAlert("Erreur", "Échec de la création du client", Alert.AlertType.ERROR);
             }
         });
+    }
+
+    private void showStyledAlert(String title, String message, Alert.AlertType type) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+
+        // Appliquer le style CSS à l'alerte
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.getStylesheets().add(getClass().getResource("/resources/css/creationCompte.css").toExternalForm());
+        dialogPane.getStyleClass().add("custom-alert");
+
+        alert.showAndWait();
     }
 
     private void resetForm() {
@@ -109,17 +145,8 @@ public class VueCreationCompte extends VueBase {
         dateNaissancePicker.setValue(LocalDate.now().minusYears(18));
     }
 
-    private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
-
     @Override
     public void actualiser() {
-        // Réinitialisation du formulaire si nécessaire
         resetForm();
     }
 }
