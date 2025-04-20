@@ -1,7 +1,9 @@
 package Vue;
+import Modele.User;
 import javafx.geometry.Insets;
 import Controleur.ControlleurSupreme;
 import Modele.Client;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
@@ -11,11 +13,13 @@ import java.time.LocalDate;
 
 public class VueCreationCompte extends VueBase {
 
-    private TextField nomField, mailField;
+    private TextField nomField, mailField, pseudoField;
+    private PasswordField passwordField;
     private Spinner<Integer> classeSpinner;
     private Spinner<Double> monnaieSpinner;
     private DatePicker dateNaissancePicker;
     private Button submitButton;
+    private VBox contenuCentral;
 
     public VueCreationCompte(ControlleurSupreme controlleurSupreme) {
         super(controlleurSupreme);
@@ -24,6 +28,11 @@ public class VueCreationCompte extends VueBase {
     @Override
     protected void initialiserComposant() {
         // Création du fond avec l'image
+
+        contenuCentral = new VBox(30);
+        contenuCentral.setPadding(new Insets(40));
+        contenuCentral.setAlignment(Pos.TOP_CENTER);
+
         Image backgroundImage = new Image("file:src/resources/background-login.jpg.png");
         BackgroundImage background = new BackgroundImage(
                 backgroundImage,
@@ -62,18 +71,29 @@ public class VueCreationCompte extends VueBase {
 
         // Champs du formulaire
         addFormField(formGrid, "Nom*:", nomField = new TextField(), 1);
-        addFormField(formGrid, "Email*:", mailField = new TextField(), 2);
-        addFormField(formGrid, "Classe:", classeSpinner = new Spinner<>(1, 3, 1), 3);
-        addFormField(formGrid, "Monnaie initiale:", monnaieSpinner = new Spinner<>(0.0, 10000.0, 0.0, 0.5), 4);
-        addFormField(formGrid, "Date de naissance:", dateNaissancePicker = new DatePicker(LocalDate.now().minusYears(18)), 5);
+        addFormField(formGrid,"Pseudo :", pseudoField = new TextField(), 2);
+
+        addFormField(formGrid, "Email*:", mailField = new TextField(), 3);
+        addFormField(formGrid, "Mot de passe :", passwordField = new PasswordField(),4);
+        addFormField(formGrid, "Classe:", classeSpinner = new Spinner<>(1, 3, 1), 5);
+        addFormField(formGrid, "Monnaie initiale:", monnaieSpinner = new Spinner<>(0.0, 10000.0, 0.0, 0.5), 6);
+        addFormField(formGrid, "Date de naissance:", dateNaissancePicker = new DatePicker(LocalDate.now().minusYears(18)), 7);
 
         // Bouton de soumission
         submitButton = new Button("Créer le client");
         submitButton.getStyleClass().add("create-client-submit-button");
         GridPane.setColumnSpan(submitButton, 2);
-        formGrid.add(submitButton, 0, 6);
+        formGrid.add(submitButton, 0, 8);
 
-        borderPane.setCenter(formContainer);
+        contenuCentral.getChildren().add(formContainer);
+
+        ScrollPane scrollPane = new ScrollPane(contenuCentral);
+        scrollPane.setFitToWidth(true);
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane.getStyleClass().add("content-scroll");
+        borderPane.setCenter(scrollPane);
+
         this.root = borderPane;
     }
 
@@ -88,6 +108,9 @@ public class VueCreationCompte extends VueBase {
             field.getStyleClass().add("create-client-spinner");
             // Style spécifique pour les Spinner
             ((Spinner<?>) field).getEditor().getStyleClass().add("spinner-text-field");
+        } else if (field instanceof PasswordField) {
+            field.getStyleClass().add("create-client-password");
+            ((PasswordField) passwordField).setPromptText("Entrez votre mot de passe");
         } else {
             field.getStyleClass().add("create-client-date-picker");
             // Style spécifique pour le DatePicker
@@ -106,6 +129,8 @@ public class VueCreationCompte extends VueBase {
                 return;
             }
 
+
+
             Client nouveauClient = new Client(
                     nomField.getText(),
                     mailField.getText(),
@@ -113,6 +138,11 @@ public class VueCreationCompte extends VueBase {
                     monnaieSpinner.getValue(),
                     Date.valueOf(dateNaissancePicker.getValue())
             );
+
+            User user = new User(pseudoField.getText(),0);
+            user.setPassword(passwordField.getText());
+            nouveauClient.setUser(user);
+
 
             if (controlleurSupreme.creerClient(nouveauClient)) {
                 showStyledAlert("Succès", "Client créé avec succès", Alert.AlertType.INFORMATION);
