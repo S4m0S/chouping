@@ -1,3 +1,40 @@
-.titre{
-    -fx-font-size: 20;
+.titre-medieval {
+    -fx-font-size: 38px;
+    -fx-text-fill: #fcebb6;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, black, 6, 0.4, 0, 2);
+    -fx-font-family: "Serif";
+}
+
+.slogan-medieval {
+    -fx-font-size: 18px;
+    -fx-text-fill: #e0d7b1;
+    -fx-font-style: italic;
+    -fx-padding: 10 0 20 0;
+    -fx-font-family: "Georgia";
+}
+
+.bouton-medieval {
+    -fx-background-color: linear-gradient(to bottom, #a67c52, #6f4e37);
+    -fx-text-fill: #fdf6e3;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-padding: 10 24;
+    -fx-background-radius: 15;
+    -fx-border-color: #deb887;
+    -fx-border-width: 2;
+    -fx-cursor: hand;
+    -fx-font-family: "Georgia";
+}
+
+.bouton-medieval:hover {
+    -fx-background-color: linear-gradient(to bottom, #c69c6d, #8b5a2b);
+    -fx-scale-x: 1.03;
+    -fx-scale-y: 1.03;
+}
+
+.version-medieval {
+    -fx-text-fill: #c9b77b;
+    -fx-font-size: 12px;
+    -fx-font-family: "Georgia";
 }

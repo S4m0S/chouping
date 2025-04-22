@@ -1,24 +1,30 @@
-.menu-bar{
-    -fx-background-color: transparent;
+#menu-bar {
+    -fx-background-color: rgba(10, 10, 10, 0.6); /* fond sombre semi-transparent */
+    -fx-padding: 10;
     -fx-alignment: center;
 }
 
-.menu-bar .label{
-    -fx-text-fill: white;
-    -fx-font-size: 20;
-    -fx-padding: 10;
-}
-
-.menu-item .label{
-    -fx-text-fill: black;
-    -fx-padding: 5;
-    -fx-font-size: 12;
-}
-
-.menu-item .label:hover{
-    -fx-background-color: grey;
-}
-
-.bouton-item{
+.menu-item {
+    -fx-font-family: "Georgia";
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #fcebb6;
+    -fx-padding: 6 12;
     -fx-background-color: transparent;
+    -fx-effect: dropshadow(gaussian, #000000, 3, 0.3, 0, 1);
+}
+
+.menu-item:hover {
+    -fx-background-color: #6e4a3a;
+    -fx-text-fill: #ffe49c;
+    -fx-background-radius: 8;
+}
+
+.bouton-item {
+    -fx-background-color: linear-gradient(to bottom, #3c2f2f, #2a1e1e);
+    -fx-text-fill: #f5e6c8;
+    -fx-border-color: #aa845b;
+    -fx-border-width: 1;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
 }

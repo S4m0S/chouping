@@ -1,18 +1,16 @@
 package Vue;
 
 import Modele.User;
-import javafx.scene.control.Button;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import Controleur.ControlleurSupreme;
-
 
 public class MenuPrincipal {
     private MenuBar menuBar;
-
     private ControlleurSupreme controlleurSupreme;
 
     public MenuPrincipal(ControlleurSupreme controlleurSupreme) {
@@ -20,75 +18,64 @@ public class MenuPrincipal {
         initialiserMenu();
     }
 
-
-    public void initialiserMenu(){
-        this.menuBar = new MenuBar();
-
-
+    public void initialiserMenu() {
+        menuBar = new MenuBar();
         menuBar.getStylesheets().add(getClass().getResource("/src/resources/css/menu.css").toExternalForm());
-        menuBar.getStyleClass().add("menu-bar");
+        menuBar.setId("menu-bar");
 
-        Button boutonAcceuil = new Button("Acceuil");
+        // Bouton Accueil
+        Button boutonAccueil = new Button("Accueil");
+        boutonAccueil.getStyleClass().addAll("menu-item", "bouton-item");
 
-
-
-        boutonAcceuil.getStyleClass().addAll("menu-item","bouton-item");
-
-        Menu menuItemAchat = new Menu("Article");
-        javafx.scene.control.MenuItem armes = new MenuItem("Armes");
-        javafx.scene.control.MenuItem plastrons = new MenuItem("Plastrons");
-        javafx.scene.control.MenuItem potions = new MenuItem("Potions");
-        javafx.scene.control.MenuItem bottes = new MenuItem("Bottes");
-
+        // Menu Articles
+        Menu menuItemAchat = new Menu("Articles");
+        MenuItem armes = new MenuItem("Armes");
+        MenuItem plastrons = new MenuItem("Plastrons");
+        MenuItem potions = new MenuItem("Potions");
+        MenuItem bottes = new MenuItem("Bottes");
         menuItemAchat.getItems().addAll(armes, plastrons, potions, bottes);
-
         menuItemAchat.getStyleClass().add("menu-item");
 
-
-        Image imageIconCompte = new Image("resources/menu/compteIcon.png");
-        ImageView vueIconCompte = new ImageView(imageIconCompte);
-
-
+        // Bouton Compte (avec icône)
+        ImageView vueIconCompte = new ImageView(new Image("resources/menu/compteIcon.png"));
         vueIconCompte.setFitHeight(20);
         vueIconCompte.setFitWidth(20);
-
         Button boutonCompte = new Button();
         boutonCompte.setGraphic(vueIconCompte);
-        boutonCompte.getStyleClass().addAll("menu-item","bouton-item");
+        boutonCompte.getStyleClass().addAll("menu-item", "bouton-item");
 
-
-        Image imageIconPanier = new Image("/src/resources/paniers.png");
-        ImageView vueIconPanier = new ImageView(imageIconPanier);
-
-        vueIconPanier.setFitWidth(20);
+        // Bouton Panier (avec icône)
+        ImageView vueIconPanier = new ImageView(new Image("resources/paniers.png"));
         vueIconPanier.setFitHeight(20);
-
+        vueIconPanier.setFitWidth(20);
         Button boutonPanier = new Button();
         boutonPanier.setGraphic(vueIconPanier);
-        boutonPanier.getStyleClass().addAll("menu-item","bouton-item");
+        boutonPanier.getStyleClass().addAll("menu-item", "bouton-item");
 
+        // Ajout des menus
+        menuBar.getMenus().addAll(
+                createMenuFromButton(boutonAccueil),
+                menuItemAchat,
+                createMenuFromButton(boutonCompte),
+                createMenuFromButton(boutonPanier)
+        );
 
+        // Bouton "Mes Commandes" si connecté
+        if (controlleurSupreme.getClient() != null) {
+            Button boutonCommandes = new Button("Mes Commandes");
+            boutonCommandes.getStyleClass().addAll("menu-item", "bouton-item");
+            boutonCommandes.setOnAction(e -> controlleurSupreme.afficherCommande());
+            menuBar.getMenus().add(createMenuFromButton(boutonCommandes));
+        }
 
+        // Actions
+        boutonAccueil.setOnAction(e -> controlleurSupreme.accederAcceuil());
+        boutonCompte.setOnAction(e -> controlleurSupreme.accederCompte());
+        boutonPanier.setOnAction(e -> controlleurSupreme.accederPanier());
         armes.setOnAction(e -> controlleurSupreme.accederCategorie("Armes"));
         bottes.setOnAction(e -> controlleurSupreme.accederCategorie("Bottes"));
         plastrons.setOnAction(e -> controlleurSupreme.accederCategorie("Plastrons"));
         potions.setOnAction(e -> controlleurSupreme.accederCategorie("Potions"));
-        boutonAcceuil.setOnAction(e -> {
-            controlleurSupreme.accederAcceuil();
-        });
-        boutonCompte.setOnAction(e-> controlleurSupreme.accederCompte());
-        boutonPanier.setOnAction(e-> controlleurSupreme.accederPanier());
-
-
-        this.menuBar.getMenus().addAll(createMenuFromButton(boutonAcceuil),menuItemAchat, createMenuFromButton(boutonCompte),createMenuFromButton(boutonPanier));
-
-        if (controlleurSupreme.getClient()!=null){
-            Button boutonCommandes = new Button("Mes Commandes");
-            boutonCommandes.getStyleClass().addAll("menu-item","bouton-item");
-            boutonCommandes.setOnAction(e-> controlleurSupreme.afficherCommande());
-            this.menuBar.getMenus().add(createMenuFromButton(boutonCommandes));
-        }
-
     }
 
     private Menu createMenuFromButton(Button button) {
@@ -97,7 +84,7 @@ public class MenuPrincipal {
         return menu;
     }
 
-    public MenuBar getMenuBar(){
+    public MenuBar getMenuBar() {
         return this.menuBar;
     }
 }
