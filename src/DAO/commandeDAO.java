@@ -45,7 +45,7 @@ public class commandeDAO implements objectDao {
     }
 
     @Override
-    public void ajouter(Object object_p) {
+    public int ajouter(Object object_p) {
         try {
             Connection connection = daoFactory.getConnection();
             PreparedStatement statement = connection.prepareStatement(
@@ -72,11 +72,14 @@ public class commandeDAO implements objectDao {
 
                 // Ajouter les items à la table de jointure
                 ajouterItemsCommande(connection, id_commande_genere, commande.getItems(), commande.getNb_items());
+                return  id_commande_genere;
             }
 
+            return -1;
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("Erreur lors de l'ajout d'une commande.");
+            return -1;
         }
     }
 

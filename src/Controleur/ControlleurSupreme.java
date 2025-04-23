@@ -50,7 +50,13 @@ public class ControlleurSupreme {
             vuePrincipal.accederVue(new VueConnection(this));
         }
         else{
-            vuePrincipal.accederVue(new VueClient(this));
+            if (this.user.getId_user()==0){
+                vuePrincipal.accederVue(new VueClient(this));
+            }
+            else {
+                vuePrincipal.accederVue(new VueAdmin(this));
+            }
+
         }
     }
 
@@ -113,8 +119,9 @@ public class ControlleurSupreme {
     }
 
     public boolean creerClient(Client nouveauClient){
-        daoFactory.getClientDAO().ajouter(nouveauClient);
+        int id_compte = daoFactory.getClientDAO().ajouter(nouveauClient);
         this.client = nouveauClient;
+        this.client.setId_compte(id_compte);
         vuePrincipal.accederVue(new VueConnection(this));
         return true;
     }
@@ -154,8 +161,29 @@ public class ControlleurSupreme {
         vuePrincipal.accederVue(new VueCommandes(this));
     }
 
+    public void afficherAjouterArticle(){
+        vuePrincipal.accederVue(new VueAjouterArticle(this));
+    }
+
+    public void afficherModifierArticle(){
+        vuePrincipal.accederVue(new VueModifierArticle(this));
+    }
+
+    public void vueModifierArticleDetail(Article article){
+        vuePrincipal.accederVue(new VueModifierArticleDetails(this,article));
+    }
+
+    public void vueCreerNouveauAdmin(){
+        vuePrincipal.accederVue(new VueCreationCompteAdmin(this));
+    }
+
     public ArrayList<Article> getaArticlesCommande(Commande commande) {
         return daoFactory.getCommandeDAO().getItemsDetailsCommande(commande.getId_commande());
+    }
+
+
+    public void supprimerArticle(Article article_supprimer){
+        daoFactory.getarticleDAO().supprimer(article_supprimer);
     }
 
     public void commander(){
@@ -177,5 +205,45 @@ public class ControlleurSupreme {
 
 
         daoFactory.getCommandeDAO().ajouter(new_commande);
+    }
+
+    public ArrayList<User> getTousLesAdmins(){
+        ArrayList<Object> listUser =  daoFactory.getClientDAO().getAll();
+        ArrayList<User> AdminList = new ArrayList<User>();
+
+
+
+        for (int i = 0; i < listUser.size(); i++) {
+            User user_p = ((Client) listUser.get(i)).getUser();
+
+            if (user_p.getUserType()==1){
+                User admin = new User(user_p.getId_user(),user_p.getPseudo(), user_p.getUserType());
+                admin.setPassword(user_p.getPassword());
+                AdminList.add(admin);
+            }
+        }
+        return AdminList;
+    }
+
+
+    public void ajouterArticle(String nom, int stock, String description, double prix, int type, int classe, int couleur, double taille, int matiere, int solidite, double poids){
+        Article articleToAdd = new Article(-1, nom,stock,description,prix,type, classe,couleur, taille, matiere, solidite,poids);
+
+        int id_article = daoFactory.getarticleDAO().ajouter(articleToAdd);
+        articleToAdd.setId_article(id_article);
+    }
+
+    public void modifierArticle(Article article_a_modifier){
+        daoFactory.getarticleDAO().modifier(article_a_modifier);
+    }
+
+    public boolean creerUtilisateur(User new_User){
+        daoFactory.getClientDAO().ajouterAdmin(new_User);
+        return true;
+    }
+
+    public boolean supprimerUtilisateur(int user_id){
+        daoFactory.getClientDAO().supprimerAdmin(user_id);
+        return true;
     }
 }

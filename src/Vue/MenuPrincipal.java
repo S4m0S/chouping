@@ -5,6 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.skin.MenuBarSkin;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import Controleur.ControlleurSupreme;
@@ -57,14 +58,8 @@ public class MenuPrincipal {
         boutonCompte.getStyleClass().addAll("menu-item","bouton-item");
 
 
-        Image imageIconPanier = new Image("/src/resources/paniers.png");
-        ImageView vueIconPanier = new ImageView(imageIconPanier);
+        Button boutonPanier = new Button("Panier");
 
-        vueIconPanier.setFitWidth(20);
-        vueIconPanier.setFitHeight(20);
-
-        Button boutonPanier = new Button();
-        boutonPanier.setGraphic(vueIconPanier);
         boutonPanier.getStyleClass().addAll("menu-item","bouton-item");
 
 
@@ -82,6 +77,7 @@ public class MenuPrincipal {
 
         this.menuBar.getMenus().addAll(createMenuFromButton(boutonAcceuil),menuItemAchat, createMenuFromButton(boutonCompte),createMenuFromButton(boutonPanier));
 
+
         if (controlleurSupreme.getClient()!=null){
             Button boutonCommandes = new Button("Mes Commandes");
             boutonCommandes.getStyleClass().addAll("menu-item","bouton-item");
@@ -89,6 +85,28 @@ public class MenuPrincipal {
             this.menuBar.getMenus().add(createMenuFromButton(boutonCommandes));
         }
 
+        if (controlleurSupreme.getUser()!=null && controlleurSupreme.getUser().getUserType()==1){
+            Button boutonAjouterArticle = new Button("Créer Article");
+            boutonAjouterArticle.getStyleClass().addAll("menu-item","bouton-item");
+            boutonAjouterArticle.setOnAction(e-> controlleurSupreme.afficherAjouterArticle());
+            this.menuBar.getMenus().add(createMenuFromButton(boutonAjouterArticle));
+
+            Button boutonModifierArticle = new Button("Modifier Article");
+            boutonModifierArticle.getStyleClass().addAll("menu-item","bouton-item");
+            boutonModifierArticle.setOnAction(e-> controlleurSupreme.afficherModifierArticle());
+            this.menuBar.getMenus().add(createMenuFromButton(boutonModifierArticle));
+        }
+
+        configurerCentrage();
+
+    }
+
+    private void configurerCentrage() {
+        // Force le centrage horizontal
+        this.menuBar.setMaxWidth(Double.MAX_VALUE);
+        MenuBarSkin skin = new MenuBarSkin(menuBar);
+        skin.getNode().setStyle("-fx-alignment: CENTER;");
+        menuBar.setSkin(skin);
     }
 
     private Menu createMenuFromButton(Button button) {

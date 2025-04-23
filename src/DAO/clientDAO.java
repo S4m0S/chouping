@@ -22,7 +22,8 @@ public class clientDAO implements objectDao{
             Connection connection = daoFactory.getConnection();
             Statement statement =connection.createStatement();
 
-            ResultSet resultat =statement.executeQuery("SELECT * FROM client;");
+            ResultSet resultat =statement.executeQuery("SELECT c.*, cp.* FROM client c JOIN compte cp ON c.id_compte = cp.id_compte;");
+
 
             while (resultat.next()){
 
@@ -34,6 +35,15 @@ public class clientDAO implements objectDao{
                 Date date_naissance = resultat.getDate(6);
 
                 Client client_n = new Client(id_compte,nom,email,classe,monnaie,date_naissance);
+
+                int type_compte = resultat.getInt("user_type");
+                String mdp = resultat.getString("mdp");
+                String pseudo = resultat.getString("pseudo");
+
+                User user_p = new User(id_compte,pseudo,type_compte);
+                user_p.setPassword(mdp);
+
+                client_n.setUser(user_p);
 
                 liste_Client.add(client_n);
 
@@ -50,7 +60,7 @@ public class clientDAO implements objectDao{
     }
 
     @Override
-    public void ajouter(Object object_p){
+    public int ajouter(Object object_p){
 
         try{
             Connection connection = daoFactory.getConnection();
@@ -84,13 +94,49 @@ public class clientDAO implements objectDao{
 
             statement.executeUpdate();
 
+            return id_compte;
+
         }
         catch (SQLException e){
             e.printStackTrace();
             System.out.println("Erreur lors de la connexion a la base de donnée");
             System.out.println("Impossible de créer un compte");
+            return -1;
         }
 
+    }
+
+    public void supprimerAdmin(int user_id){
+        try{
+            Connection connection = daoFactory.getConnection();
+            PreparedStatement statement = connection.prepareStatement("DELETE FROM compte WHERE id_compte=?;");
+            statement.setInt(1,user_id);
+
+            statement.executeUpdate();
+
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+            System.out.println("Erreur lors de la connexion a la base de donnée");
+            System.out.println("Impossible de supprimer le client");
+        }
+    }
+
+    public void ajouterAdmin(User new_user){
+        try{
+            Connection connection = daoFactory.getConnection();
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO compte(pseudo,mdp,user_type) VALUES (?,?,?)");
+
+            statement.setString(1,new_user.getPseudo());
+            statement.setString(2,new_user.getPassword());
+            statement.setInt(3,new_user.getUserType());
+
+            statement.executeUpdate();
+
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
     }
 
     public User connection(String pseudo, String password){

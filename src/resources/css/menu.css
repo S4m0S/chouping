@@ -1,24 +1,75 @@
-.menu-bar{
+.menu-bar {
+    -fx-background-color: linear-gradient(to right,
+    rgba(70, 50, 30, 0.5),
+    rgba(100, 75, 50, 0.5)); /* Transparence augmentée */
+    -fx-background-radius: 0 0 15px 15px;
+    -fx-border-color: rgba(139, 69, 19, 0.7); /* Bordure bois semi-transparente */
+    -fx-border-width: 0 0 3px 0;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 12, 0, 0, 2);
+    -fx-padding: 5 0 5 0; /* Padding réduit sur les côtés */
+    -fx-alignment: CENTER; /* Centrage principal */
+}
+
+/* Conteneur des menus pour centrage */
+.menu-bar > .container {
+    -fx-alignment: CENTER;
+}
+
+.menu-bar .label {
+    -fx-text-fill: #FFEEDD; /* Couleur parchemin clair */
+    -fx-font-size: 16px;
+    -fx-font-family: "Palatino Linotype", "Book Antiqua", serif;
+    -fx-font-weight: bold;
+    -fx-padding: 8 20 8 20;
+    -fx-effect: innershadow(gaussian, rgba(0,0,0,0.3), 2, 0, 1, 1);
+}
+
+.menu-item {
     -fx-background-color: transparent;
-    -fx-alignment: center;
+    -fx-padding: 0 5 0 5; /* Espacement entre les items */
 }
 
-.menu-bar .label{
-    -fx-text-fill: white;
-    -fx-font-size: 20;
-    -fx-padding: 10;
+.menu-item .label {
+    -fx-text-fill: #5D4037;
+    -fx-background-color: linear-gradient(to bottom,
+    rgba(245, 222, 179, 0.9),
+    rgba(230, 201, 168, 0.9)); /* Légère transparence */
+    -fx-background-radius: 5px;
+    -fx-border-color: rgba(139, 69, 19, 0.6);
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-padding: 5 15 5 15;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 2, 0, 1, 1);
 }
 
-.menu-item .label{
-    -fx-text-fill: black;
-    -fx-padding: 5;
-    -fx-font-size: 12;
+.menu-item .label:hover {
+    -fx-background-color: linear-gradient(to bottom,
+    rgba(210, 180, 140, 0.9),
+    rgba(193, 154, 107, 0.9));
+    -fx-text-fill: #3E2723;
+    -fx-effect: dropshadow(gaussian, rgba(139, 69, 19, 0.5), 5, 0, 0, 2);
 }
 
-.menu-item .label:hover{
-    -fx-background-color: grey;
+.bouton-item {
+    -fx-background-color: rgba(139, 69, 19, 0.3); /* Déjà transparent */
+    -fx-text-fill: #FFEEDD;
+    -fx-font-family: "Palatino Linotype", "Book Antiqua", serif;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-border-color: transparent;
+    -fx-border-radius: 10px;
+    -fx-padding: 8 20 8 20;
+    -fx-effect: innershadow(gaussian, rgba(0,0,0,0.2), 1, 0, 1, 1);
+    -fx-alignment: CENTER;
 }
 
-.bouton-item{
-    -fx-background-color: transparent;
+.bouton-item:hover {
+    -fx-background-color: rgba(139, 69, 19, 0.5); /* Transparence ajustée */
+    -fx-text-fill: #FFF8F0;
+    -fx-effect: dropshadow(gaussian, rgba(139, 69, 19, 0.7), 5, 0, 0, 1);
+}
+
+/* Pour le centrage parfait des menus */
+.menu-bar > .menu-button {
+    -fx-alignment: CENTER;
 }

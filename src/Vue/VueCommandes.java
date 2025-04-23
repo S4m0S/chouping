@@ -28,12 +28,18 @@ public class VueCommandes extends VueBase {
     protected void initialiserComposant() {
         BorderPane borderPane = new BorderPane();
         borderPane.setPadding(new Insets(20));
+        String cssPath = "/src/resources/css/VueCommandes.css";
+        try {
+            borderPane.getStylesheets().add(getClass().getResource(cssPath).toExternalForm());
+        } catch (Exception e) {
+            System.err.println("Erreur chargement CSS: " + e.getMessage());
+        }
 
         borderPane.setTop(new MenuPrincipal(controlleurSupreme).getMenuBar());
 
         // Titre
         Label titre = new Label("Vos Commandes");
-        titre.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
+        titre.getStyleClass().add("titre-commandes");
 
         // Tableau des commandes
         tableCommandes = new TableView<>();
@@ -41,6 +47,7 @@ public class VueCommandes extends VueBase {
 
         // Bouton de détail
         Button btnDetail = new Button("Voir le détail");
+        btnDetail.getStyleClass().add("bouton-detail");
         btnDetail.setOnAction(e -> afficherDetailCommande());
 
         VBox contenu = new VBox(20, titre, tableCommandes, btnDetail);
@@ -76,6 +83,8 @@ public class VueCommandes extends VueBase {
             alert.setTitle("Aucune sélection");
             alert.setHeaderText(null);
             alert.setContentText("Veuillez sélectionner une commande");
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStyleClass().add("dialog-pane");
             alert.showAndWait();
         }
     }

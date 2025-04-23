@@ -49,6 +49,10 @@ public class VueDetailCommande extends VueBase {
         scrollPane.setFitToWidth(true);
 
         borderPane.setCenter(scrollPane);
+
+        MenuPrincipal menuPrincipal = new MenuPrincipal(controlleurSupreme);
+        borderPane.setTop(menuPrincipal.getMenuBar());
+
         this.root = borderPane;
     }
 

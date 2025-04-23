@@ -105,22 +105,16 @@ public class VueBoutiqueCategorie extends VueBase {
                     // 🎯 ZOOM au clic
                     final Article articleFinal = article;
 
-                    imageView.setOnMouseClicked(event -> {
-                        Stage zoomStage = new Stage();
-                        zoomStage.setTitle(articleFinal.getNom());
-
-                        ImageView zoomedImageView = new ImageView(imageView.getImage());
-                        zoomedImageView.setPreserveRatio(true);
-                        zoomedImageView.setFitWidth(500);
-                        zoomedImageView.setFitHeight(500);
-
-                        StackPane root = new StackPane(zoomedImageView);
-                        root.setStyle("-fx-background-color: rgba(0,0,0,0.85);");
-                        root.setPadding(new Insets(20));
-
-                        Scene scene = new Scene(root);
-                        zoomStage.setScene(scene);
-                        zoomStage.show();
+                    imageView.setOnMouseEntered(e -> {
+                        imageView.setEffect(new DropShadow(10, Color.BROWN));
+                        imageView.setCursor(Cursor.HAND);
+                        imageView.setScaleX(1.05);
+                        imageView.setScaleY(1.05);
+                    });
+                    imageView.setOnMouseExited(e -> {
+                        imageView.setEffect(null);
+                        imageView.setScaleX(1.0);
+                        imageView.setScaleY(1.0);
                     });
 
 
@@ -162,21 +156,19 @@ public class VueBoutiqueCategorie extends VueBase {
         borderPane.setBottom(footer);
 
         try {
-            Image backgroundImage = new Image(getClass().getResourceAsStream("/resources/backgrounds/shop_bg.png"));
-            if (!backgroundImage.isError()) {
-                BackgroundImage bgImage = new BackgroundImage(
-                        backgroundImage,
-                        BackgroundRepeat.NO_REPEAT,
-                        BackgroundRepeat.NO_REPEAT,
-                        BackgroundPosition.CENTER,
-                        new BackgroundSize(100, 100, true, true, true, false)
-                );
-                borderPane.setBackground(new Background(bgImage));
-            } else {
-                System.out.println("Erreur lors du chargement de l'image de fond");
-            }
+            // Texture de parchemin en fond par défaut
+            Image backgroundImage = new Image(getClass().getResourceAsStream("/resources/backgrounds/parchment_texture.jpg"));
+            BackgroundImage bgImage = new BackgroundImage(
+                    backgroundImage,
+                    BackgroundRepeat.REPEAT,
+                    BackgroundRepeat.REPEAT,
+                    BackgroundPosition.DEFAULT,
+                    new BackgroundSize(100, 100, true, true, false, true)
+            );
+            borderPane.setBackground(new Background(bgImage));
         } catch (Exception e) {
-            System.err.println("Erreur lors du chargement de l'image de fond: " + e.getMessage());
+            System.err.println("Erreur chargement texture parchemin: " + e.getMessage());
+            borderPane.setStyle("-fx-background-color: linear-gradient(to bottom, #F5DEB3, #E6C9A8);");
         }
 
         this.root = borderPane;
