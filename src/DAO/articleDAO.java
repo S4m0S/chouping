@@ -4,14 +4,25 @@ import Modele.Article;
 import java.sql.*;
 import java.util.ArrayList;
 
+/**
+ * DAO (Data Access Object) pour gérer les opérations liées aux articles.
+ */
 public class articleDAO implements objectDao {
 
     private DaoFactory daoFactory;
 
+    /**
+     * Constructeur pour initialiser la factory DAO.
+     * @param daoFactory_p la factory de connexion à la base de données
+     */
     public articleDAO(DaoFactory daoFactory_p) {
         this.daoFactory = daoFactory_p;
     }
 
+    /**
+     * Récupère tous les articles de la base de données.
+     * @return une liste d'objets Article
+     */
     @Override
     public ArrayList<Object> getAll() {
         ArrayList<Object> liste_articles = new ArrayList<Object>();
@@ -28,7 +39,6 @@ public class articleDAO implements objectDao {
             ResultSet resultat1 = statement1.executeQuery("SELECT * FROM caracteristiques;");
 
             while (resultat.next() && resultat1.next()) {
-
 
                 int id_article = resultat.getInt("id_article");
                 String nom = resultat.getString("nom");
@@ -55,12 +65,17 @@ public class articleDAO implements objectDao {
         return liste_articles;
     }
 
+    /**
+     * Ajoute un nouvel article dans la base de données.
+     * @param object_p l'objet Article à ajouter
+     * @return l'identifiant généré de l'article ajouté, ou -1 en cas d'erreur
+     */
     @Override
     public int ajouter(Object object_p) {
         try {
 
             Connection connection = daoFactory.getConnection();
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO article(nom, stock, description) VALUES (?,?,?);",Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO article(nom, stock, description) VALUES (?,?,?);", Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, ((Article) object_p).getNom());
             statement.setInt(2, ((Article) object_p).getStock());
             statement.setString(3, ((Article) object_p).getDescription());
@@ -75,14 +90,11 @@ public class articleDAO implements objectDao {
                 throw new SQLException("Creating article failed, no ID obtained.");
             }
 
-
-
-
             statement = connection.prepareStatement(
                     "INSERT INTO caracteristiques(id_article, prix, type, classe, couleur, taille, matiere, solidite, poids) VALUES (?,?, ?, ?, ?, ?, ?, ?, ?);"
             );
 
-            statement.setInt(1,generatedId);
+            statement.setInt(1, generatedId);
             statement.setDouble(2, ((Article) object_p).getPrix());
             statement.setInt(3, ((Article) object_p).getType());
             statement.setInt(4, ((Article) object_p).getClasse());
@@ -102,6 +114,11 @@ public class articleDAO implements objectDao {
         }
     }
 
+    /**
+     * Cherche un article dans la base de données par son identifiant.
+     * @param object_id l'identifiant de l'article
+     * @return l'objet Article correspondant, ou null si introuvable
+     */
     @Override
     public Object chercher(int object_id) {
         try {
@@ -139,6 +156,10 @@ public class articleDAO implements objectDao {
         }
     }
 
+    /**
+     * Modifie un article existant dans la base de données.
+     * @param object_p l'objet Article modifié
+     */
     @Override
     public void modifier(Object object_p) {
         try {
@@ -150,17 +171,13 @@ public class articleDAO implements objectDao {
             statement.setString(1, ((Article) object_p).getNom());
             statement.setInt(2, ((Article) object_p).getStock());
             statement.setString(3, ((Article) object_p).getDescription());
-            statement.setInt(4,(((Article) object_p).getId_article()));
+            statement.setInt(4, (((Article) object_p).getId_article()));
 
             statement.executeUpdate();
-
-
-
 
             statement = connection.prepareStatement(
                     "UPDATE caracteristiques SET prix=?, type=?, classe=?, couleur=?, taille=?, matiere=?, solidite=?, poids=? WHERE id_article=?;"
             );
-
 
             statement.setDouble(1, ((Article) object_p).getPrix());
             statement.setInt(2, ((Article) object_p).getType());
@@ -179,6 +196,10 @@ public class articleDAO implements objectDao {
         }
     }
 
+    /**
+     * Supprime un article de la base de données.
+     * @param object_p l'objet Article à supprimer
+     */
     @Override
     public void supprimer(Object object_p) {
         try {
@@ -187,7 +208,6 @@ public class articleDAO implements objectDao {
             statement.setInt(1, ((Article) object_p).getId_article());
 
             statement.executeUpdate();
-
 
             statement = connection.prepareStatement("DELETE FROM caracteristiques WHERE id_article=?;");
             statement.setInt(1, ((Article) object_p).getId_article());

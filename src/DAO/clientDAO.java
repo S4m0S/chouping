@@ -6,14 +6,26 @@ import Modele.User;
 import java.sql.*;
 import java.util.ArrayList;
 
+/**
+ * DAO (Data Access Object) pour gérer les opérations sur la table 'client'.
+ * Permet d'ajouter, chercher, modifier, supprimer et récupérer tous les clients.
+ */
 public class clientDAO implements objectDao{
 
     private DaoFactory daoFactory;
 
+    /**
+     * Constructeur du DAO pour client.
+     * @param daoFactory_p l'usine à connexions pour accéder à la base de données
+     */
     public clientDAO(DaoFactory daoFactory_p){
         this.daoFactory = daoFactory_p;
     }
 
+    /**
+     * Récupère tous les clients présents dans la base de données.
+     * @return une liste d'objets de type Client
+     */
     @Override
     public ArrayList<Object> getAll(){
         ArrayList<Object> liste_Client= new ArrayList<Object>();
@@ -23,7 +35,6 @@ public class clientDAO implements objectDao{
             Statement statement =connection.createStatement();
 
             ResultSet resultat =statement.executeQuery("SELECT c.*, cp.* FROM client c JOIN compte cp ON c.id_compte = cp.id_compte;");
-
 
             while (resultat.next()){
 
@@ -46,7 +57,6 @@ public class clientDAO implements objectDao{
                 client_n.setUser(user_p);
 
                 liste_Client.add(client_n);
-
             }
 
         }
@@ -59,6 +69,11 @@ public class clientDAO implements objectDao{
         return liste_Client;
     }
 
+    /**
+     * Ajoute un client dans la base de données.
+     * @param object_p l'objet Client à ajouter
+     * @return l'identifiant du compte généré, ou -1 en cas d'erreur
+     */
     @Override
     public int ajouter(Object object_p){
 
@@ -81,9 +96,7 @@ public class clientDAO implements objectDao{
 
             int id_compte = resultat.getInt("id_compte");
 
-
             statement = connection.prepareStatement("INSERT INTO client(id_compte, nom, mail, classe, monnaie, date_naissance) VALUES (?,?,?,?,?,?);");
-
 
             statement.setInt(1,id_compte);
             statement.setString(2,((Client) object_p).getNom());
@@ -106,6 +119,10 @@ public class clientDAO implements objectDao{
 
     }
 
+    /**
+     * Supprime un administrateur de la base de données.
+     * @param user_id l'identifiant de l'utilisateur à supprimer
+     */
     public void supprimerAdmin(int user_id){
         try{
             Connection connection = daoFactory.getConnection();
@@ -122,6 +139,10 @@ public class clientDAO implements objectDao{
         }
     }
 
+    /**
+     * Ajoute un administrateur dans la base de données.
+     * @param new_user l'utilisateur à ajouter
+     */
     public void ajouterAdmin(User new_user){
         try{
             Connection connection = daoFactory.getConnection();
@@ -139,6 +160,12 @@ public class clientDAO implements objectDao{
         }
     }
 
+    /**
+     * Tente de connecter un utilisateur avec son pseudo et mot de passe.
+     * @param pseudo le pseudo de l'utilisateur
+     * @param password le mot de passe de l'utilisateur
+     * @return l'objet User si la connexion réussit, null sinon
+     */
     public User connection(String pseudo, String password){
         try{
             Connection connection = daoFactory.getConnection();
@@ -167,6 +194,11 @@ public class clientDAO implements objectDao{
         }
     }
 
+    /**
+     * Cherche un client spécifique par son identifiant.
+     * @param object_id l'identifiant du client
+     * @return l'objet Client trouvé, ou null si non trouvé
+     */
     @Override
     public Object chercher(int object_id){
 
@@ -199,11 +231,14 @@ public class clientDAO implements objectDao{
             e.printStackTrace();
             System.out.println("Erreur lors de la connexion a la base de donnée");
             System.out.println("Impossible de rechercher le client");
-            // On peut faire un truc qui reesaie au lieu de return null quand il y a une erreur
             return null;
         }
     }
 
+    /**
+     * Modifie un client existant dans la base de données.
+     * @param object_p le client modifié
+     */
     @Override
     public void modifier(Object object_p){
         try{
@@ -218,8 +253,6 @@ public class clientDAO implements objectDao{
             statement.setDate(5,((Client)object_p).getDate_naissance());
             statement.setInt(6,((Client)object_p).getId_compte());
 
-
-            // Il faudrait check que cela a bien ete effectue
             statement.executeUpdate();
         }
         catch (SQLException e){
@@ -228,6 +261,10 @@ public class clientDAO implements objectDao{
         }
     }
 
+    /**
+     * Supprime un client de la base de données, ainsi que son compte et ses commandes.
+     * @param object_p le client à supprimer
+     */
     @Override
     public void supprimer(Object object_p){
         try {
