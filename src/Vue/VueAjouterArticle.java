@@ -13,7 +13,8 @@ import javafx.stage.Stage;
  * Elle hérite de {@link VueBase} et utilise JavaFX pour construire l'interface graphique.
  * <p>
  * Cette vue comprend des champs obligatoires (nom, prix, stock) ainsi que des champs optionnels (type, classe, couleur, etc.).
- * Lors de la validation, elle transmet les informations saisies au contrôleur {@link ControleurSupreme}.
+ * Lors de la validation, elle transmet les informations saisies au contrôleur * Lors de la validation, elle transmet les informations saisies au contrôleur
+ * * {@link Controleur.ControlleurSupreme}.
  * </p>
  *
  * @author
