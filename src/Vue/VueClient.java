@@ -25,6 +25,7 @@ public class VueClient extends VueBase{
     private Spinner<Double> monnaieSpinner;
     private DatePicker dateNaissancePicker;
     private Button saveButton;
+    private Button disconnect;
 
     public VueClient(ControlleurSupreme controlleurSupreme_p){
         super(controlleurSupreme_p);
@@ -66,6 +67,11 @@ public class VueClient extends VueBase{
         addFormField(formGrid, "Date de naissance:", dateNaissancePicker = new DatePicker(this.controlleurSupreme.getClient().getDate_naissance().toLocalDate()), 5);
 
         // Bouton de sauvegarde
+
+        disconnect = new Button("Se décconecter");
+        GridPane.setColumnSpan(disconnect, 3);
+        formGrid.add(disconnect, 0, 7);
+
         saveButton = new Button("Enregistrer les modifications");
         saveButton.getStyleClass().add("client-save-button");
         GridPane.setColumnSpan(saveButton, 2);
@@ -97,6 +103,10 @@ public class VueClient extends VueBase{
 
     @Override
     protected void configurerActions() {
+        disconnect.setOnAction(e-> {
+            controlleurSupreme.disonnection();
+        });
+
         saveButton.setOnAction(e -> {
             // Mettre à jour l'objet client avec les nouvelles valeurs
             client.setNom(nomField.getText());

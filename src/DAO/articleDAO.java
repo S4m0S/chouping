@@ -195,8 +195,9 @@ public class articleDAO implements objectDao {
                 statement.setString(1, ((Article) object_p).getNom());
                 statement.setInt(2, ((Article) object_p).getStock());
                 statement.setString(3, ((Article) object_p).getDescription());
-                statement.setInt(4,(((Article) object_p).getId_article()));
-                statement.setInt(5,((Article) object_p).getPromo());
+                statement.setInt(4,((Article) object_p).getPromo());
+                statement.setInt(5,(((Article) object_p).getId_article()));
+
 
             statement.executeUpdate();
 
@@ -309,6 +310,69 @@ public class articleDAO implements objectDao {
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("Erreur lors de l'ajout de l'article.");
+        }
+    }
+
+    public double getRealPrice(int id_article, int nb_article) {
+        try {
+            Connection connection = daoFactory.getConnection();
+
+            // 1. Récupérer les informations de base de l'article
+            PreparedStatement articleStmt = connection.prepareStatement(
+                    "SELECT a.promo, c.prix, p.id_pack " +
+                            "FROM article a " +
+                            "JOIN caracteristiques c ON a.id_article = c.id_article " +
+                            "LEFT JOIN pack p ON a.id_article = p.id_article " +
+                            "WHERE a.id_article = ?");
+            articleStmt.setInt(1, id_article);
+            ResultSet articleRs = articleStmt.executeQuery();
+
+            if (!articleRs.next()) {
+                throw new RuntimeException("Article non trouvé avec l'ID: " + id_article);
+            }
+
+            int promo = articleRs.getInt("promo");
+            double prixBase = articleRs.getDouble("prix");
+            int id_pack = articleRs.getInt("id_pack");
+            if (articleRs.wasNull()) {
+                id_pack = 0; // Si NULL en base, mettre à 0
+            }
+
+            // 2. Vérifier si un pack est applicable
+            double prixFinal = prixBase * nb_article; // Prix sans réduction
+
+            if (id_pack != 0) {
+                // Récupérer les infos du pack
+                PreparedStatement packStmt = connection.prepareStatement(
+                        "SELECT nb_articles, prix FROM description_pack WHERE id_pack = ?");
+                packStmt.setInt(1, id_pack);
+                ResultSet packRs = packStmt.executeQuery();
+
+                if (packRs.next()) {
+                    int nbArticlesPack = packRs.getInt("nb_articles");
+                    float prixPack = packRs.getFloat("prix");
+
+                    // Calculer combien de packs complets on peut appliquer
+                    int nbPacksApplicables = nb_article / nbArticlesPack;
+                    int nbArticlesRestants = nb_article % nbArticlesPack;
+
+                    if (nbPacksApplicables > 0) {
+                        // Appliquer le prix pack pour les articles groupés
+                        prixFinal = (nbPacksApplicables * prixPack) + (nbArticlesRestants * prixBase);
+                    }
+                }
+            }
+
+            // 3. Appliquer la promotion si elle existe
+            if (promo < 100) {
+                prixFinal = prixFinal * (promo / 100f);
+            }
+
+            return prixFinal;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Erreur lors du calcul du prix réel", e);
         }
     }
 }

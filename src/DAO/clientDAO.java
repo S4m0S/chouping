@@ -22,6 +22,8 @@ public class clientDAO implements objectDao{
         this.daoFactory = daoFactory_p;
     }
 
+
+
     /**
      * Récupère tous les clients présents dans la base de données.
      * @return une liste d'objets de type Client
@@ -191,6 +193,33 @@ public class clientDAO implements objectDao{
         catch (SQLException e){
             e.printStackTrace();
             return null;
+        }
+    }
+
+    public ArrayList<User> getAllUser() {
+
+        ArrayList<User> listUser = new ArrayList<User>();
+        try {
+            Connection connection = daoFactory.getConnection();
+            Statement statement = connection.createStatement();
+
+            ResultSet resultat = statement.executeQuery("SELECT * FROM compte");
+
+            while (resultat.next()){
+
+                int type_compte = resultat.getInt("user_type");
+                String mdp = resultat.getString("mdp");
+                String pseudo = resultat.getString("pseudo");
+                int id_compte = resultat.getInt("id_compte");
+
+                User user_p = new User(id_compte,pseudo,type_compte);
+                user_p.setPassword(mdp);
+                listUser.add(user_p);
+            }
+            return listUser;
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 

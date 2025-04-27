@@ -91,7 +91,6 @@ public class VueCreationCompte extends VueBase {
         addFormField(formGrid, "Email*:", mailField = new TextField(), 3);
         addFormField(formGrid, "Mot de passe :", passwordField = new PasswordField(),4);
         addFormField(formGrid, "Classe:", classeSpinner = new Spinner<>(1, 3, 1), 5);
-        addFormField(formGrid, "Monnaie initiale:", monnaieSpinner = new Spinner<>(0.0, 10000.0, 0.0, 0.5), 6);
         addFormField(formGrid, "Date de naissance:", dateNaissancePicker = new DatePicker(LocalDate.now().minusYears(18)), 7);
 
         // Bouton de soumission

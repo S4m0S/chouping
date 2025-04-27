@@ -6,6 +6,7 @@ import Modele.Panier;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+
 /**
  * Vue représentant le panier d'un utilisateur.
  * Cette vue permet à l'utilisateur de voir et de modifier les articles présents dans son panier,
@@ -20,12 +21,7 @@ public class VuePanier extends VueBase {
     public VuePanier(ControlleurSupreme controlleurSupreme) {
         super(controlleurSupreme);
     }
-    /**
-     * Initialise les composants graphiques de la vue du panier.
-     * Cela inclut la mise en place de l'interface utilisateur,
-     * du menu en haut, du conteneur des articles du panier,
-     * du total et du bouton de commande.
-     */
+
     @Override
     protected void initialiserComposant() {
         BorderPane borderPane = new BorderPane();
@@ -60,17 +56,73 @@ public class VuePanier extends VueBase {
         Button boutonCommander = new Button("Commander");
         mainContainer.getChildren().add(boutonCommander);
 
-        boutonCommander.setOnAction(e-> controlleurSupreme.commander());
+        // Modification de l'action du bouton commander
+        boutonCommander.setOnAction(e -> showCreditCardPopup());
 
         borderPane.setCenter(mainContainer);
         this.root = borderPane;
 
         actualiserPanier();
     }
+
     /**
-     * Met à jour l'affichage des articles du panier ainsi que le total.
-     * Parcourt les articles du panier et ajuste leur quantité et leur prix total.
+     * Affiche une popup de saisie de carte de crédit
      */
+    private void showCreditCardPopup() {
+        // Création de la boîte de dialogue
+        Dialog<String> dialog = new Dialog<>();
+        dialog.setTitle("Paiement");
+        dialog.setHeaderText("Veuillez entrer vos informations de paiement");
+
+        // Configuration des boutons
+        ButtonType validerButtonType = new ButtonType("Valider", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(validerButtonType, ButtonType.CANCEL);
+
+        // Création du formulaire
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(20, 150, 10, 10));
+
+        TextField numeroCarte = new TextField();
+        numeroCarte.setPromptText("Numéro de carte");
+        TextField dateExpiration = new TextField();
+        dateExpiration.setPromptText("MM/AA");
+        TextField codeSecurite = new TextField();
+        codeSecurite.setPromptText("CVV");
+
+        grid.add(new Label("Numéro de carte:"), 0, 0);
+        grid.add(numeroCarte, 1, 0);
+        grid.add(new Label("Date d'expiration:"), 0, 1);
+        grid.add(dateExpiration, 1, 1);
+        grid.add(new Label("Code de sécurité:"), 0, 2);
+        grid.add(codeSecurite, 1, 2);
+
+        dialog.getDialogPane().setContent(grid);
+
+        // Résultat de la boîte de dialogue
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == validerButtonType) {
+                return "Paiement accepté";
+            }
+            return null;
+        });
+
+        // Affichage de la boîte de dialogue et gestion de la réponse
+        dialog.showAndWait().ifPresent(result -> {
+            // On ne vérifie pas réellement les infos de la carte
+            // On considère que le paiement est accepté
+            Alert confirmation = new Alert(Alert.AlertType.INFORMATION);
+            confirmation.setTitle("Commande validée");
+            confirmation.setHeaderText(null);
+            confirmation.setContentText("Votre commande a été passée avec succès !");
+            confirmation.showAndWait();
+
+            // Appel au contrôleur pour valider la commande
+            controlleurSupreme.commander();
+        });
+    }
+
     private void actualiserPanier() {
         articlesContainer.getChildren().clear();
         Panier panier = controlleurSupreme.getPanier();
@@ -79,27 +131,24 @@ public class VuePanier extends VueBase {
         for (int i = 0; i < panier.getListeArticle().size(); i++) {
             Article article = panier.getListeArticle().get(i);
             int quantite = panier.getListeQuantite().get(i);
-            total += article.getPrix() * quantite;
+            total += controlleurSupreme.getRealPrice(article,quantite);
 
-            // Création de la boîte pour chaque article
             HBox articleBox = new HBox();
             articleBox.getStyleClass().add("panier-article-box");
             articleBox.setSpacing(20);
             articleBox.setPadding(new Insets(15));
 
-            // Partie gauche : Info article
             VBox articleInfo = new VBox();
             articleInfo.setSpacing(5);
 
             Label nameLabel = new Label(article.getNom());
             nameLabel.getStyleClass().add("article-name");
 
-            Label priceLabel = new Label(String.format("%.2f €", article.getPrix()));
+            Label priceLabel = new Label("");
             priceLabel.getStyleClass().add("article-price");
 
             articleInfo.getChildren().addAll(nameLabel, priceLabel);
 
-            // Partie droite : Contrôles quantité
             HBox controlsBox = new HBox();
             controlsBox.getStyleClass().add("quantity-controls");
             controlsBox.setSpacing(10);
@@ -121,14 +170,14 @@ public class VuePanier extends VueBase {
                 actualiserPanier();
             });
 
+            priceLabel.setText(String.format("%.2f €", controlleurSupreme.getRealPrice(article,quantitySpinner.getValue())));
+
             controlsBox.getChildren().addAll(quantitySpinner, updateButton, removeButton);
 
-            // Assemblage
             articleBox.getChildren().addAll(articleInfo, controlsBox);
             articlesContainer.getChildren().add(articleBox);
         }
 
-        // Mise à jour du total
         totalLabel.setText(String.format("Total : %.2f €", total));
     }
 
@@ -136,10 +185,7 @@ public class VuePanier extends VueBase {
     protected void configurerActions() {
         // Pas besoin d'actions supplémentaires ici
     }
-    /**
-     * Actualise la vue pour refléter les dernières modifications.
-     * Cette méthode est appelée chaque fois qu'une action sur le panier est effectuée (par exemple, une mise à jour de quantité).
-     */
+
     @Override
     public void actualiser() {
         actualiserPanier();

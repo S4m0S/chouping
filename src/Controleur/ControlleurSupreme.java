@@ -288,15 +288,16 @@ public class ControlleurSupreme {
      * @return Liste d'administrateurs
      */
     public ArrayList<User> getTousLesAdmins(){
-        ArrayList<Object> listUser =  daoFactory.getClientDAO().getAll();
+        ArrayList<User> listUser =  daoFactory.getClientDAO().getAllUser();
         ArrayList<User> AdminList = new ArrayList<User>();
 
 
 
         for (int i = 0; i < listUser.size(); i++) {
-            User user_p = ((Client) listUser.get(i)).getUser();
-
+            User user_p = listUser.get(i);
+            System.out.println(user_p.getUserType());
             if (user_p.getUserType()==1){
+
                 User admin = new User(user_p.getId_user(),user_p.getPseudo(), user_p.getUserType());
                 admin.setPassword(user_p.getPassword());
                 AdminList.add(admin);
@@ -352,5 +353,15 @@ public class ControlleurSupreme {
     public int getNumberPack(){
         ArrayList<Integer> liste_pack = daoFactory.getarticleDAO().getAllPack();
         return liste_pack.size();
+    }
+
+    public double getRealPrice(Article article, int nb_article){
+        return daoFactory.getarticleDAO().getRealPrice(article.getId_article(),nb_article);
+    }
+
+    public void disonnection(){
+        this.user = null;
+        this.client = null;
+        vuePrincipal.accederVue(new VueAccueil(this));
     }
 }
