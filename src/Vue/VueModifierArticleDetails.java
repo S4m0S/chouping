@@ -9,8 +9,13 @@ import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-
-public class VueModifierArticleDetails extends VueBase {
+/**
+ * VueModifierArticleDetails représente la vue permettant de modifier les détails d'un article existant.
+ * Cette vue permet de visualiser et de modifier les informations d'un article comme le nom, le prix, le stock,
+ * la description, et d'autres caractéristiques comme le type, la couleur, la matière, la taille, etc.
+ * Elle offre aussi la possibilité de supprimer un article.
+ */
+public class VueModifierArticleDetails extends VueBase{
     private Article article;
 
     public VueModifierArticleDetails(ControlleurSupreme controlleurSupreme_p, Article article_p) {
@@ -18,8 +23,13 @@ public class VueModifierArticleDetails extends VueBase {
         this.article = article_p;
         initialiseComposant();
     }
+    /**
+     * Initialise les composants de la vue pour la modification des détails d'un article.
+     * Cette méthode crée le formulaire avec les champs pré-remplis avec les valeurs actuelles de l'article.
+     * Elle configure également les boutons pour sauvegarder, supprimer ou annuler la modification.
+     */
+    private void initialiseComposant(){
 
-    private void initialiseComposant() {
         // Create form fields with current values
         TextField champNom = new TextField(article.getNom());
         TextField champPrix = new TextField(String.valueOf(article.getPrix()));
@@ -119,6 +129,7 @@ public class VueModifierArticleDetails extends VueBase {
         // Configure actions
         boutonSauvegarder.setOnAction(e -> {
             try {
+
                 // Validate required fields
                 if (champNom.getText().isEmpty() || champPrix.getText().isEmpty() || champStock.getText().isEmpty()) {
                     showAlert("Champs requis", "Les champs marqués d'un * sont obligatoires.");
@@ -145,6 +156,7 @@ public class VueModifierArticleDetails extends VueBase {
 
                 this.controlleurSupreme.afficherModifierArticle();
 
+
             } catch (NumberFormatException ex) {
                 showAlert("Erreur de format", "Veuillez entrer des valeurs numériques valides pour les champs numériques.");
             }
@@ -166,6 +178,7 @@ public class VueModifierArticleDetails extends VueBase {
         this.root = mainPane;
     }
 
+
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
@@ -173,6 +186,7 @@ public class VueModifierArticleDetails extends VueBase {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
 
     @Override
     protected void initialiserComposant() {

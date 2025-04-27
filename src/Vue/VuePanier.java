@@ -6,7 +6,12 @@ import Modele.Panier;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-
+/**
+ * Vue représentant le panier d'un utilisateur.
+ * Cette vue permet à l'utilisateur de voir et de modifier les articles présents dans son panier,
+ * ainsi que d'afficher le total de la commande.
+ * Elle permet également de commander les articles du panier.
+ */
 public class VuePanier extends VueBase {
 
     private VBox articlesContainer;
@@ -15,7 +20,12 @@ public class VuePanier extends VueBase {
     public VuePanier(ControlleurSupreme controlleurSupreme) {
         super(controlleurSupreme);
     }
-
+    /**
+     * Initialise les composants graphiques de la vue du panier.
+     * Cela inclut la mise en place de l'interface utilisateur,
+     * du menu en haut, du conteneur des articles du panier,
+     * du total et du bouton de commande.
+     */
     @Override
     protected void initialiserComposant() {
         BorderPane borderPane = new BorderPane();
@@ -57,7 +67,10 @@ public class VuePanier extends VueBase {
 
         actualiserPanier();
     }
-
+    /**
+     * Met à jour l'affichage des articles du panier ainsi que le total.
+     * Parcourt les articles du panier et ajuste leur quantité et leur prix total.
+     */
     private void actualiserPanier() {
         articlesContainer.getChildren().clear();
         Panier panier = controlleurSupreme.getPanier();
@@ -123,7 +136,10 @@ public class VuePanier extends VueBase {
     protected void configurerActions() {
         // Pas besoin d'actions supplémentaires ici
     }
-
+    /**
+     * Actualise la vue pour refléter les dernières modifications.
+     * Cette méthode est appelée chaque fois qu'une action sur le panier est effectuée (par exemple, une mise à jour de quantité).
+     */
     @Override
     public void actualiser() {
         actualiserPanier();

@@ -5,13 +5,21 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-
+/**
+ * Vue principale de l'application.
+ * Cette classe étend {@link javafx.application.Application} et gère la configuration et l'affichage des différentes vues.
+ * Elle est responsable de l'initialisation de la fenêtre principale et de la navigation entre les vues.
+ */
 public class VuePrincipal extends Application{
 
     private Stage stage;
     private ControlleurSupreme controlleurSupreme;
 
-
+    /**
+     * Méthode d'entrée principale de l'application JavaFX.
+     * Elle est appelée au démarrage de l'application et initialise le stage et le contrôleur principal.
+     * @param stage_p Le stage qui contient la fenêtre de l'application.
+     */
     @Override
     public void start(Stage stage_p) {
         this.stage = stage_p;
@@ -53,7 +61,10 @@ public class VuePrincipal extends Application{
         stage.setHeight(600);
 
     }
-
+    /**
+     * Permet de naviguer vers une vue spécifique.
+     * @param vue La vue à afficher, qui doit être une instance de {@link VueBase}.
+     */
     public void accederVue(VueBase vue) {
         Scene scene = new Scene(vue.getRoot(), stage.getWidth(), stage.getHeight());
         stage.setScene(scene);
@@ -81,7 +92,10 @@ public class VuePrincipal extends Application{
         this.controlleurSupreme = controlleurSupreme_p;
     }
 
-
+    /**
+     * Méthode principale pour lancer l'application.
+     * @param args Les arguments de la ligne de commande (non utilisés ici).
+     */
     public static void main(String[] args) {
         launch(args);
     }

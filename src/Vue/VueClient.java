@@ -6,7 +6,16 @@ import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 
-
+/**
+ * VueClient est une vue permettant d'afficher et de modifier les informations du client connecté.
+ *
+ * Cette vue contient :
+ * - Un formulaire pré-rempli avec les données du client
+ * - Un bouton pour enregistrer les modifications
+ *
+ * Auteurs : [Ton Nom]
+ * Date : [Date du fichier]
+ */
 
 public class VueClient extends VueBase{
 
@@ -21,7 +30,9 @@ public class VueClient extends VueBase{
         super(controlleurSupreme_p);
         this.client = controlleurSupreme_p.getClient();
     }
-
+    /**
+     * Initialise tous les composants graphiques de la vue Client.
+     */
     @Override
     protected void initialiserComposant() {
         BorderPane borderPane = new BorderPane();
@@ -63,7 +74,14 @@ public class VueClient extends VueBase{
         borderPane.setCenter(formGrid);
         this.root = borderPane;
     }
-
+    /**
+     * Ajoute un champ de formulaire avec un label dans un GridPane.
+     *
+     * @param grid Le GridPane où ajouter les éléments
+     * @param labelText Le texte du label
+     * @param field Le champ de saisie (TextField, Spinner ou DatePicker)
+     * @param row La ligne où insérer les éléments
+     */
     // Méthode utilitaire pour ajouter des champs avec style
     private void addFormField(GridPane grid, String labelText, Control field, int row) {
         Label label = new Label(labelText);

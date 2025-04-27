@@ -20,7 +20,17 @@ import javafx.scene.paint.Color;
 import javafx.scene.layout.StackPane;
 
 import java.util.ArrayList;
-
+/**
+ * VueBoutiqueCategorie est une vue affichant les articles d'une catégorie spécifique sous forme de grille.
+ *
+ * Elle utilise une structure BorderPane avec :
+ * - Un menu principal en haut
+ * - Une grille d'articles au centre avec un scroll
+ * - Un pied de page en bas
+ *
+ * Auteurs : [Ton Nom]
+ * Date : [Date du fichier]
+ */
 public class VueBoutiqueCategorie extends VueBase {
 
     private BorderPane borderPane;
@@ -30,7 +40,9 @@ public class VueBoutiqueCategorie extends VueBase {
     public VueBoutiqueCategorie(ControlleurSupreme controlleurSupreme_p) {
         super(controlleurSupreme_p);
     }
-
+    /**
+     * Initialise tous les composants graphiques de la vue.
+     */
     @Override
     protected void initialiserComposant() {
         this.nomCategorie = controlleurSupreme.getCategorieActuelle();
@@ -173,17 +185,28 @@ public class VueBoutiqueCategorie extends VueBase {
 
         this.root = borderPane;
     }
-
+    /**
+     * Configure les actions utilisateur sur les composants.
+     * (À compléter si nécessaire)
+     */
     @Override
     protected void configurerActions() {
         // à compléter si nécessaire
     }
-
+    /**
+     * Actualise le contenu de la vue.
+     * (À compléter si nécessaire)
+     */
     @Override
     public void actualiser() {
         // à compléter si nécessaire
     }
-
+    /**
+     * Récupère l'identifiant de type d'article correspondant à une catégorie donnée.
+     *
+     * @param categorie Le nom de la catégorie
+     * @return L'identifiant de type d'article correspondant, ou -1 si inconnu
+     */
     private int getTypeCorrespondant(String categorie) {
         if (categorie == null) {
             System.out.println("Categorie Null");
