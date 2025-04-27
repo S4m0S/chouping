@@ -26,7 +26,6 @@ public class VueCreationCompte extends VueBase {
     private TextField nomField, mailField, pseudoField;
     private PasswordField passwordField;
     private Spinner<Integer> classeSpinner;
-    private Spinner<Double> monnaieSpinner;
     private DatePicker dateNaissancePicker;
     private Button submitButton;
     private VBox contenuCentral;
@@ -160,7 +159,6 @@ public class VueCreationCompte extends VueBase {
                     nomField.getText(),
                     mailField.getText(),
                     classeSpinner.getValue(),
-                    monnaieSpinner.getValue(),
                     Date.valueOf(dateNaissancePicker.getValue())
             );
 
@@ -205,7 +203,6 @@ public class VueCreationCompte extends VueBase {
         nomField.clear();
         mailField.clear();
         classeSpinner.getValueFactory().setValue(1);
-        monnaieSpinner.getValueFactory().setValue(0.0);
         dateNaissancePicker.setValue(LocalDate.now().minusYears(18));
     }
     /**

@@ -47,7 +47,6 @@ public class ControlleurSupreme {
                     this.client = (Client) daoFactory.getClientDAO().chercher(this.user.getId_user());
                     this.panier = new Panier();
                     vuePrincipal.accederVue(new VueClient(this));
-
             }
 
         }
