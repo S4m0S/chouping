@@ -8,7 +8,16 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-
+/**
+ * VueAjouterArticle est une vue permettant à l'utilisateur d'ajouter un nouvel article via un formulaire.
+ * Elle hérite de {@link VueBase} et utilise JavaFX pour construire l'interface graphique.
+ * <p>
+ * Cette vue comprend des champs obligatoires (nom, prix, stock) ainsi que des champs optionnels (type, classe, couleur, etc.).
+ * Lors de la validation, elle transmet les informations saisies au contrôleur {@link ControleurSupreme}.
+ * </p>
+ *
+ * @author
+ */
 public class VueAjouterArticle extends VueBase {
     // Basic fields
     private TextField champNom;
@@ -32,7 +41,10 @@ public class VueAjouterArticle extends VueBase {
     public VueAjouterArticle(ControlleurSupreme controlleurSupreme_p) {
         super(controlleurSupreme_p);
     }
-
+    /**
+     * Initialise tous les composants de l'interface utilisateur.
+     * Configure le formulaire avec les champs de saisie nécessaires et les menus.
+     */
     @Override
     protected void initialiserComposant() {
         // Create basic fields
@@ -122,7 +134,13 @@ public class VueAjouterArticle extends VueBase {
         // Create scene
         this.root = mainPane;
     }
-
+    /**
+     * Configure les actions des boutons :
+     * <ul>
+     *   <li><b>Ajouter</b> : valide et envoie les données au contrôleur.</li>
+     *   <li><b>Annuler</b> : vide le formulaire.</li>
+     * </ul>
+     */
     @Override
     protected void configurerActions() {
         boutonAjouter.setOnAction(e -> {
@@ -176,7 +194,9 @@ public class VueAjouterArticle extends VueBase {
            clearForm();
         });
     }
-
+    /**
+     * Réinitialise tous les champs du formulaire pour permettre une nouvelle saisie propre.
+     */
     private void clearForm() {
         champNom.clear();
         champPrix.clear();
@@ -190,7 +210,12 @@ public class VueAjouterArticle extends VueBase {
         comboSolidite.getSelectionModel().clearSelection();
         champPoids.clear();
     }
-
+    /**
+     * Affiche une boîte de dialogue d'alerte en cas d'erreur.
+     *
+     * @param title   Le titre de la fenêtre d'alerte.
+     * @param message Le message explicatif affiché à l'utilisateur.
+     */
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
@@ -198,12 +223,17 @@ public class VueAjouterArticle extends VueBase {
         alert.setContentText(message);
         alert.showAndWait();
     }
-
+    /**
+     * Méthode prévue pour actualiser la vue si nécessaire.
+     * Actuellement vide.
+     */
     @Override
     public void actualiser() {
         // Implementation if needed for data refresh
     }
-
+    /**
+     * Permet d'afficher la fenêtre liée à cette vue.
+     */
     public void show() {
         Stage stage = (Stage) champNom.getScene().getWindow();
         stage.show();

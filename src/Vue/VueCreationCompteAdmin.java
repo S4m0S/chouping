@@ -8,7 +8,13 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-
+/**
+ * VueCreationCompteAdmin représente la vue pour la création d'un compte administrateur.
+ * Elle inclut les composants de l'interface utilisateur et les actions nécessaires pour créer un nouvel utilisateur admin.
+ *
+ * Cette vue est utilisée par le contrôleur pour interagir avec l'utilisateur et gérer la création de comptes.
+ * Elle fournit un formulaire pour saisir un pseudo et un mot de passe pour le compte admin.
+ */
 public class VueCreationCompteAdmin extends VueBase {
 
     private TextField pseudoField;
@@ -18,7 +24,10 @@ public class VueCreationCompteAdmin extends VueBase {
     public VueCreationCompteAdmin(ControlleurSupreme controlleurSupreme) {
         super(controlleurSupreme);
     }
-
+    /**
+     * Initialise les composants de la vue de création de compte admin.
+     * Cette méthode configure la mise en page, les styles et les champs du formulaire.
+     */
     @Override
     protected void initialiserComposant() {
         // Main container with background
@@ -65,7 +74,14 @@ public class VueCreationCompteAdmin extends VueBase {
         borderPane.setCenter(formContainer);
         this.root = borderPane;
     }
-
+    /**
+     * Ajoute un champ de formulaire avec une étiquette au GridPane fourni.
+     *
+     * @param grid Le GridPane où le champ sera ajouté.
+     * @param labelText Le texte à afficher dans l'étiquette.
+     * @param field Le champ de formulaire (TextField, PasswordField, etc.) à ajouter.
+     * @param row L'index de la ligne où le champ sera ajouté dans le GridPane.
+     */
     private void addFormField(GridPane grid, String labelText, Control field, int row) {
         Label label = new Label(labelText);
         label.getStyleClass().add("admin-label");
@@ -79,7 +95,10 @@ public class VueCreationCompteAdmin extends VueBase {
         grid.add(label, 0, row);
         grid.add(field, 1, row);
     }
-
+    /**
+     * Configure les actions associées aux composants, telles que le bouton de soumission.
+     * Cette méthode gère la soumission du formulaire, la validation des entrées et la création d'un nouvel utilisateur admin.
+     */
     @Override
     protected void configurerActions() {
         submitButton.setOnAction(e -> {
@@ -100,7 +119,13 @@ public class VueCreationCompteAdmin extends VueBase {
             }
         });
     }
-
+    /**
+     * Affiche une alerte avec un titre, un message et un type d'alerte.
+     *
+     * @param title Le titre de l'alerte.
+     * @param message Le message à afficher dans l'alerte.
+     * @param type Le type d'alerte (ERROR, INFORMATION, etc.).
+     */
     private void showAlert(String title, String message, Alert.AlertType type) {
         Alert alert = new Alert(type);
         alert.setTitle(title);
@@ -113,7 +138,9 @@ public class VueCreationCompteAdmin extends VueBase {
 
         alert.showAndWait();
     }
-
+    /**
+     * Réinitialise les champs du formulaire à leur état initial.
+     */
     private void resetForm() {
         pseudoField.clear();
         passwordField.clear();

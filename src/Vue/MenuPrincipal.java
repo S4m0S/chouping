@@ -10,17 +10,28 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import Controleur.ControlleurSupreme;
 
-
+/**
+ * Classe représentant le menu principal de l'application.
+ * Ce menu permet d'accéder aux différentes fonctionnalités de l'application comme l'accueil,
+ * les catégories d'articles, le compte utilisateur, le panier et des options supplémentaires pour les administrateurs.
+ */
 public class MenuPrincipal {
     private MenuBar menuBar;
 
     private ControlleurSupreme controlleurSupreme;
-
+    /**
+     * Constructeur du MenuPrincipal.
+     * Initialise le menu avec les options disponibles.
+     *
+     * @param controlleurSupreme Contrôleur principal de l'application.
+     */
     public MenuPrincipal(ControlleurSupreme controlleurSupreme) {
         this.controlleurSupreme = controlleurSupreme;
         initialiserMenu();
     }
-
+    /**
+     * Initialise les différents éléments du menu : boutons, menus déroulants, actions associées.
+     */
     public void initialiserMenu() {
         menuBar = new MenuBar();
         menuBar.getStylesheets().add(getClass().getResource("/src/resources/css/menu.css").toExternalForm());
@@ -94,6 +105,12 @@ public class MenuPrincipal {
 
     }
 
+    /**
+     * Crée un Menu JavaFX à partir d'un bouton.
+     *
+     * @param button Le bouton à transformer en menu.
+     * @return Menu contenant le bouton.
+     */
 
 
     private Menu createMenuFromButton(Button button) {
@@ -101,7 +118,11 @@ public class MenuPrincipal {
         menu.setGraphic(button);
         return menu;
     }
-
+    /**
+     * Retourne la barre de menu principale.
+     *
+     * @return MenuBar contenant tous les éléments de navigation.
+     */
     public MenuBar getMenuBar() {
         return this.menuBar;
     }

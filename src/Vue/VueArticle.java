@@ -5,7 +5,15 @@ import Modele.Article;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-
+/**
+ * VueArticle est une vue qui affiche en détail un article sélectionné.
+ * Permet également à un utilisateur connecté d'ajouter une quantité de cet article à son panier.
+ *
+ * Cette vue présente les informations principales (nom, prix, stock) ainsi que les caractéristiques techniques.
+ *
+ * Auteurs : [Ton Nom]
+ * Date : [Date du fichier]
+ */
 public class VueArticle extends VueBase {
     private Article article;
     private Spinner<Integer> quantiteSpinner;
@@ -22,7 +30,11 @@ public class VueArticle extends VueBase {
         this.article = article_p;
         actualiser(); // Maintenant l'article est disponible
     }
-
+    /**
+     * Initialise les composants graphiques de la vue.
+     * Configure la structure de la page et ajoute les éléments principaux :
+     * menu, conteneur d'informations, description et caractéristiques.
+     */
     @Override
     protected void initialiserComposant() {
         VBox mainContainer = new VBox(20);
@@ -70,6 +82,10 @@ public class VueArticle extends VueBase {
         appliquerStylesInitiaux();
     }
 
+    /**
+     * Applique les styles CSS et les propriétés initiales aux composants principaux
+     * (ex : rendre la description non éditable, configurer l'espacement du GridPane, etc.).
+     */
     private void appliquerStylesInitiaux() {
         nomLabel.getStyleClass().add("nom-article");
         prixLabel.getStyleClass().add("prix");
@@ -78,7 +94,10 @@ public class VueArticle extends VueBase {
         specsGrid.setHgap(15);
         specsGrid.setVgap(10);
     }
-
+    /**
+     * Configure les actions utilisateur de la vue :
+     * - Permet d'ajouter l'article au panier en cliquant sur le bouton prévu à cet effet.
+     */
     @Override
     protected void configurerActions() {
         Button ajouterButton = (Button) infoContainer.getChildren().get(4);
@@ -91,6 +110,12 @@ public class VueArticle extends VueBase {
         });
     }
 
+    /**
+     * Actualise l'affichage de la vue avec les données de l'article :
+     * - Met à jour les labels (nom, prix, stock)
+     * - Remplit la description et les caractéristiques techniques.
+     * - Configure les bornes du sélecteur de quantité selon le stock disponible.
+     */
     @Override
     public void actualiser() {
         if (article != null) {
@@ -113,7 +138,9 @@ public class VueArticle extends VueBase {
             specsGrid.addRow(4, new Label("Solidité :"), new Label(convertSolidite(article.getSolidite())));
         }
     }
-
+    /**
+     * Affiche une alerte de confirmation après l'ajout de l'article au panier.
+     */
     private void afficherConfirmation() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Ajout réussi");
@@ -121,7 +148,12 @@ public class VueArticle extends VueBase {
         alert.setContentText(quantiteSpinner.getValue() + " x " + article.getNom() + " ajouté(s) au panier !");
         alert.showAndWait();
     }
-
+    /**
+     * Convertit l'identifiant numérique du type d'article en son nom lisible.
+     *
+     * @param type Le type sous forme d'identifiant numérique.
+     * @return Le nom correspondant au type d'article.
+     */
     private String convertType(int type) {
         return switch (type) {
             case 1 -> "Arme";
@@ -131,7 +163,12 @@ public class VueArticle extends VueBase {
             default -> "Inconnu";
         };
     }
-
+    /**
+     * Convertit l'identifiant numérique de la classe d'article en son nom lisible.
+     *
+     * @param classe La classe sous forme d'identifiant numérique.
+     * @return Le nom correspondant à la classe d'article.
+     */
     private String convertClasse(int classe) {
         return switch (classe) {
             case 0 -> "Toutes classes";
@@ -142,7 +179,12 @@ public class VueArticle extends VueBase {
             default -> "Inconnue";
         };
     }
-
+    /**
+     * Convertit l'identifiant numérique de la matière de l'article en son nom lisible.
+     *
+     * @param matiere La matière sous forme d'identifiant numérique.
+     * @return Le nom correspondant à la matière de l'article.
+     */
     private String convertMatiere(int matiere) {
         return switch (matiere) {
             case 1 -> "Tissu";
@@ -154,7 +196,12 @@ public class VueArticle extends VueBase {
             default -> "Inconnue";
         };
     }
-
+    /**
+     * Convertit l'identifiant numérique du niveau de solidité en son nom lisible.
+     *
+     * @param solidite Le niveau de solidité sous forme d'identifiant numérique.
+     * @return Le nom correspondant au niveau de solidité de l'article.
+     */
     private String convertSolidite(int solidite) {
         return switch (solidite) {
             case 0 -> "-";

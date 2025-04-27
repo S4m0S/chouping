@@ -9,7 +9,12 @@ import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-
+/**
+ * VueModifierArticleDetails représente la vue permettant de modifier les détails d'un article existant.
+ * Cette vue permet de visualiser et de modifier les informations d'un article comme le nom, le prix, le stock,
+ * la description, et d'autres caractéristiques comme le type, la couleur, la matière, la taille, etc.
+ * Elle offre aussi la possibilité de supprimer un article.
+ */
 public class VueModifierArticleDetails extends VueBase{
     private Article article;
 
@@ -18,7 +23,11 @@ public class VueModifierArticleDetails extends VueBase{
         this.article = article_p;
         initialiseComposant();
     }
-
+    /**
+     * Initialise les composants de la vue pour la modification des détails d'un article.
+     * Cette méthode crée le formulaire avec les champs pré-remplis avec les valeurs actuelles de l'article.
+     * Elle configure également les boutons pour sauvegarder, supprimer ou annuler la modification.
+     */
     private void initialiseComposant(){
 
         // Create form fields with current values
@@ -152,7 +161,13 @@ public class VueModifierArticleDetails extends VueBase{
         this.root = mainPane;
     }
 
-
+    /**
+     * Affiche une alerte avec un titre et un message d'erreur.
+     * Cette méthode est utilisée pour avertir l'utilisateur si des erreurs surviennent lors de la modification de l'article.
+     *
+     * @param title Le titre de l'alerte.
+     * @param message Le message d'erreur à afficher.
+     */
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);

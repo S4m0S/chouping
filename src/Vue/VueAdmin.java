@@ -11,7 +11,10 @@ import javafx.scene.text.Font;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Classe représentant la vue d'administration du site.
+ * Permet de visualiser la liste des administrateurs, en créer un nouveau ou en supprimer.
+ */
 public class VueAdmin extends VueBase {
     private Label adminInfoLabel;
     private ListView<User> adminsListView;
@@ -22,7 +25,10 @@ public class VueAdmin extends VueBase {
     public VueAdmin(ControlleurSupreme controlleurSupreme_p) {
         super(controlleurSupreme_p);
     }
-
+    /**
+     * Initialise tous les composants de l'interface :
+     * barre de menu, titre, liste des administrateurs, et boutons d'action.
+     */
     @Override
     protected void initialiserComposant() {
         // Main container
@@ -100,7 +106,10 @@ public class VueAdmin extends VueBase {
         // Appeler actualiser() APRÈS que tout le layout est construit
         actualiser();
     }
-
+    /**
+     * Configure les actions associées aux boutons :
+     * suppression d'un administrateur, actualisation de la liste, création d'un nouvel administrateur.
+     */
     @Override
     protected void configurerActions() {
         // Delete selected admin
@@ -140,7 +149,10 @@ public class VueAdmin extends VueBase {
             this.controlleurSupreme.vueCreerNouveauAdmin();
         });
     }
-
+    /**
+     * Met à jour l'affichage de la vue :
+     * affiche l'utilisateur connecté et recharge la liste des administrateurs.
+     */
     @Override
     public void actualiser() {
         // Update current admin info
@@ -151,7 +163,13 @@ public class VueAdmin extends VueBase {
         ArrayList<User> admins = controlleurSupreme.getTousLesAdmins();
         adminsListView.setItems(FXCollections.observableArrayList(admins));
     }
-
+    /**
+     * Affiche une fenêtre d'alerte.
+     *
+     * @param title   Le titre de la fenêtre.
+     * @param message Le message à afficher.
+     * @param type    Le type d'alerte (information, erreur, confirmation...).
+     */
     private void showAlert(String title, String message, Alert.AlertType type) {
         Alert alert = new Alert(type);
         alert.setTitle(title);

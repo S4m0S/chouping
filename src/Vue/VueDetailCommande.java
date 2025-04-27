@@ -12,7 +12,11 @@ import javafx.scene.layout.VBox;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * VueDetailCommande représente la vue détaillée d'une commande spécifique.
+ * Elle affiche des informations sur la commande, telles que son ID, la date d'achat et une liste des articles commandés.
+ * Cette vue est généralement utilisée pour afficher une répartition détaillée d'une commande pour l'utilisateur.
+ */
 public class VueDetailCommande extends VueBase {
 
     public VueDetailCommande(ControlleurSupreme controlleurSupreme, Commande commande) {
@@ -55,12 +59,19 @@ public class VueDetailCommande extends VueBase {
 
         this.root = borderPane;
     }
-
+    /**
+     /**
+     * Initialise les composants de la vue.
+     * Dans ce cas, cette méthode est vide car la vue est initialisée dans le constructeur.
+     */
     @Override
     protected void initialiserComposant() {
         
     }
-
+    /**
+     * Configure les actions spécifiques pour cette vue.
+     * Dans ce cas, il n'y a pas d'actions spécifiques nécessaires.
+     */
     @Override
     protected void configurerActions() {
         // Pas d'actions spécifiques nécessaires
