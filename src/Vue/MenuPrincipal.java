@@ -89,6 +89,11 @@ public class MenuPrincipal {
             boutonModifierArticle.getStyleClass().addAll("menu-item","bouton-item");
             boutonModifierArticle.setOnAction(e-> controlleurSupreme.afficherModifierArticle());
             this.menuBar.getMenus().add(createMenuFromButton(boutonModifierArticle));
+
+            Button boutonAjouterPack = new Button("Ajouter Pack");
+            boutonAjouterPack.getStyleClass().addAll("menu-item","bouton-item");
+            boutonAjouterPack.setOnAction(e-> controlleurSupreme.afficherAjouterPack());
+            this.menuBar.getMenus().add(createMenuFromButton(boutonAjouterPack));
         }
 
 

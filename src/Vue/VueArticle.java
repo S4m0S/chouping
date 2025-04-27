@@ -5,6 +5,7 @@ import Modele.Article;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 
 public class VueArticle extends VueBase {
     private Article article;
@@ -13,14 +14,14 @@ public class VueArticle extends VueBase {
     // Composants UI
     private HBox topContainer;
     private VBox infoContainer;
-    private Label nomLabel, prixLabel, stockLabel;
+    private Label nomLabel, prixLabel, stockLabel, promoLabel;
     private TextArea descriptionArea;
     private GridPane specsGrid;
 
     public VueArticle(ControlleurSupreme controlleurSupreme_p, Article article_p) {
         super(controlleurSupreme_p);
         this.article = article_p;
-        actualiser(); // Maintenant l'article est disponible
+        actualiser();
     }
 
     @Override
@@ -32,24 +33,23 @@ public class VueArticle extends VueBase {
         BorderPane borderPane = new BorderPane();
         borderPane.setTop(new MenuPrincipal(controlleurSupreme).getMenuBar());
 
-
-        // Création des conteneurs vides
         topContainer = new HBox(20);
         infoContainer = new VBox(10);
 
-        // Création des composants sans données
         nomLabel = new Label();
         prixLabel = new Label();
         stockLabel = new Label();
-        quantiteSpinner = new Spinner<>(1, 1, 1); // Valeurs par défaut
+        promoLabel = new Label();
+        promoLabel.setTextFill(Color.RED); // Style pour la promo
+        quantiteSpinner = new Spinner<>(1, 1, 1);
         descriptionArea = new TextArea();
         specsGrid = new GridPane();
 
-        // Structure de base
-        topContainer.getChildren().addAll(new Pane(), infoContainer); // Pane vide pour l'image
+        topContainer.getChildren().addAll(new Pane(), infoContainer);
         infoContainer.getChildren().addAll(
                 nomLabel,
                 prixLabel,
+                promoLabel,  // Ajout du label pour la promo
                 stockLabel,
                 new HBox(10, new Label("Quantité :"), quantiteSpinner),
                 new Button("Ajouter au panier")
@@ -65,8 +65,6 @@ public class VueArticle extends VueBase {
         borderPane.setCenter(mainContainer);
 
         this.root = borderPane;
-
-        // Appliquer les classes CSS
         appliquerStylesInitiaux();
     }
 
@@ -74,6 +72,7 @@ public class VueArticle extends VueBase {
         nomLabel.getStyleClass().add("nom-article");
         prixLabel.getStyleClass().add("prix");
         stockLabel.getStyleClass().add("stock");
+        promoLabel.getStyleClass().add("promo"); // Classe CSS pour la promo
         descriptionArea.setEditable(false);
         specsGrid.setHgap(15);
         specsGrid.setVgap(10);
@@ -81,30 +80,37 @@ public class VueArticle extends VueBase {
 
     @Override
     protected void configurerActions() {
-        Button ajouterButton = (Button) infoContainer.getChildren().get(4);
+        Button ajouterButton = (Button) infoContainer.getChildren().get(5); // Index changé à cause de l'ajout de promoLabel
         ajouterButton.setOnAction(e -> {
             if (this.controlleurSupreme.getUser()!=null) {
                 controlleurSupreme.getPanier().ajouterArticle(article, quantiteSpinner.getValue());
                 afficherConfirmation();
             }
-
         });
     }
 
     @Override
     public void actualiser() {
         if (article != null) {
-            // Peupler les données
             nomLabel.setText(article.getNom());
-            prixLabel.setText(String.format("Prix : %.2f pièces d'or", article.getPrix()));
+
+            // Affichage du prix avec ou sans promo
+            if (article.getPromo() < 100) {
+                double prixPromo = article.getPrix() * article.getPromo() / 100.0;
+                prixLabel.setText(String.format("Prix : %.2f pièces d'or", article.getPrix()));
+                promoLabel.setText(String.format("PROMO -%d%% : %.2f pièces d'or !",
+                        article.getPromo(), prixPromo));
+            } else {
+                prixLabel.setText(String.format("Prix : %.2f pièces d'or", article.getPrix()));
+                promoLabel.setText(""); // Cache le label si pas de promo
+            }
+
             stockLabel.setText("En stock : " + article.getStock());
             descriptionArea.setText(article.getDescription());
 
-            // Configurer le spinner
             quantiteSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(
                     1, article.getStock(), 1));
 
-            // Peupler les caractéristiques
             specsGrid.getChildren().clear();
             specsGrid.addRow(0, new Label("Type :"), new Label(convertType(article.getType())));
             specsGrid.addRow(1, new Label("Classe :"), new Label(convertClasse(article.getClasse())));

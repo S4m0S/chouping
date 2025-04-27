@@ -10,7 +10,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 
-public class VueModifierArticleDetails extends VueBase{
+public class VueModifierArticleDetails extends VueBase {
     private Article article;
 
     public VueModifierArticleDetails(ControlleurSupreme controlleurSupreme_p, Article article_p) {
@@ -19,14 +19,21 @@ public class VueModifierArticleDetails extends VueBase{
         initialiseComposant();
     }
 
-    private void initialiseComposant(){
-
+    private void initialiseComposant() {
         // Create form fields with current values
         TextField champNom = new TextField(article.getNom());
         TextField champPrix = new TextField(String.valueOf(article.getPrix()));
         TextField champStock = new TextField(String.valueOf(article.getStock()));
         TextArea champDescription = new TextArea(article.getDescription());
         champDescription.setPrefRowCount(3);
+
+        // Champs pour la promotion et le pack
+        Spinner<Integer> champPromo = new Spinner<>(0, 100, article.getPromo());
+        champPromo.setEditable(true);
+
+        Spinner<Integer> champNumPack = new Spinner<>(0, controlleurSupreme.getNumberPack(), article.getPack());
+        champNumPack.setEditable(true);
+        champNumPack.setPromptText("0 si aucun pack");
 
         // Additional fields with current values
         ComboBox<String> comboType = new ComboBox<>(FXCollections.observableArrayList(
@@ -76,25 +83,29 @@ public class VueModifierArticleDetails extends VueBase{
         formGrid.add(champPrix, 1, 1);
         formGrid.add(new Label("Stock*:"), 0, 2);
         formGrid.add(champStock, 1, 2);
-        formGrid.add(new Label("Description:"), 0, 3);
-        formGrid.add(champDescription, 1, 3);
-        formGrid.add(new Label("Type:"), 0, 4);
-        formGrid.add(comboType, 1, 4);
-        formGrid.add(new Label("Classe:"), 0, 5);
-        formGrid.add(comboClasse, 1, 5);
-        formGrid.add(new Label("Couleur:"), 0, 6);
-        formGrid.add(comboCouleur, 1, 6);
-        formGrid.add(new Label("Taille:"), 0, 7);
-        formGrid.add(champTaille, 1, 7);
-        formGrid.add(new Label("Matière:"), 0, 8);
-        formGrid.add(comboMatiere, 1, 8);
-        formGrid.add(new Label("Solidité:"), 0, 9);
-        formGrid.add(comboSolidite, 1, 9);
-        formGrid.add(new Label("Poids:"), 0, 10);
-        formGrid.add(champPoids, 1, 10);
+        formGrid.add(new Label("Promotion (%):"), 0, 3);
+        formGrid.add(champPromo, 1, 3);
+        formGrid.add(new Label("Numéro de pack:"), 0, 4);
+        formGrid.add(champNumPack, 1, 4);
+        formGrid.add(new Label("Description:"), 0, 5);
+        formGrid.add(champDescription, 1, 5);
+        formGrid.add(new Label("Type:"), 0, 6);
+        formGrid.add(comboType, 1, 6);
+        formGrid.add(new Label("Classe:"), 0, 7);
+        formGrid.add(comboClasse, 1, 7);
+        formGrid.add(new Label("Couleur:"), 0, 8);
+        formGrid.add(comboCouleur, 1, 8);
+        formGrid.add(new Label("Taille:"), 0, 9);
+        formGrid.add(champTaille, 1, 9);
+        formGrid.add(new Label("Matière:"), 0, 10);
+        formGrid.add(comboMatiere, 1, 10);
+        formGrid.add(new Label("Solidité:"), 0, 11);
+        formGrid.add(comboSolidite, 1, 11);
+        formGrid.add(new Label("Poids:"), 0, 12);
+        formGrid.add(champPoids, 1, 12);
 
         // Button bar
-        HBox buttonBar = new HBox(10, boutonAnnuler,boutonSupprimer, boutonSauvegarder);
+        HBox buttonBar = new HBox(10, boutonAnnuler, boutonSupprimer, boutonSauvegarder);
         buttonBar.setAlignment(Pos.CENTER_RIGHT);
 
         // Main layout
@@ -108,7 +119,6 @@ public class VueModifierArticleDetails extends VueBase{
         // Configure actions
         boutonSauvegarder.setOnAction(e -> {
             try {
-
                 // Validate required fields
                 if (champNom.getText().isEmpty() || champPrix.getText().isEmpty() || champStock.getText().isEmpty()) {
                     showAlert("Champs requis", "Les champs marqués d'un * sont obligatoires.");
@@ -119,6 +129,8 @@ public class VueModifierArticleDetails extends VueBase{
                 article.setNom(champNom.getText());
                 article.setPrix(Double.parseDouble(champPrix.getText()));
                 article.setStock(Integer.parseInt(champStock.getText()));
+                article.setPromo(champPromo.getValue());
+                article.setPack(champNumPack.getValue()); // Sauvegarde du numéro de pack
                 article.setDescription(champDescription.getText());
                 article.setType(comboType.getSelectionModel().getSelectedIndex() + 1);
                 article.setClasse(comboClasse.getSelectionModel().getSelectedIndex() + 1);
@@ -133,17 +145,19 @@ public class VueModifierArticleDetails extends VueBase{
 
                 this.controlleurSupreme.afficherModifierArticle();
 
-
             } catch (NumberFormatException ex) {
                 showAlert("Erreur de format", "Veuillez entrer des valeurs numériques valides pour les champs numériques.");
             }
         });
 
-        boutonSupprimer.setOnAction(e->{
+        boutonSupprimer.setOnAction(e -> {
             this.controlleurSupreme.supprimerArticle(article);
             this.controlleurSupreme.afficherModifierArticle();
         });
 
+        boutonAnnuler.setOnAction(e -> {
+            this.controlleurSupreme.afficherModifierArticle();
+        });
 
         MenuPrincipal menuPrincipal = new MenuPrincipal(controlleurSupreme);
         mainPane.setTop(menuPrincipal.getMenuBar());
@@ -151,7 +165,6 @@ public class VueModifierArticleDetails extends VueBase{
         // Show the edit window
         this.root = mainPane;
     }
-
 
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -161,20 +174,18 @@ public class VueModifierArticleDetails extends VueBase{
         alert.showAndWait();
     }
 
-
     @Override
     protected void initialiserComposant() {
-
-
+        // Déjà implémenté dans initialiseComposant()
     }
 
     @Override
     protected void configurerActions() {
-
+        // Déjà implémenté dans initialiseComposant()
     }
 
     @Override
     public void actualiser() {
-
+        // Pas besoin d'actualisation pour cette vue
     }
 }

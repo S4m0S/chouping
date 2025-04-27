@@ -50,7 +50,7 @@ public class ControlleurSupreme {
             vuePrincipal.accederVue(new VueConnection(this));
         }
         else{
-            if (this.user.getId_user()==0){
+            if (this.user.getUserType()==0){
                 vuePrincipal.accederVue(new VueClient(this));
             }
             else {
@@ -245,5 +245,19 @@ public class ControlleurSupreme {
     public boolean supprimerUtilisateur(int user_id){
         daoFactory.getClientDAO().supprimerAdmin(user_id);
         return true;
+    }
+
+    public void afficherAjouterPack(){
+        vuePrincipal.accederVue(new VueAjouterPack(this));
+    }
+
+    public void ajouterPack(int nb_article, double prix ){
+
+        daoFactory.getarticleDAO().ajouterPack(nb_article,prix);
+    }
+
+    public int getNumberPack(){
+        ArrayList<Integer> liste_pack = daoFactory.getarticleDAO().getAllPack();
+        return liste_pack.size();
     }
 }
