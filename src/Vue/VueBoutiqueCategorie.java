@@ -20,7 +20,17 @@ import javafx.scene.paint.Color;
 import javafx.scene.layout.StackPane;
 
 import java.util.ArrayList;
-
+/**
+ * VueBoutiqueCategorie est une vue affichant les articles d'une catégorie spécifique sous forme de grille.
+ *
+ * Elle utilise une structure BorderPane avec :
+ * - Un menu principal en haut
+ * - Une grille d'articles au centre avec un scroll
+ * - Un pied de page en bas
+ *
+ * Auteurs : [Ton Nom]
+ * Date : [Date du fichier]
+ */
 public class VueBoutiqueCategorie extends VueBase {
 
     private BorderPane borderPane;
@@ -30,7 +40,9 @@ public class VueBoutiqueCategorie extends VueBase {
     public VueBoutiqueCategorie(ControlleurSupreme controlleurSupreme_p) {
         super(controlleurSupreme_p);
     }
-
+    /**
+     * Initialise tous les composants graphiques de la vue.
+     */
     @Override
     protected void initialiserComposant() {
         this.nomCategorie = controlleurSupreme.getCategorieActuelle();
@@ -105,22 +117,16 @@ public class VueBoutiqueCategorie extends VueBase {
                     // 🎯 ZOOM au clic
                     final Article articleFinal = article;
 
-                    imageView.setOnMouseClicked(event -> {
-                        Stage zoomStage = new Stage();
-                        zoomStage.setTitle(articleFinal.getNom());
-
-                        ImageView zoomedImageView = new ImageView(imageView.getImage());
-                        zoomedImageView.setPreserveRatio(true);
-                        zoomedImageView.setFitWidth(500);
-                        zoomedImageView.setFitHeight(500);
-
-                        StackPane root = new StackPane(zoomedImageView);
-                        root.setStyle("-fx-background-color: rgba(0,0,0,0.85);");
-                        root.setPadding(new Insets(20));
-
-                        Scene scene = new Scene(root);
-                        zoomStage.setScene(scene);
-                        zoomStage.show();
+                    imageView.setOnMouseEntered(e -> {
+                        imageView.setEffect(new DropShadow(10, Color.BROWN));
+                        imageView.setCursor(Cursor.HAND);
+                        imageView.setScaleX(1.05);
+                        imageView.setScaleY(1.05);
+                    });
+                    imageView.setOnMouseExited(e -> {
+                        imageView.setEffect(null);
+                        imageView.setScaleX(1.0);
+                        imageView.setScaleY(1.0);
                     });
 
 
@@ -162,36 +168,45 @@ public class VueBoutiqueCategorie extends VueBase {
         borderPane.setBottom(footer);
 
         try {
-            Image backgroundImage = new Image(getClass().getResourceAsStream("/resources/backgrounds/shop_bg.png"));
-            if (!backgroundImage.isError()) {
-                BackgroundImage bgImage = new BackgroundImage(
-                        backgroundImage,
-                        BackgroundRepeat.NO_REPEAT,
-                        BackgroundRepeat.NO_REPEAT,
-                        BackgroundPosition.CENTER,
-                        new BackgroundSize(100, 100, true, true, true, false)
-                );
-                borderPane.setBackground(new Background(bgImage));
-            } else {
-                System.out.println("Erreur lors du chargement de l'image de fond");
-            }
+            // Texture de parchemin en fond par défaut
+            Image backgroundImage = new Image(getClass().getResourceAsStream("/resources/backgrounds/parchment_texture.jpg"));
+            BackgroundImage bgImage = new BackgroundImage(
+                    backgroundImage,
+                    BackgroundRepeat.REPEAT,
+                    BackgroundRepeat.REPEAT,
+                    BackgroundPosition.DEFAULT,
+                    new BackgroundSize(100, 100, true, true, false, true)
+            );
+            borderPane.setBackground(new Background(bgImage));
         } catch (Exception e) {
-            System.err.println("Erreur lors du chargement de l'image de fond: " + e.getMessage());
+            System.err.println("Erreur chargement texture parchemin: " + e.getMessage());
+            borderPane.setStyle("-fx-background-color: linear-gradient(to bottom, #F5DEB3, #E6C9A8);");
         }
 
         this.root = borderPane;
     }
-
+    /**
+     * Configure les actions utilisateur sur les composants.
+     * (À compléter si nécessaire)
+     */
     @Override
     protected void configurerActions() {
         // à compléter si nécessaire
     }
-
+    /**
+     * Actualise le contenu de la vue.
+     * (À compléter si nécessaire)
+     */
     @Override
     public void actualiser() {
         // à compléter si nécessaire
     }
-
+    /**
+     * Récupère l'identifiant de type d'article correspondant à une catégorie donnée.
+     *
+     * @param categorie Le nom de la catégorie
+     * @return L'identifiant de type d'article correspondant, ou -1 si inconnu
+     */
     private int getTypeCorrespondant(String categorie) {
         if (categorie == null) {
             System.out.println("Categorie Null");

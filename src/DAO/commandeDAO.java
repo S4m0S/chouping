@@ -8,12 +8,30 @@ import java.util.ArrayList;
 import java.sql.Timestamp;
 import java.time.Instant;
 
+/**
+ * DAO (Data Access Object) pour gérer les opérations sur la table 'commande'.
+ * Permet d'ajouter, chercher, modifier, supprimer et récupérer toutes les commandes.
+ */
+
 public class commandeDAO implements objectDao {
     private DaoFactory daoFactory;
+
+    /**
+     * Constructeur du DAO pour commande.
+     *
+     * @param daoFactory_p l'usine à connexions pour accéder à la base de données
+     */
+
 
     public commandeDAO(DaoFactory daoFactory_p) {
         this.daoFactory = daoFactory_p;
     }
+
+    /**
+     * Récupère toutes les commandes présentes dans la base de données.
+     *
+     * @return une liste d'objets de type Commande
+     */
 
     @Override
     public ArrayList<Object> getAll() {
@@ -44,8 +62,14 @@ public class commandeDAO implements objectDao {
         return liste_Commandes;
     }
 
+    /**
+     * Ajoute une commande dans la base de données.
+     *
+     * @param object_p la commande à ajouter
+     * @return l'identifiant de la commande générée, ou -1 en cas d'erreur
+     */
     @Override
-    public void ajouter(Object object_p) {
+    public int ajouter(Object object_p) {
         try {
             Connection connection = daoFactory.getConnection();
             PreparedStatement statement = connection.prepareStatement(
@@ -72,14 +96,23 @@ public class commandeDAO implements objectDao {
 
                 // Ajouter les items à la table de jointure
                 ajouterItemsCommande(connection, id_commande_genere, commande.getItems(), commande.getNb_items());
+                return  id_commande_genere;
             }
 
+            return -1;
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("Erreur lors de l'ajout d'une commande.");
+            return -1;
         }
     }
 
+    /**
+     * Cherche une commande spécifique par son identifiant.
+     *
+     * @param object_id l'identifiant de la commande
+     * @return l'objet Commande trouvé, ou null si non trouvé
+     */
     @Override
     public Object chercher(int object_id) {
         try {
@@ -110,6 +143,11 @@ public class commandeDAO implements objectDao {
         }
     }
 
+    /**
+     * Modifie une commande existante dans la base de données.
+     *
+     * @param object_p la commande modifiée
+     */
     @Override
     public void modifier(Object object_p) {
         try {
@@ -141,6 +179,11 @@ public class commandeDAO implements objectDao {
         }
     }
 
+    /**
+     * Supprime une commande (et ses articles associés) de la base de données.
+     *
+     * @param object_p la commande à supprimer
+     */
     @Override
     public void supprimer(Object object_p) {
         try {
@@ -168,7 +211,14 @@ public class commandeDAO implements objectDao {
     }
 
     // Méthodes utilitaires
-
+    /**
+     * Récupère les identifiants des articles associés à une commande.
+     *
+     * @param connection la connexion à la base de données
+     * @param id_commande l'identifiant de la commande
+     * @return un tableau d'identifiants d'articles
+     * @throws SQLException en cas de problème d'accès aux données
+     */
     private int[] recupererItemsCommande(Connection connection, int id_commande) throws SQLException {
         PreparedStatement statement = connection.prepareStatement(
                 "SELECT id_article FROM commande_articles WHERE id_commande=?;"
@@ -186,6 +236,15 @@ public class commandeDAO implements objectDao {
         return liste.stream().mapToInt(Integer::intValue).toArray();
     }
 
+    /**
+     * Ajoute les articles associés à une commande dans la table de liaison.
+     *
+     * @param connection la connexion à la base de données
+     * @param id_commande l'identifiant de la commande
+     * @param items les identifiants des articles
+     * @param nb_items les quantités associées à chaque article
+     * @throws SQLException en cas de problème d'accès aux données
+     */
     private void ajouterItemsCommande(Connection connection, int id_commande, int[] items, int[] nb_items) throws SQLException {
         if (items == null) return;
 
@@ -203,6 +262,12 @@ public class commandeDAO implements objectDao {
         statement.executeBatch();
     }
 
+    /**
+     * Récupère les détails des articles associés à une commande spécifique.
+     *
+     * @param id_commande l'identifiant de la commande
+     * @return une liste d'articles associés à la commande
+     */
     public ArrayList<Article> getItemsDetailsCommande(int id_commande) {
         ArrayList<Article> items = new ArrayList<>();
 

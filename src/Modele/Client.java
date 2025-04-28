@@ -21,6 +21,13 @@ public class Client {
         this.monnaie = monnaie_p;
         this.date_naissance = date_naissance_p;
     }
+    public Client(String nom_p, String mail_p, int classe_p, java.sql.Date date_naissance_p){
+        this.nom = nom_p;
+        this.mail = mail_p;
+        this.classe = classe_p;
+
+        this.date_naissance = date_naissance_p;
+    }
 
 
 

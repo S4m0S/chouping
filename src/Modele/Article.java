@@ -16,7 +16,8 @@ public class Article {
     private int matiere;
     private int solidite;
     private double poids;
-
+    private int promo;
+    private int pack;
 
     public Article(int id_article, String nom, int stock, String description, double prix, int type,
                    int classe, int couleur, double taille, int matiere, int solidite, double poids) {
@@ -32,9 +33,29 @@ public class Article {
         this.matiere = matiere;
         this.solidite = solidite;
         this.poids = poids;
+        this.promo = 100;
+        this.pack = 0;
     }
 
     // Getters et Setters
+
+
+    public void setPromo(int promo) {
+        this.promo = promo;
+    }
+
+    public int getPromo() {
+        return promo;
+    }
+
+    public void setPack(int pack) {
+        this.pack = pack;
+    }
+
+    public int getPack() {
+        return pack;
+    }
+
     public int getId_article() {
         return id_article;
     }

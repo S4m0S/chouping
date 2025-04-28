@@ -6,8 +6,8 @@
 
 .prix {
     -fx-font-size: 20px;
-    -fx-text-fill: #27ae60;
     -fx-font-weight: bold;
+    -fx-text-fill: gray;
 }
 
 .stock {
@@ -44,4 +44,12 @@
 .text-area {
     -fx-background-color: #f8f9fa;
     -fx-border-color: #bdc3c7;
+}
+
+.promo {
+    -fx-font-weight: bold;
+    -fx-font-size: 1.1em;
+}
+.prix-with-promo {
+    -fx-strikethrough: true;
 }

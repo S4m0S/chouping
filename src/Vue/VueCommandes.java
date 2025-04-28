@@ -12,7 +12,17 @@ import javafx.scene.layout.VBox;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * VueCommandes est la vue permettant d'afficher les commandes d'un utilisateur.
+ * Elle hérite de la classe VueBase et est responsable de l'affichage d'un tableau
+ * contenant les commandes avec des détails associés.
+ * Cette classe permet à l'utilisateur de consulter ses commandes et d'afficher les
+ * détails d'une commande sélectionnée.
+ *
+ * @see VueBase
+ * @see Controleur.ControlleurSupreme
+ * @see Modele.Commande
+ */
 public class VueCommandes extends VueBase {
 
     private TableView<Commande> tableCommandes;
@@ -23,17 +33,27 @@ public class VueCommandes extends VueBase {
         initialiserComposant();
         actualiser();
     }
-
+    /**
+     * Initialise les composants de l'interface graphique pour la vue des commandes.
+     * Configure la structure du BorderPane, les éléments de l'interface et leur style,
+     * ainsi que l'ajout des actions aux boutons et autres composants.
+     */
     @Override
     protected void initialiserComposant() {
         BorderPane borderPane = new BorderPane();
         borderPane.setPadding(new Insets(20));
+        String cssPath = "/src/resources/css/VueCommandes.css";
+        try {
+            borderPane.getStylesheets().add(getClass().getResource(cssPath).toExternalForm());
+        } catch (Exception e) {
+            System.err.println("Erreur chargement CSS: " + e.getMessage());
+        }
 
         borderPane.setTop(new MenuPrincipal(controlleurSupreme).getMenuBar());
 
         // Titre
         Label titre = new Label("Vos Commandes");
-        titre.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
+        titre.getStyleClass().add("titre-commandes");
 
         // Tableau des commandes
         tableCommandes = new TableView<>();
@@ -41,13 +61,17 @@ public class VueCommandes extends VueBase {
 
         // Bouton de détail
         Button btnDetail = new Button("Voir le détail");
+        btnDetail.getStyleClass().add("bouton-detail");
         btnDetail.setOnAction(e -> afficherDetailCommande());
 
         VBox contenu = new VBox(20, titre, tableCommandes, btnDetail);
         borderPane.setCenter(contenu);
         this.root = borderPane;
     }
-
+    /**
+     * Configure les colonnes du tableau des commandes.
+     * Les colonnes incluent l'ID de la commande, la date d'achat et le nombre d'articles.
+     */
     private void configurerColonnes() {
         TableColumn<Commande, Integer> colId = new TableColumn<>("N° Commande");
         colId.setCellValueFactory(new PropertyValueFactory<>("id_commande"));
@@ -66,7 +90,10 @@ public class VueCommandes extends VueBase {
         tableCommandes.getColumns().addAll(colId, colDate, colNbItems);
         tableCommandes.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     }
-
+    /**
+     * Affiche les détails de la commande sélectionnée dans le tableau.
+     * Si aucune commande n'est sélectionnée, une alerte est affichée à l'utilisateur.
+     */
     private void afficherDetailCommande() {
         Commande commandeSelectionnee = tableCommandes.getSelectionModel().getSelectedItem();
         if (commandeSelectionnee != null) {
@@ -76,10 +103,16 @@ public class VueCommandes extends VueBase {
             alert.setTitle("Aucune sélection");
             alert.setHeaderText(null);
             alert.setContentText("Veuillez sélectionner une commande");
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStyleClass().add("dialog-pane");
             alert.showAndWait();
         }
     }
-
+    /**
+     * Configure les actions associées aux composants interactifs de la vue,
+     * telles que les clics sur les lignes du tableau.
+     * Ici, un double-clic sur une ligne de la table ouvre les détails de la commande.
+     */
     @Override
     protected void configurerActions() {
         // Double-clic sur une ligne
@@ -93,7 +126,10 @@ public class VueCommandes extends VueBase {
             return row;
         });
     }
-
+    /**
+     * Actualise les données des commandes dans la vue en récupérant les commandes depuis le contrôleur.
+     * Met à jour le tableau des commandes avec les nouvelles données.
+     */
     @Override
     public void actualiser() {
         // Récupérer les commandes depuis le contrôleur

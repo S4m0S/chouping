@@ -10,7 +10,15 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-
+/**
+ * VueConnection est la vue permettant à l'utilisateur de se connecter à l'application.
+ * Elle hérite de la classe VueBase et affiche un écran de connexion avec un champ pour le nom d'utilisateur,
+ * un champ pour le mot de passe, et un bouton pour se connecter.
+ * L'utilisateur peut aussi accéder à la page de création de compte à partir de cette vue.
+ *
+ * @see VueBase
+ * @see Controleur.ControlleurSupreme
+ */
 public class VueConnection extends VueBase {
 
     private VBox contenuCentral;
@@ -23,7 +31,10 @@ public class VueConnection extends VueBase {
     public VueConnection(ControlleurSupreme controlleurSupreme_p) {
         super(controlleurSupreme_p);
     }
-
+    /**
+     * Initialise les composants de l'interface graphique pour la vue de connexion.
+     * Configure le fond d'écran, les styles, et la disposition des éléments (champs de saisie, boutons, etc.).
+     */
     @Override
     protected void initialiserComposant() {
         // Création du fond avec l'image
@@ -106,7 +117,11 @@ public class VueConnection extends VueBase {
 
         this.root = borderPane;
     }
-
+    /**
+     * Configure les actions associées aux boutons de la vue de connexion.
+     * Le bouton de connexion appelle la méthode de connexion du contrôleur.
+     * Le bouton de création de compte permet d'accéder à la page de création de compte.
+     */
     @Override
     protected void configurerActions() {
         loginButton.setOnAction(e ->
@@ -115,11 +130,20 @@ public class VueConnection extends VueBase {
         creerCompteButton.setOnAction(e ->
                 controlleurSupreme.accederCreationCompte());
     }
-
+    /**
+     * Change le texte du label d'erreur dans la vue de connexion.
+     * Ce texte peut être utilisé pour afficher un message d'erreur à l'utilisateur.
+     *
+     * @param s Le message d'erreur à afficher.
+     */
     public void changeErrorLabel(String s) {
         this.errorLabel.setText(s);
     }
-
+    /**
+     * Actualise la vue en réinitialisant les champs de saisie et le label d'erreur.
+     * Cette méthode est appelée pour effacer les informations lorsque l'utilisateur
+     * quitte la vue ou lorsqu'il y a un nouvel essai de connexion.
+     */
     @Override
     public void actualiser() {
         // Réinitialiser les champs si nécessaire

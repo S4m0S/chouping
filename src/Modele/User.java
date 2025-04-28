@@ -34,4 +34,8 @@ public class User {
         return this.userType;
     }
     public int getId_user(){return this.id_user;}
+
+    public String getPseudo() {
+        return pseudo;
+    }
 }

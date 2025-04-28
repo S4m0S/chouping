@@ -10,13 +10,22 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import java.sql.Date;
 import java.time.LocalDate;
-
+/**
+ * VueCreationCompte est la vue qui permet à un utilisateur de créer un nouveau compte client dans l'application.
+ * Elle hérite de la classe VueBase et affiche un formulaire avec des champs pour saisir les informations du client,
+ * telles que le nom, le mail, le pseudo, le mot de passe, la classe, la monnaie initiale et la date de naissance.
+ * Après la soumission, elle crée un nouveau client et un utilisateur associé, puis effectue une validation des données.
+ *
+ * @see VueBase
+ * @see Controleur.ControlleurSupreme
+ * @see Modele.Client
+ * @see Modele.User
+ */
 public class VueCreationCompte extends VueBase {
 
     private TextField nomField, mailField, pseudoField;
     private PasswordField passwordField;
     private Spinner<Integer> classeSpinner;
-    private Spinner<Double> monnaieSpinner;
     private DatePicker dateNaissancePicker;
     private Button submitButton;
     private VBox contenuCentral;
@@ -25,6 +34,11 @@ public class VueCreationCompte extends VueBase {
         super(controlleurSupreme);
     }
 
+    /**
+     * Initialise les composants de l'interface graphique pour la vue de création de compte.
+     * Cette méthode configure les champs du formulaire, les styles, et le fond d'écran,
+     * puis assemble tous les composants dans une structure de type BorderPane.
+     */
     @Override
     protected void initialiserComposant() {
         // Création du fond avec l'image
@@ -76,7 +90,6 @@ public class VueCreationCompte extends VueBase {
         addFormField(formGrid, "Email*:", mailField = new TextField(), 3);
         addFormField(formGrid, "Mot de passe :", passwordField = new PasswordField(),4);
         addFormField(formGrid, "Classe:", classeSpinner = new Spinner<>(1, 3, 1), 5);
-        addFormField(formGrid, "Monnaie initiale:", monnaieSpinner = new Spinner<>(0.0, 10000.0, 0.0, 0.5), 6);
         addFormField(formGrid, "Date de naissance:", dateNaissancePicker = new DatePicker(LocalDate.now().minusYears(18)), 7);
 
         // Bouton de soumission
@@ -96,7 +109,14 @@ public class VueCreationCompte extends VueBase {
 
         this.root = borderPane;
     }
-
+    /**
+     * Ajoute un champ de formulaire avec son label correspondant dans le GridPane.
+     *
+     * @param grid Le GridPane où le champ sera ajouté.
+     * @param labelText Le texte à afficher sur le label.
+     * @param field Le champ de formulaire à ajouter (TextField, Spinner, PasswordField, etc.).
+     * @param row La ligne où le champ sera placé dans le GridPane.
+     */
     private void addFormField(GridPane grid, String labelText, Control field, int row) {
         Label label = new Label(labelText);
         label.getStyleClass().add("create-client-label");
@@ -120,7 +140,11 @@ public class VueCreationCompte extends VueBase {
         grid.add(label, 0, row);
         grid.add(field, 1, row);
     }
-
+    /**
+     * Configure les actions associées aux événements utilisateur dans la vue de création de compte.
+     * Cette méthode vérifie les champs obligatoires, crée un client et un utilisateur, puis soumet les données.
+     * Un message de succès ou d'erreur est affiché après la soumission.
+     */
     @Override
     protected void configurerActions() {
         submitButton.setOnAction(e -> {
@@ -135,7 +159,6 @@ public class VueCreationCompte extends VueBase {
                     nomField.getText(),
                     mailField.getText(),
                     classeSpinner.getValue(),
-                    monnaieSpinner.getValue(),
                     Date.valueOf(dateNaissancePicker.getValue())
             );
 
@@ -152,7 +175,13 @@ public class VueCreationCompte extends VueBase {
             }
         });
     }
-
+    /**
+     * Affiche une alerte stylisée à l'utilisateur.
+     *
+     * @param title Le titre de l'alerte.
+     * @param message Le message de l'alerte.
+     * @param type Le type de l'alerte (par exemple, ERROR, INFORMATION).
+     */
     private void showStyledAlert(String title, String message, Alert.AlertType type) {
         Alert alert = new Alert(type);
         alert.setTitle(title);
@@ -166,15 +195,19 @@ public class VueCreationCompte extends VueBase {
 
         alert.showAndWait();
     }
-
+    /**
+     * Réinitialise les champs du formulaire à leurs valeurs par défaut.
+     * Cette méthode est appelée après une soumission réussie ou en cas de réinitialisation.
+     */
     private void resetForm() {
         nomField.clear();
         mailField.clear();
         classeSpinner.getValueFactory().setValue(1);
-        monnaieSpinner.getValueFactory().setValue(0.0);
         dateNaissancePicker.setValue(LocalDate.now().minusYears(18));
     }
-
+    /**
+     * Actualise la vue de création de compte en réinitialisant le formulaire.
+     */
     @Override
     public void actualiser() {
         resetForm();

@@ -9,18 +9,27 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 
-
+/**
+ * Classe représentant la vue d'accueil de l'application.
+ * Affiche un message de bienvenue, une barre de menu principale et un arrière-plan personnalisé.
+ */
 public class VueAccueil extends VueBase {
 
     private BorderPane borderPane;
     private VBox contenuCentral;
     private Label titreAcceuil;
 
-
+    /**
+     * Constructeur de la vue d'accueil.
+     *
+     * @param controlleurSupreme_p Le contrôleur principal de l'application.
+     */
     public VueAccueil(ControlleurSupreme controlleurSupreme_p){
         super(controlleurSupreme_p);
     }
-
+    /**
+     * Initialise les composants de la vue : menu, contenu central, arrière-plan et pied de page.
+     */
     @Override
     protected void initialiserComposant(){
         // Conteneur principal qui sera donne comme root
@@ -74,12 +83,18 @@ public class VueAccueil extends VueBase {
         // Ajout du conteneur principal en tant que root pour pouvoir le donner sur demande
         this.root = borderPane;
     }
-
+    /**
+     * Configure les actions pour les composants interactifs.
+     * (Non utilisé pour le moment dans la vue d'accueil.)
+     */
     @Override
     protected void configurerActions() {
 
     }
-
+    /**
+     * Actualise le contenu de la vue.
+     * Met à jour le titre pour simuler une redirection vers la page Compte.
+     */
     @Override
     public void actualiser(){
         // Test d'actualisation

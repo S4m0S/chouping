@@ -1,0 +1,57 @@
+/* Main form styling */
+.admin-form-grid {
+    -fx-background-color: #f8f9fa;
+    -fx-border-color: #dee2e6;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);
+}
+
+/* Title styling */
+.admin-title {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #343a40;
+    -fx-padding: 0 0 20 0;
+}
+
+/* Label styling */
+.admin-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #495057;
+}
+
+/* Text field styling */
+.admin-text-field, .admin-password-field {
+    -fx-font-size: 14px;
+    -fx-background-color: #ffffff;
+    -fx-border-color: #ced4da;
+    -fx-border-width: 1px;
+    -fx-border-radius: 4px;
+    -fx-padding: 5px;
+    -fx-min-width: 250px;
+}
+
+/* Button styling */
+.admin-submit-button {
+    -fx-font-size: 14px;
+    -fx-background-color: #28a745;
+    -fx-text-fill: white;
+    -fx-padding: 8px 16px;
+    -fx-border-radius: 4px;
+    -fx-cursor: hand;
+}
+
+.admin-submit-button:hover {
+    -fx-background-color: #218838;
+}
+
+/* Alert dialog styling */
+.custom-alert {
+    -fx-font-size: 14px;
+}
+
+.custom-alert .header-panel {
+    -fx-background-color: #f8f9fa;
+}

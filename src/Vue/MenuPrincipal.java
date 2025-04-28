@@ -1,23 +1,37 @@
 package Vue;
 
 import Modele.User;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import Controleur.ControlleurSupreme;
 
+/**
+ * Classe représentant le menu principal de l'application.
+ * Ce menu permet d'accéder aux différentes fonctionnalités de l'application comme l'accueil,
+ * les catégories d'articles, le compte utilisateur, le panier et des options supplémentaires pour les administrateurs.
+ */
 public class MenuPrincipal {
     private MenuBar menuBar;
-    private ControlleurSupreme controlleurSupreme;
 
+    private ControlleurSupreme controlleurSupreme;
+    /**
+     * Constructeur du MenuPrincipal.
+     * Initialise le menu avec les options disponibles.
+     *
+     * @param controlleurSupreme Contrôleur principal de l'application.
+     */
     public MenuPrincipal(ControlleurSupreme controlleurSupreme) {
         this.controlleurSupreme = controlleurSupreme;
         initialiserMenu();
     }
-
+    /**
+     * Initialise les différents éléments du menu : boutons, menus déroulants, actions associées.
+     */
     public void initialiserMenu() {
         menuBar = new MenuBar();
         menuBar.getStylesheets().add(getClass().getResource("/src/resources/css/menu.css").toExternalForm());
@@ -76,14 +90,44 @@ public class MenuPrincipal {
         bottes.setOnAction(e -> controlleurSupreme.accederCategorie("Bottes"));
         plastrons.setOnAction(e -> controlleurSupreme.accederCategorie("Plastrons"));
         potions.setOnAction(e -> controlleurSupreme.accederCategorie("Potions"));
+        if (controlleurSupreme.getUser()!=null && controlleurSupreme.getUser().getUserType()==1){
+            Button boutonAjouterArticle = new Button("Créer Article");
+            boutonAjouterArticle.getStyleClass().addAll("menu-item","bouton-item");
+            boutonAjouterArticle.setOnAction(e-> controlleurSupreme.afficherAjouterArticle());
+            this.menuBar.getMenus().add(createMenuFromButton(boutonAjouterArticle));
+
+            Button boutonModifierArticle = new Button("Modifier Article");
+            boutonModifierArticle.getStyleClass().addAll("menu-item","bouton-item");
+            boutonModifierArticle.setOnAction(e-> controlleurSupreme.afficherModifierArticle());
+            this.menuBar.getMenus().add(createMenuFromButton(boutonModifierArticle));
+
+            Button boutonAjouterPack = new Button("Ajouter Pack");
+            boutonAjouterPack.getStyleClass().addAll("menu-item","bouton-item");
+            boutonAjouterPack.setOnAction(e-> controlleurSupreme.afficherAjouterPack());
+            this.menuBar.getMenus().add(createMenuFromButton(boutonAjouterPack));
+        }
+
+
     }
+
+    /**
+     * Crée un Menu JavaFX à partir d'un bouton.
+     *
+     * @param button Le bouton à transformer en menu.
+     * @return Menu contenant le bouton.
+     */
+
 
     private Menu createMenuFromButton(Button button) {
         Menu menu = new Menu();
         menu.setGraphic(button);
         return menu;
     }
-
+    /**
+     * Retourne la barre de menu principale.
+     *
+     * @return MenuBar contenant tous les éléments de navigation.
+     */
     public MenuBar getMenuBar() {
         return this.menuBar;
     }
