@@ -40,7 +40,7 @@ public class VueAccueil extends VueBase {
 
         // Titre Principal
 
-        titreAcceuil = new Label("Bienvenue sur notre site Chouping");
+        titreAcceuil = new Label(" ");
         titreAcceuil.getStyleClass().add("titre");
 
 
